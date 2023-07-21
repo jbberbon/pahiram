@@ -1,4 +1,10 @@
-import { Box, Drawer, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Drawer,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 
 import PropTypes from "prop-types";
@@ -6,9 +12,9 @@ import PropTypes from "prop-types";
 function Sidebar(props) {
   const sidebarWidth = props.isCollapsed ? 0 : 280;
 
-//   const isSm = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-//   const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
-//   const isXl = useMediaQuery((theme) => theme.breakpoints.down("xl"));
+  //   const isSm = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  //   const isXl = useMediaQuery((theme) => theme.breakpoints.down("xl"));
 
   return (
     <Drawer
@@ -20,7 +26,8 @@ function Sidebar(props) {
           boxSizing: "border-box",
         },
       }}
-      elevation={0}
+      elevation={isMd ? 3 : 0}
+      //   variant={isMd ? "persistent" : "permanent"}
       variant="permanent"
       anchor="left"
     >

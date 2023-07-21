@@ -17,23 +17,21 @@ function App() {
 
   //Responsive sht, use ZustandStore Later
   // const isSm = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const isMd = useMediaQuery(theme.breakpoints.down("md"));
+  // const isMd = useMediaQuery(theme.breakpoints.down("md"));
   // const isXl = useMediaQuery((theme) => theme.breakpoints.down("xl"));
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Box display={isMd ? "" : "flex"} flexDirection={"column"}>
+        <Box display={"flex"}>
+          <Topbar onCollapsed={onCollapsed} isCollapsed={isCollapsed} />
           <Sidebar isCollapsed={isCollapsed}>
             <BorrowerSidebarItems />
           </Sidebar>
-          <main className="content">
-            <Topbar onCollapsed={onCollapsed} isCollapsed={isCollapsed} />
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-            </Routes>
-          </main>
+          <Routes>
+            <Route path="/" element={<Dashboard isCollapsed={isCollapsed} />} />
+          </Routes>
         </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>

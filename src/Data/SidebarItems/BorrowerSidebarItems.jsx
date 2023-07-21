@@ -59,7 +59,7 @@ function BorrowerSidebarItems() {
             <ListItemIcon
               sx={{
                 paddingRight: "16px",
-                color: {mainTextColor}
+                color: mainTextColor
               }}
             >
               {val.icon}
