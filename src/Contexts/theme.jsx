@@ -1,5 +1,5 @@
 import { createContext, useState, useMemo } from "react";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 // Color Design Tokens
 export const tokens = (mode) => ({
@@ -132,10 +132,43 @@ const breakpoints = {
     xl: 1920, // Extra large devices (large desktops, 1920px and up)
     // Add more breakpoints as needed
   },
-}
+};
+
+const responsiveFonts = {
+  typography: {
+    fontFamily: ["Inter", "sans-serif"].join(","),
+    fontSize: 12,
+    h1: {
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: "2.5rem",
+    },
+    h2: {
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: "2rem",
+    },
+    h3: {
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: "1.5rem",
+    },
+    h4: {
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: "1.25rem",
+    },
+    h5: {
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: "1rem",
+    },
+    h6: {
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: "0.875rem",
+    },
+  },
+};
+
+const responsiveFontsTheme = responsiveFontSizes(responsiveFonts);
 
 // MUI Theme Settings
-export const themeSettings = (mode) => {
+const themeSettings = (mode) => {
   const colors = tokens(mode);
 
   return {
@@ -177,35 +210,7 @@ export const themeSettings = (mode) => {
             },
           }),
     },
-    typography: {
-      fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: 12,
-      h1: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: "2.5rem",
-      },
-      h2: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: "2rem",
-      },
-      h3: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: "1.5rem",
-      },
-      h4: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: "1.25rem",
-      },
-      h5: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: "1rem",
-      },
-      h6: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: "0.875rem",
-        color: tokens(mode).gray[500],
-      },
-    },
+    typography: responsiveFontsTheme.typography,
     breakpoints: breakpoints,
   };
 };

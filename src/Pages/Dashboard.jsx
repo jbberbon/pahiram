@@ -1,20 +1,32 @@
-import Box from "@mui/material/Box";
-
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 import PropTypes from "prop-types";
 
 function Dashboard(props) {
-  const sidebarWidth = props.isCollapsed ? 0 : 280;
+  const theme = useTheme();
+  const drawerTransition = {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  };
+
+  const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   return (
-    <Box flexGrow={1} ml={`${sidebarWidth}px`} pl={2}>
+    <Box
+      flexGrow={1}
+      pl={2}
+      marginLeft={props.isOpen && !isMd ? "280px" : "0px"}
+      sx={drawerTransition}
+    >
       Dashboard
     </Box>
   );
 }
 
-
 Dashboard.propTypes = {
-  isCollapsed: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default Dashboard;

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ColorModeContext } from "../../../Contexts/theme";
-import { useTheme } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -20,16 +20,23 @@ function Topbar(props) {
 
   //Text Colors
   const mainTextColor = theme.palette.neutral.main;
-
-  //Side Bar Open / Close Sizes
-  const sidebarWidth = props.isCollapsed ? 0 : 280;
-
   //Remove MUI IconButton Outline When Clicked
   const removeOutline = {
     border: "none",
     outline: "none",
   };
 
+  //Responsive SHT
+  //   const isSm = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  //   const isXl = useMediaQuery((theme) => theme.breakpoints.down("xl"));
+
+  const drawerTransition = {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  };
 
   return (
     <AppBar
@@ -37,25 +44,18 @@ function Topbar(props) {
       color="transparent"
       elevation={0}
       style={{
-        width: `calc(100% - ${sidebarWidth}px)`,
-        marginleft: `${sidebarWidth}px`,
-        // transition: theme.transitions.create(['margin', 'width'], {
-        //   easing: theme.transitions.easing.easeOut,
-        //   duration: theme.transitions.duration.enteringScreen,
-        // }),
+        width: props.isOpen && !isMd ? `calc(100% - 280px)` : "100%",
       }}
+      sx={drawerTransition}
     >
       <Toolbar>
         <IconButton
           size="large"
           edge="start"
           aria-label="menu"
-          style={{
-            border: "none",
-            outline: "none",
-          }}
+          style={removeOutline}
           sx={{ mr: 2, color: mainTextColor }}
-          onClick={props.onCollapsed}
+          onClick={props.onOpen}
         >
           <MenuIcon />
         </IconButton>
@@ -65,7 +65,7 @@ function Topbar(props) {
           style={removeOutline}
           sx={{
             mr: 1,
-            color: mainTextColor
+            color: mainTextColor,
           }}
           onClick={colorMode.toggleColorMode}
         >
@@ -76,7 +76,7 @@ function Topbar(props) {
           )}
         </IconButton>
         <IconButton style={removeOutline} size="small">
-          <Avatar sx={{ width: 32, height: 32  }} alt="Christian" src=""/>
+          <Avatar sx={{ width: 32, height: 32 }} alt="Christian" src="" />
         </IconButton>
       </Toolbar>
     </AppBar>
@@ -84,8 +84,8 @@ function Topbar(props) {
 }
 
 Topbar.propTypes = {
-  onCollapsed: PropTypes.func.isRequired,
-  isCollapsed: PropTypes.bool.isRequired,
+  onOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default Topbar;
