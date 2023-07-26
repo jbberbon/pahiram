@@ -1,13 +1,13 @@
 import { createContext, useState, useMemo } from "react";
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 // Color Design Tokens
 export const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
-        //Default text color when in dark mode #f7f7f7
+        //Default text color when in dark mode 100: #f7f7f7, or rgba(247,247,247)
         gray: {
-          100: "#f7f7f7",
+          100: "rgba(247,247,247,1)",
           200: "#c2c2c2",
           300: "#a3a3a3",
           400: "#858585",
@@ -33,7 +33,7 @@ export const tokens = (mode) => ({
           200: "#ffdd99",
           300: "#ffcd66",
           400: "#ffbc33",
-          500: "#ffab00",
+          500: "rgba(255,171,0,1)",
           600: "#cc8900",
           700: "#996700",
           800: "#664400",
@@ -63,16 +63,18 @@ export const tokens = (mode) => ({
         },
       }
     : {
-        //Text main color #5a6976
-        //Try to switch back to #637381 later
+        //Text main color #414b55" or rgba(65,75,85)
+        //text darker 700
+
+        // Yellow Color 500: "#ffab00" or rgba(255,171,0)
         gray: {
           100: "#141414",
           200: "#292929",
           300: "#3d3d3d",
           400: "#525252",
-          500: "#414b55",
+          500: "rgba(65,75,85,1)",
           600: "#858585",
-          700: "#a3a3a3",
+          700: "#212B36",
           800: "#c2c2c2",
           900: "#e0e0e0",
         },
@@ -92,7 +94,7 @@ export const tokens = (mode) => ({
           200: "#664400",
           300: "#996700",
           400: "#cc8900",
-          500: "#ffab00",
+          500: "rgba(255,171,0,1)",
           600: "#ffbc33",
           700: "#ffcd66",
           800: "#ffdd99",
@@ -134,38 +136,6 @@ const breakpoints = {
   },
 };
 
-const responsiveFonts = {
-  typography: {
-    fontFamily: ["Inter", "sans-serif"].join(","),
-    fontSize: 12,
-    h1: {
-      fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: "2.5rem",
-    },
-    h2: {
-      fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: "2rem",
-    },
-    h3: {
-      fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: "1.5rem",
-    },
-    h4: {
-      fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: "1.25rem",
-    },
-    h5: {
-      fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: "1rem",
-    },
-    h6: {
-      fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: "0.875rem",
-    },
-  },
-};
-
-const responsiveFontsTheme = responsiveFontSizes(responsiveFonts);
 
 // MUI Theme Settings
 const themeSettings = (mode) => {
@@ -184,7 +154,7 @@ const themeSettings = (mode) => {
               main: colors.yellowAccent[500],
             },
             neutral: {
-              dark: colors.gray[700],
+              dark: colors.gray[100],
               main: colors.gray[100],
               // light: colors.gray[100],
             },
@@ -210,7 +180,34 @@ const themeSettings = (mode) => {
             },
           }),
     },
-    typography: responsiveFontsTheme.typography,
+    typography: {
+      fontFamily: ["Inter", "sans-serif"].join(","),
+      fontSize: 12,
+      h1: {
+        fontFamily: ["Inter", "sans-serif"].join(","),
+        fontSize: "2.5rem",
+      },
+      h2: {
+        fontFamily: ["Inter", "sans-serif"].join(","),
+        fontSize: "2rem",
+      },
+      h3: {
+        fontFamily: ["Inter", "sans-serif"].join(","),
+        fontSize: "1.5rem",
+      },
+      h4: {
+        fontFamily: ["Inter", "sans-serif"].join(","),
+        fontSize: "1.25rem",
+      },
+      h5: {
+        fontFamily: ["Inter", "sans-serif"].join(","),
+        fontSize: "1rem",
+      },
+      h6: {
+        fontFamily: ["Inter", "sans-serif"].join(","),
+        fontSize: "0.875rem",
+      },
+    },
     breakpoints: breakpoints,
   };
 };

@@ -52,7 +52,8 @@ function Topbar(props) {
         <IconButton
           size="large"
           edge="start"
-          aria-label="menu"
+          aria-label="Toggle Side Bar For Navigation"
+          role="button"
           style={removeOutline}
           sx={{ mr: 2, color: mainTextColor }}
           onClick={props.onOpen}
@@ -62,6 +63,7 @@ function Topbar(props) {
         <Box flexGrow={1} />
         <IconButton
           aria-label="dark mode"
+          role="button"
           style={removeOutline}
           sx={{
             mr: 1,
@@ -75,7 +77,7 @@ function Topbar(props) {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton style={removeOutline} size="small">
+        <IconButton style={removeOutline} size="small" aria-label="profile">
           <Avatar sx={{ width: 32, height: 32 }} alt="Christian" src="" />
         </IconButton>
       </Toolbar>

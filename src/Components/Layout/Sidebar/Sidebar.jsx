@@ -4,31 +4,35 @@ import {
   IconButton,
   Typography,
   useMediaQuery,
-  useTheme
+  // useTheme,
 } from "@mui/material";
+import ProfileCard from "./ProfileCard";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 
 import PropTypes from "prop-types";
 
 function Sidebar(props) {
-    const theme = useTheme();
-    const drawerColor = theme.palette.background;
+  // const theme = useTheme();
+  // const drawerColor = theme.palette.background;
   //   const isSm = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
   //   const isXl = useMediaQuery((theme) => theme.breakpoints.down("xl"));
 
   return (
     <Drawer
+      
       anchor="left"
       open={props.isOpen}
       onClose={props.onOpen}
       variant={isMd ? "temporary" : "persistent"}
+      aria-label="Main Navigation"
+      role="navigation"
       sx={{
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: "280px",
           boxSizing: "border-box",
-          backgroundColor: drawerColor
+          // backgroundColor: drawerColor
         },
       }}
     >
@@ -63,6 +67,8 @@ function Sidebar(props) {
           </Typography>
         </IconButton>
       </Box>
+      {/* Profile Card */}
+      <ProfileCard />
       {props.children}
     </Drawer>
   );

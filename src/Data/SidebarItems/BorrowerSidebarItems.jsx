@@ -33,6 +33,7 @@ const BorrowerItems = [
 function BorrowerSidebarItems() {
   const theme = useTheme();
   const mainTextColor = theme.palette.neutral.main;
+  // const yellowHover = theme.palette.secondary.main.replace("1)", "0.1)");
 
   return (
     <List>
@@ -41,9 +42,9 @@ function BorrowerSidebarItems() {
           key={key}
           sx={{
             display: "block",
-            paddingTop: "8px",
+            paddingTop: "4px",
             paddingRight: "8px",
-            paddingBottom: 0,
+            paddingBottom: "4px",
             paddingLeft: "8px",
           }}
         >
@@ -54,11 +55,14 @@ function BorrowerSidebarItems() {
               paddingRight: "16px",
               height: 48,
               borderRadius: "8px",
+              // "&:hover, &.Mui-focusVisible": { backgroundColor: yellowHover }
             }}
+            aria-label={val.title}
+            role="button"
           >
             <ListItemIcon
               sx={{
-                paddingRight: "16px",
+                minWidth: "48px",
                 color: mainTextColor
               }}
             >
