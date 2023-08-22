@@ -2,9 +2,9 @@ import { Avatar, Box, Typography, useTheme } from "@mui/material";
 
 function ProfileCard() {
   const theme = useTheme();
-  const backgroundColor = theme.palette.neutral.main.replace("1)", "0.1)");
+  const cardColor = theme.palette.primary.main.replace("1)", "0.1)");
   const darkerText = theme.palette.neutral.dark;
-  const mainText = theme.palette.neutral.main;
+  // const mainTextColor = theme.palette.neutral.main;
 
 
   return (
@@ -15,7 +15,7 @@ function ProfileCard() {
       gap={"16px"}
       margin={"16px 16px 16px 16px"}
       padding={"0 16px 0 16px"}
-      backgroundColor={backgroundColor}
+      backgroundColor={cardColor}
       borderRadius={"8px"}
     >
       <Avatar sx={{ width: "40px", height: "40px" }} />
@@ -33,7 +33,7 @@ function ProfileCard() {
         >
           John Christian B.
         </Typography>
-        <Typography variant="h6" component={"span"} color={mainText}>
+        <Typography variant="h6" component={"span"} fontWeight={500} color={darkerText}>
           Executive Director
         </Typography>
       </Box>

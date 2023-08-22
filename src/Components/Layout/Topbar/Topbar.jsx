@@ -7,9 +7,9 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Avatar from "@mui/material/Avatar";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import TopbarAvatar from "./TopbarAvatar";
 
 import PropTypes from "prop-types";
 
@@ -18,8 +18,9 @@ function Topbar(props) {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
 
-  //Text Colors
-  const mainTextColor = theme.palette.neutral.main;
+  // Icon Color
+  const iconColor = theme.palette.neutral.main;
+
   //Remove MUI IconButton Outline When Clicked
   const removeOutline = {
     border: "none",
@@ -27,16 +28,17 @@ function Topbar(props) {
   };
 
   //Responsive SHT
-  //   const isSm = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  //   const isXl = useMediaQuery((theme) => theme.breakpoints.down("xl"));
 
+  //Transition Sht
   const drawerTransition = {
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   };
+
+  const mode = theme.palette.mode;
 
   return (
     <AppBar
@@ -55,10 +57,10 @@ function Topbar(props) {
           aria-label="Toggle Side Bar For Navigation"
           role="button"
           style={removeOutline}
-          sx={{ mr: 2, color: mainTextColor }}
+          sx={{ mr: 2, color: iconColor }}
           onClick={props.onOpen}
         >
-          <MenuIcon />
+          <MenuIcon sx={{ color: iconColor }} />
         </IconButton>
         <Box flexGrow={1} />
         <IconButton
@@ -67,19 +69,17 @@ function Topbar(props) {
           style={removeOutline}
           sx={{
             mr: 1,
-            color: mainTextColor,
+            color: iconColor,
           }}
           onClick={colorMode.toggleColorMode}
         >
-          {theme.palette.mode === "dark" ? (
+          {mode === "dark" ? (
             <DarkModeOutlinedIcon />
           ) : (
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton style={removeOutline} size="small" aria-label="profile">
-          <Avatar sx={{ width: 32, height: 32 }} alt="Christian" src="" />
-        </IconButton>
+        <TopbarAvatar />
       </Toolbar>
     </AppBar>
   );

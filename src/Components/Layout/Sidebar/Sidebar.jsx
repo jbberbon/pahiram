@@ -1,26 +1,26 @@
+// MUI
 import {
   Box,
   Drawer,
   IconButton,
   Typography,
   useMediaQuery,
-  // useTheme,
 } from "@mui/material";
-import ProfileCard from "./ProfileCard";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+
+// Pages
+import ProfileCard from "./ProfileCard";
+
+// Components
+import SidebarItemsContainer from "./SidebarItemsContainer";
 
 import PropTypes from "prop-types";
 
 function Sidebar(props) {
-  // const theme = useTheme();
-  // const drawerColor = theme.palette.background;
-  //   const isSm = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  //   const isXl = useMediaQuery((theme) => theme.breakpoints.down("xl"));
 
   return (
     <Drawer
-      
       anchor="left"
       open={props.isOpen}
       onClose={props.onOpen}
@@ -32,7 +32,6 @@ function Sidebar(props) {
         "& .MuiDrawer-paper": {
           width: "280px",
           boxSizing: "border-box",
-          // backgroundColor: drawerColor
         },
       }}
     >
@@ -45,7 +44,7 @@ function Sidebar(props) {
         height={64}
       >
         <IconButton
-          color={"secondary"}
+          color="primary"
           style={{
             border: "none",
             outline: "none",
@@ -53,7 +52,7 @@ function Sidebar(props) {
           disableRipple={true}
           aria-label="navigate to home page"
         >
-          <DashboardRoundedIcon fontSize="large" />
+          <DashboardRoundedIcon sx={{ fontSize: "2.5rem" }} />
           <Typography
             variant="h2"
             component={"h1"}
@@ -67,9 +66,8 @@ function Sidebar(props) {
           </Typography>
         </IconButton>
       </Box>
-      {/* Profile Card */}
       <ProfileCard />
-      {props.children}
+      <SidebarItemsContainer />
     </Drawer>
   );
 }
@@ -77,7 +75,6 @@ function Sidebar(props) {
 Sidebar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onOpen: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 export default Sidebar;

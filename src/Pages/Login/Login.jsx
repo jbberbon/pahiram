@@ -1,0 +1,160 @@
+import { useState } from "react";
+
+// MUI
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+
+// Pages
+import LoginForm from "./LoginForm";
+
+// CSS Styles
+import styles from "./login.module.css";
+
+function Login() {
+  const [isRemembered, setIsRemembered] = useState(false);
+  const onRemembered = () => {
+    setIsRemembered((prevIsRemembered) => !prevIsRemembered);
+  };
+
+  const isCustom420 = useMediaQuery((theme) =>
+    theme.breakpoints.down("custom420")
+  );
+  const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
+  // Color theme
+  const theme = useTheme();
+
+  // Whole screen centering div
+  const centerLoginPage = {
+    position: "absolute",
+    top: "0",
+    bottom: "0",
+    left: "0",
+    right: "0",
+    margin: "auto",
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    backgroundColor: `${theme.palette.secondary.login}`,
+  };
+
+  // Login Screen Styling
+  const mainDivStyle = {
+    display: "flex",
+    flexDirection: `${isMd ? "column" : "row"}`,
+    justifyContent: "center",
+    alignItems: "center",
+
+    maxWidth: `${isMd ? "480px" : "100%"}`,
+    maxHeight: `${isCustom420 ? "100vh" : "640px"}`,
+    height: "100%",
+    bgcolor: `${isCustom420 ? "" : "background.login"}`,
+
+    margin: `${isCustom420 ? "0" : "8%"}`,
+    gap: `${""}`,
+    borderRadius: `${isCustom420 ? "" : "16px"}`,
+  };
+
+  //Left Div Styling
+  const imgDiv = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    width: `${isMd ? "100%" : "50%"}`,
+    height: "100%",
+
+    borderRadius: `${isCustom420 ? "0 0 32px 32px" : "16px"}`,
+    overflow: "hidden",
+  };
+
+  // Right Div Styling
+  const rightDiv = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+
+    width: `${isMd ? "100%" : "50%"}`,
+    maxHeight: "640px",
+    padding: `${
+      isMd && !isCustom420 //between 400 and 600
+        ? "0 8% 8% 8%"
+        : isCustom420
+        ? "0 4% 12% 4%"
+        : "32px"
+    }`,
+  };
+
+  // Right - Second Layer Div Styling
+  const rightSecondLayer = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+
+    margin: `${isMd ? "16px 0 16px 0" : "32px 0 32px 0"}`,
+  };
+
+  // Footer Styling
+  const footerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    gap: "4px",
+    marginTop: `${isMd ? "32px" : "54px"}`,
+  };
+
+  return (
+    <div style={centerLoginPage}>
+      <Box sx={mainDivStyle} className={styles.mainDiv} boxShadow={2}>
+        {/* LEFT -------------------------- */}
+        <Box sx={imgDiv}>
+          <img src="./assets/login2.jpg" className={styles.loginImg} />
+        </Box>
+
+        {/* RIGHT ------------------------- */}
+        <Box sx={rightDiv}>
+          {/* Logo ----------- */}
+          <Box sx={rightSecondLayer}>
+            <Box display={"flex"} alignItems={"center"}>
+              <span style={{ lineHeight: 1 }}>
+                <DashboardRoundedIcon
+                  style={{ fontSize: "2.5rem" }}
+                  color="primary"
+                />
+              </span>
+              <Typography
+                variant="h1"
+                component={"h1"}
+                lineHeight={0.8}
+                color="primary"
+              >
+                Pahiram
+              </Typography>
+            </Box>
+            <Typography variant="h5" component={"span"}>
+              APC Equipment Lending System
+            </Typography>
+          </Box>
+
+          {/* Form Section ---- */}
+          <LoginForm isRemembered={isRemembered} onRemembered={onRemembered} />
+
+          {/* Footer ---------- */}
+          <Box sx={footerStyle}>
+            <Typography fontWeight={"700"} component={"span"}>
+              The Polarber Group
+            </Typography>
+            <Typography component={"span"}>&copy; 2023</Typography>
+          </Box>
+        </Box>
+      </Box>
+    </div>
+  );
+}
+
+export default Login;

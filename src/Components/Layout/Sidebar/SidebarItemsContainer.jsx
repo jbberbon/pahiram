@@ -7,37 +7,20 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import HandshakeRoundedIcon from "@mui/icons-material/HandshakeRounded";
-import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
-import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 
-const BorrowerItems = [
-  {
-    title: "Borrow Equipment",
-    icon: <HandshakeRoundedIcon fontSize="large" />,
-    link: "/borrow-equipment",
-  },
-  {
-    title: "Track Equipment",
-    icon: <AccessTimeRoundedIcon fontSize="large" />,
-    link: "/track-equipment",
-  },
-  {
-    title: "History",
-    icon: <ListAltRoundedIcon fontSize="large" />,
-    link: "/history",
-  },
-];
+import { SidebarItems } from "./SidebarItems";
 
-
-function BorrowerSidebarItems() {
+function SidebarItemsContainer() {
   const theme = useTheme();
   const mainTextColor = theme.palette.neutral.main;
   // const yellowHover = theme.palette.secondary.main.replace("1)", "0.1)");
 
+  const userRole = "Borrower";
+  const sidebarItems = SidebarItems[userRole];
+
   return (
     <List>
-      {BorrowerItems.map((val, key) => (
+      {sidebarItems.map((val, key) => (
         <ListItem
           key={key}
           sx={{
@@ -57,13 +40,13 @@ function BorrowerSidebarItems() {
               borderRadius: "8px",
               // "&:hover, &.Mui-focusVisible": { backgroundColor: yellowHover }
             }}
-            aria-label={val.title}
+            aria-label={val.aria}
             role="button"
           >
             <ListItemIcon
               sx={{
                 minWidth: "48px",
-                color: mainTextColor
+                color: mainTextColor,
               }}
             >
               {val.icon}
@@ -80,9 +63,9 @@ function BorrowerSidebarItems() {
             </ListItemText>
           </ListItemButton>
         </ListItem>
-      ))}
+    ))}
     </List>
   );
 }
 
-export default BorrowerSidebarItems;
+export default SidebarItemsContainer;

@@ -5,122 +5,169 @@ import { createTheme } from "@mui/material/styles";
 export const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
-        //Default text color when in dark mode 100: #f7f7f7, or rgba(247,247,247)
-        gray: {
-          100: "rgba(247,247,247,1)",
-          200: "#c2c2c2",
-          300: "#a3a3a3",
-          400: "#858585",
-          500: "#666666",
-          600: "#525252",
-          700: "#3d3d3d",
-          800: "#292929",
-          900: "#141414",
+        // Dark Mode
+        // Shade: Light to Dark
+        //Text main color #F3F4F6 or rgba(243,244,246,1)
+        // Yellow Color 500: "#E7B426" or rgba(231,180,38)
+        neutral: {
+          100: "rgba(243,244,246,1)",
+          200: "#D6D9E1",
+          300: "#C5C9D3",
+          400: "#ADB3C2",
+          500: "rgba(102,112,137,1)",
+          600: "#51586C",
+          700: "#363C49",
+          800: "#", // Placeholder
+          900: "#21242C",
         },
-        primary: {
-          100: "#637381",
-          200: "#a1a4ab",
-          300: "#727681",
-          400: "#1f2a40",
-          500: "#141b2d",
-          600: "#f2f0f0",
-          700: "#0c101b",
-          800: "#080b12",
-          900: "#040509",
+        primaryYellow: {
+          100: "#FFF8E5",
+          200: "#FCE7AE",
+          300: "#F9DB8A",
+          400: "#F6D064",
+          500: "rgba(231,180,38,1)",
+          600: "#C39105",
+          700: "#A47903",
+          800: "#6D5101",
+          900: "#4D3A08",
         },
-        yellowAccent: {
-          100: "#ffeecc",
-          200: "#ffdd99",
-          300: "#ffcd66",
-          400: "#ffbc33",
-          500: "rgba(255,171,0,1)",
-          600: "#cc8900",
-          700: "#996700",
-          800: "#664400",
-          900: "#332200",
+        primaryBlue: {
+          100: "#EBEDFA",
+          200: "#C6CDF1",
+          300: "#ADB7EB",
+          400: "#8593E0",
+          500: "#3047C0",
+          600: "#24358F",
+          700: "#1A2666",
+          800: "#0F173D",
+          900: "#050814",
         },
-        redAccent: {
-          100: "#f8dcdb",
-          200: "#f1b9b7",
-          300: "#e99592",
-          400: "#e2726e",
-          500: "#db4f4a",
-          600: "#af3f3b",
-          700: "#832f2c",
-          800: "#58201e",
-          900: "#2c100f",
+        success: {
+          100: "#F6FEFA",
+          200: "#CBF7D9",
+          300: "#90F3AC",
+          400: "#73E88F",
+          500: "#21CF66",
+          600: "#4EA659",
+          700: "#36783E",
+          800: "#1D4623",
+          900: "#0D2612",
         },
-        blueAccent: {
-          100: "#e1e2fe",
-          200: "#c3c6fd",
-          300: "#a4a9fc",
-          400: "#868dfb",
-          500: "#6870fa",
-          600: "#535ac8",
-          700: "#3e4396",
-          800: "#2a2d64",
-          900: "#151632",
+        warning: {
+          100: "#FEF4E7",
+          200: "#F5E0C1",
+          300: "#EEC995",
+          400: "#E9B772",
+          500: "#DE9630",
+          600: "#B0721C",
+          700: "#845615",
+          800: "#58390E",
+          900: "#2C1D07",
+        },
+        error: {
+          100: "#F9E2E1",
+          200: "#F4CDCC",
+          300: "#EDABAB",
+          400: "#E68989",
+          500: "#CF2C2B",
+          600: "#A92423",
+          700: "#7F1B1A",
+          800: "#541212",
+          900: "#2A0909",
+        },
+        message: {
+          100: "#EAEFFB",
+          200: "#CCDAF4",
+          300: "#ABC1ED",
+          400: "#89A8E6",
+          500: "#2B62CF",
+          600: "#214CA0",
+          700: "#1A3C7F",
+          800: "#122854",
+          900: "#09142A",
         },
       }
     : {
-        //Text main color #414b55" or rgba(65,75,85)
-        //text darker 700
-
-        // Yellow Color 500: "#ffab00" or rgba(255,171,0)
-        gray: {
-          100: "#141414",
-          200: "#292929",
-          300: "#3d3d3d",
-          400: "#525252",
-          500: "rgba(65,75,85,1)",
-          600: "#858585",
-          700: "#212B36",
-          800: "#c2c2c2",
-          900: "#e0e0e0",
+        // LIGHT MODE
+        // Shade: Dark to Light
+        // Text main color #667089 or rgba(102,112,137)
+        // Yellow Color 500: "#E7B426" or rgba(231,180,38)
+        neutral: {
+          100: "#21242C",
+          200: "", //Placeholder
+          300: "#363C49",
+          400: "#51586C",
+          500: "rgba(102,112,137,1)",
+          600: "#ADB3C2",
+          700: "#C5C9D3",
+          800: "#D6D9E1",
+          900: "#F3F4F6",
         },
-        primary: {
-          100: "#040509",
-          200: "#080b12",
-          300: "#0c101b",
-          400: "#f2f0f0",
-          500: "#141b2d",
-          600: "#434957",
-          700: "#727681",
-          800: "#a1a4ab",
-          900: "#d0d1d5",
+        primaryYellow: {
+          100: "#4D3A08",
+          200: "#6D5101",
+          300: "#A47903",
+          400: "#C39105",
+          500: "rgba(231,180,38,1)",
+          600: "#F6D064",
+          700: "#F9DB8A",
+          800: "#FCE7AE",
+          900: "#FFF8E5",
         },
-        yellowAccent: {
-          100: "#332200",
-          200: "#664400",
-          300: "#996700",
-          400: "#cc8900",
-          500: "rgba(255,171,0,1)",
-          600: "#ffbc33",
-          700: "#ffcd66",
-          800: "#ffdd99",
-          900: "#ffeecc",
+        primaryBlue: {
+          100: "#050814",
+          200: "#0F173D", //Placeholder
+          300: "#1A2666",
+          400: "#24358F",
+          500: "#3047C0",
+          600: "#8593E0",
+          700: "#ADB7EB",
+          800: "#C6CDF1",
+          900: "#EBEDFA",
         },
-        redAccent: {
-          100: "#2c100f",
-          200: "#58201e",
-          300: "#832f2c",
-          400: "#af3f3b",
-          500: "#db4f4a",
-          600: "#e2726e",
-          700: "#e99592",
-          800: "#f1b9b7",
-          900: "#f8dcdb",
+        success: {
+          100: "#0D2612",
+          200: "#1D4623",
+          300: "#36783E",
+          400: "#4EA659",
+          500: "#21CF66",
+          600: "#73E88F",
+          700: "#90F3AC",
+          800: "#CBF7D9",
+          900: "#F6FEFA",
         },
-        blueAccent: {
-          100: "#151632",
-          200: "#2a2d64",
-          300: "#3e4396",
-          400: "#535ac8",
-          500: "#6870fa",
-          600: "#868dfb",
-          700: "#a4a9fc",
-          800: "#c3c6fd",
-          900: "#e1e2fe",
+        warning: {
+          100: "#2C1D07",
+          200: "#58390E",
+          300: "#845615",
+          400: "#B0721C",
+          500: "#DE9630",
+          600: "#E9B772",
+          700: "#EEC995",
+          800: "#F5E0C1",
+          900: "#FEF4E7",
+        },
+        error: {
+          100: "#2A0909",
+          200: "#541212",
+          300: "#7F1B1A",
+          400: "#A92423",
+          500: "#CF2C2B",
+          600: "#E68989",
+          700: "#EDABAB",
+          800: "#F4CDCC",
+          900: "#F9E2E1",
+        },
+        message: {
+          100: "#09142A",
+          200: "#122854",
+          300: "#1A3C7F",
+          400: "#214CA0",
+          500: "#2B62CF",
+          600: "#89A8E6",
+          700: "#ABC1ED",
+          800: "#CCDAF4",
+          900: "#EAEFFB",
         },
       }),
 });
@@ -128,6 +175,7 @@ export const tokens = (mode) => ({
 const breakpoints = {
   values: {
     xs: 0, // Extra small devices (portrait phones, less than 600px)
+    custom420: 420, // Custom 400 width
     sm: 600, // Small devices (landscape phones, 600px and up)
     md: 960, // Medium devices (tablets, 960px and up)
     lg: 1280, // Large devices (desktops, 1280px and up)
@@ -135,7 +183,6 @@ const breakpoints = {
     // Add more breakpoints as needed
   },
 };
-
 
 // MUI Theme Settings
 const themeSettings = (mode) => {
@@ -148,44 +195,67 @@ const themeSettings = (mode) => {
         ? {
             // MUI Palette for Dark Mode
             primary: {
-              main: colors.primary[500],
+              main: colors.primaryYellow[500],
+              light: colors.primaryYellow[100],
             },
             secondary: {
-              main: colors.yellowAccent[500],
+              main: colors.primaryBlue[500],
+              login: colors.primaryBlue[900],
             },
             neutral: {
-              dark: colors.gray[100],
-              main: colors.gray[100],
-              // light: colors.gray[100],
+              dark: colors.neutral[100],
+              main: colors.neutral[100],
+              light: colors.neutral[900],
             },
             background: {
-              default: colors.primary[500],
+              default: colors.neutral[900],
+              login: colors.neutral[900],
             },
           }
         : {
             // MUI Palette for Light Mode
             primary: {
-              main: colors.primary[100],
+              main: colors.primaryYellow[500],
+              light: colors.primaryYellow[100],
             },
             secondary: {
-              main: colors.yellowAccent[500],
+              main: colors.primaryBlue[500],
+              login: "#F9F9FB",
+            },
+            success: {
+              light: colors.success[100],
+              main: colors.success[500],
+              dark: colors.success[900],
+            },
+            warning: {
+              light: colors.warning[100],
+              main: colors.warning[500],
+              dark: colors.warning[900],
+            },
+            error: {
+              light: colors.error[100],
+              main: colors.error[500],
+              dark: colors.error[900],
             },
             neutral: {
-              dark: colors.gray[700],
-              main: colors.gray[500],
-              light: colors.gray[100],
+              dark: colors.neutral[400],
+              main: colors.neutral[500],
+              light: colors.neutral[900],
             },
             background: {
-              default: "#fcfcfc",
+              default: colors.neutral[900],
+              login: "white",
             },
           }),
     },
     typography: {
       fontFamily: ["Inter", "sans-serif"].join(","),
       fontSize: 12,
+      button: { textTransform: "none" },
       h1: {
         fontFamily: ["Inter", "sans-serif"].join(","),
         fontSize: "2.5rem",
+        fontWeight: "700",
       },
       h2: {
         fontFamily: ["Inter", "sans-serif"].join(","),
@@ -218,7 +288,7 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState("dark");
+  const [mode, setMode] = useState("light");
 
   const colorMode = useMemo(
     () => ({
