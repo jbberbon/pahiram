@@ -25,7 +25,6 @@ function App() {
           />
           <Route path="dashboard" element={<MainPage selectedMenu="dashboard" />} />
           <Route path="faq" element={<MainPage selectedMenu="faq" />} />
-
           <Route path="*" element={<div>404 NOT FOUND</div>} />
         </Routes>
       </ThemeProvider>
