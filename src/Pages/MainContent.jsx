@@ -4,9 +4,11 @@ import Faq from "./Faq";
 import PropTypes from "prop-types";
 import Home from "./Home";
 
-function MainContent({ isOpen, selectedMenu }) {
-  //return <Dashboard isOpen={props.isOpen} />;
+import useSidebarStore from "../Store/SidebarStore";
 
+function MainContent({ selectedMenu }) {
+  const isOpen = useSidebarStore((state) => state.isOpen);
+  
   return (
     <div>
       {selectedMenu === "dashboard" && <Dashboard isOpen={isOpen} />}
@@ -17,7 +19,6 @@ function MainContent({ isOpen, selectedMenu }) {
 }
 
 MainContent.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   selectedMenu: PropTypes.string.isRequired,
 };
 

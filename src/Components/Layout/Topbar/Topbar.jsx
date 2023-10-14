@@ -11,9 +11,11 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import TopbarAvatar from "./TopbarAvatar";
 
-import PropTypes from "prop-types";
+// isOpen Store
+import useSidebarStore from "../../../Store/SidebarStore";
 
-function Topbar(props) {
+
+function Topbar() {
   //Using colors from custom palette
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
@@ -40,13 +42,16 @@ function Topbar(props) {
 
   const mode = theme.palette.mode;
 
+  const isOpen = useSidebarStore((state) => state.isOpen);
+  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+
   return (
     <AppBar
       component="nav"
       color="transparent"
       elevation={0}
       style={{
-        width: props.isOpen && !isMd ? `calc(100% - 280px)` : "100%",
+        width: isOpen && !isMd ? `calc(100% - 280px)` : "100%",
       }}
       sx={drawerTransition}
     >
@@ -58,7 +63,8 @@ function Topbar(props) {
           role="button"
           style={removeOutline}
           sx={{ mr: 2, color: iconColor }}
-          onClick={props.onOpen}
+          
+          onClick={toggleSidebar}
         >
           <MenuIcon sx={{ color: iconColor }} />
         </IconButton>
@@ -85,9 +91,6 @@ function Topbar(props) {
   );
 }
 
-Topbar.propTypes = {
-  onOpen: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-};
+
 
 export default Topbar;

@@ -14,16 +14,19 @@ import ProfileCard from "./ProfileCard";
 // Components
 import SidebarItemsContainer from "./SidebarItemsContainer";
 
-import PropTypes from "prop-types";
+// isOpen Store
+import useSidebarStore from "../../../Store/SidebarStore";
 
-function Sidebar(props) {
+function Sidebar() {
   const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const isOpen = useSidebarStore((state) => state.isOpen);
+  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
 
   return (
     <Drawer
       anchor="left"
-      open={props.isOpen}
-      onClose={props.onOpen}
+      open={isOpen}
+      onClose={toggleSidebar}
       variant={isMd ? "temporary" : "persistent"}
       aria-label="Main Navigation"
       role="navigation"
@@ -71,10 +74,5 @@ function Sidebar(props) {
     </Drawer>
   );
 }
-
-Sidebar.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onOpen: PropTypes.func.isRequired,
-};
 
 export default Sidebar;

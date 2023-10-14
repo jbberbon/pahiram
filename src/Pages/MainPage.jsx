@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 // MUI
 import { Box } from "@mui/material";
 
@@ -12,17 +10,11 @@ import PropTypes from "prop-types";
 
 
 function MainPage({ selectedMenu }) {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const onOpen = () => {
-    setIsOpen((prevIsOpen) => !prevIsOpen);
-  };
-
   return (
     <Box display={"flex"}>
-      <Topbar onOpen={onOpen} isOpen={isOpen} />
-      <Sidebar isOpen={isOpen} onOpen={onOpen} />
-      <MainContent isOpen={isOpen} selectedMenu={selectedMenu}/>
+      <Topbar />
+      <Sidebar />
+      <MainContent selectedMenu={selectedMenu}/>
     </Box>
   );
 }
