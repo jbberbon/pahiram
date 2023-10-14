@@ -1,6 +1,5 @@
-import { useMemo } from "react";
+import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
-import useColorModeStore from "../Store/ColorModeStore";
 
 // Color Design Tokens
 export const tokens = (mode) => ({
@@ -283,12 +282,25 @@ const themeSettings = (mode) => {
   };
 };
 
-
-
+// Context for color mode
+export const ColorModeContext = createContext({
+  toggleColorMode: () => {},
+});
 
 export const useMode = () => {
-  const mode = useColorModeStore((state) => state.mode);
+  const [mode, setMode] = useState("light");
+
+  const colorMode = useMemo(
+    () => ({
+      //For the dark mode slider / button
+      toggleColorMode: () => {
+        setMode((prev) => (prev === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
+
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
-  return [theme];
+  return [theme, colorMode];
 };

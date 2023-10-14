@@ -1,8 +1,9 @@
-import { createContext, useState, useMemo } from "react";
+import { useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
+import useColorModeStore from "../Store/ColorModeStore";
 
 // Color Design Tokens
-export const tokens = (mode) => ({
+const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
         // Dark Mode
@@ -282,25 +283,12 @@ const themeSettings = (mode) => {
   };
 };
 
-// Context for color mode
-export const ColorModeContext = createContext({
-  toggleColorMode: () => {},
-});
-
 export const useMode = () => {
-  const [mode, setMode] = useState("light");
-
-  const colorMode = useMemo(
-    () => ({
-      //For the dark mode slider / button
-      toggleColorMode: () => {
-        setMode((prev) => (prev === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
-
+  // Get the theme mode from zustand store
+  const mode = useColorModeStore((state) => state.mode);
+  
+  // Use theme mode variable as a dependency to this function
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
-  return [theme, colorMode];
+  return [theme];
 };

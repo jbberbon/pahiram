@@ -1,7 +1,3 @@
-import { useContext } from "react";
-import { ColorModeContext } from "../../../Contexts/theme";
-import { useTheme, useMediaQuery } from "@mui/material";
-
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,14 +7,17 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import TopbarAvatar from "./TopbarAvatar";
 
-// isOpen Store
+// MUI Theming and Media Query
+import { useTheme, useMediaQuery } from "@mui/material";
+// Zustand Stores
 import useSidebarStore from "../../../Store/SidebarStore";
+import useColorModeStore from "../../../Store/ColorModeStore";
 
 
 function Topbar() {
   //Using colors from custom palette
   const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
+  const toggleColorMode = useColorModeStore((state) => state.toggleColorMode);
 
   // Icon Color
   const iconColor = theme.palette.neutral.main;
@@ -77,7 +76,7 @@ function Topbar() {
             mr: 1,
             color: iconColor,
           }}
-          onClick={colorMode.toggleColorMode}
+          onClick={toggleColorMode}
         >
           {mode === "dark" ? (
             <DarkModeOutlinedIcon />
@@ -90,7 +89,5 @@ function Topbar() {
     </AppBar>
   );
 }
-
-
 
 export default Topbar;
