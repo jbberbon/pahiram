@@ -8,7 +8,10 @@ import Topbar from "../Components/Layout/Topbar/Topbar";
 import Sidebar from "../Components/Layout/Sidebar/Sidebar";
 import MainContent from "./MainContent";
 
-function MainPage() {
+import PropTypes from "prop-types";
+
+
+function MainPage({ selectedMenu }) {
   const [isOpen, setIsOpen] = useState(true);
 
   const onOpen = () => {
@@ -19,9 +22,13 @@ function MainPage() {
     <Box display={"flex"}>
       <Topbar onOpen={onOpen} isOpen={isOpen} />
       <Sidebar isOpen={isOpen} onOpen={onOpen} />
-      <MainContent isOpen={isOpen} />
+      <MainContent isOpen={isOpen} selectedMenu={selectedMenu}/>
     </Box>
   );
 }
+
+MainPage.propTypes = {
+  selectedMenu: PropTypes.string.isRequired
+};
 
 export default MainPage;

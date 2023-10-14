@@ -2,7 +2,7 @@ import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 import PropTypes from "prop-types";
 
-function Faq(props) {
+function Home(props) {
   const theme = useTheme();
   const drawerTransition = {
     transition: theme.transitions.create(["margin", "width"], {
@@ -20,13 +20,13 @@ function Faq(props) {
       marginLeft={props.isOpen && !isMd ? "280px" : "0px"}
       sx={drawerTransition}
     >
-      FAQSSS U
+      HOMMEEE BOIII
     </Box>
   );
 }
 
-Faq.propTypes = {
+Home.propTypes = {
   isOpen: PropTypes.bool.isRequired,
 };
 
-export default Faq;
+export default Home;

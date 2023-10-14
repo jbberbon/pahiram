@@ -5,15 +5,15 @@ import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 export const SidebarItems = {
   Borrower: [
     {
-      title: "Borrow Equipment",
+      title: "Dashboard",
       icon: <HandshakeRoundedIcon fontSize="large" />,
-      link: "/borrow-equipment",
-      aria: "Navigate to borrow equipment page",
+      link: "dashboard",
+      aria: "Navigate to dashboard page",
     },
     {
-      title: "Track Equipment",
+      title: "FAQ",
       icon: <AccessTimeRoundedIcon fontSize="large" />,
-      link: "/track-equipment",
+      link: "faq",
       aria: "Navigate to track equipment page",
     },
     {

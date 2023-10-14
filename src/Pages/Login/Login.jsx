@@ -9,6 +9,7 @@ import LoginForm from "./LoginForm";
 
 // CSS Styles
 import styles from "./login.module.css";
+import Footer from "./Footer";
 
 function Login() {
   const [isRemembered, setIsRemembered] = useState(false);
@@ -53,7 +54,7 @@ function Login() {
     bgcolor: `${isCustom420 ? "" : "background.login"}`,
 
     margin: `${isCustom420 ? "0" : "8%"}`,
-    gap: `${""}`,
+    gap: `${isMd ? "16px" : "0"}`,
     borderRadius: `${isCustom420 ? "" : "16px"}`,
   };
 
@@ -80,10 +81,10 @@ function Login() {
     width: `${isMd ? "100%" : "50%"}`,
     maxHeight: "640px",
     padding: `${
-      isMd && !isCustom420 //between 400 and 600
+      isMd && !isCustom420 //between 420px and 900px
         ? "0 8% 8% 8%"
-        : isCustom420
-        ? "0 4% 12% 4%"
+        : isCustom420 //less than 420px
+        ? "0 4% 8% 4%"
         : "32px"
     }`,
   };
@@ -98,15 +99,7 @@ function Login() {
     margin: `${isMd ? "16px 0 16px 0" : "32px 0 32px 0"}`,
   };
 
-  // Footer Styling
-  const footerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-
-    gap: "4px",
-    marginTop: `${isMd ? "32px" : "54px"}`,
-  };
+  
 
   return (
     <div style={centerLoginPage}>
@@ -136,7 +129,7 @@ function Login() {
                 Pahiram
               </Typography>
             </Box>
-            <Typography variant="h5" component={"span"}>
+            <Typography variant="h5" component={"span"} color="neutral.main">
               APC Equipment Lending System
             </Typography>
           </Box>
@@ -145,12 +138,7 @@ function Login() {
           <LoginForm isRemembered={isRemembered} onRemembered={onRemembered} />
 
           {/* Footer ---------- */}
-          <Box sx={footerStyle}>
-            <Typography fontWeight={"700"} component={"span"}>
-              The Polarber Group
-            </Typography>
-            <Typography component={"span"}>&copy; 2023</Typography>
-          </Box>
+          <Footer isMd={isMd} />
         </Box>
       </Box>
     </div>

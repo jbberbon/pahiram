@@ -10,6 +10,8 @@ import {
 
 import { SidebarItems } from "./SidebarItems";
 
+import { useNavigate } from "react-router-dom";
+
 function SidebarItemsContainer() {
   const theme = useTheme();
   const mainTextColor = theme.palette.neutral.main;
@@ -17,6 +19,13 @@ function SidebarItemsContainer() {
 
   const userRole = "Borrower";
   const sidebarItems = SidebarItems[userRole];
+
+  const navigate = useNavigate();
+
+  const handleMenuClick = (menuPath) => {
+    navigate(`/${menuPath}`);
+  };
+  
 
   return (
     <List>
@@ -42,6 +51,7 @@ function SidebarItemsContainer() {
             }}
             aria-label={val.aria}
             role="button"
+            onClick={() => handleMenuClick(val.link)}
           >
             <ListItemIcon
               sx={{
@@ -63,7 +73,7 @@ function SidebarItemsContainer() {
             </ListItemText>
           </ListItemButton>
         </ListItem>
-    ))}
+      ))}
     </List>
   );
 }

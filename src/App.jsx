@@ -1,3 +1,5 @@
+import { Route, Routes } from "react-router-dom";
+
 // Theme
 import { ColorModeContext, useMode } from "./Contexts/theme";
 
@@ -5,7 +7,7 @@ import { ColorModeContext, useMode } from "./Contexts/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
 // Pages
-// import MainPage from "./Pages/MainPage"; 
+import MainPage from "./Pages/MainPage";
 import Login from "./Pages/Login/Login";
 
 function App() {
@@ -14,8 +16,18 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {/* <MainPage /> */}
-        <Login />
+        <Routes>
+          <Route path="login" element={<Login />} />
+          <Route index element={<Login />} />
+          <Route
+            path="home"
+            element={<MainPage selectedMenu="home" />}
+          />
+          <Route path="dashboard" element={<MainPage selectedMenu="dashboard" />} />
+          <Route path="faq" element={<MainPage selectedMenu="faq" />} />
+
+          <Route path="*" element={<div>404 NOT FOUND</div>} />
+        </Routes>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
