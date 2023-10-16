@@ -8,5 +8,4 @@ const useSidebarStore = create((set) => ({
     set((state) => ({ isOpen: !state.isOpen }));
   },
 }));
-
 export default useSidebarStore;

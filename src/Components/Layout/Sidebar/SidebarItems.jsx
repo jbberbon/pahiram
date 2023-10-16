@@ -3,7 +3,7 @@ import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 
 export const SidebarItems = {
-  Borrower: [
+  BORROWER: [
     {
       title: "Dashboard",
       icon: <HandshakeRoundedIcon fontSize="large" />,
@@ -23,7 +23,7 @@ export const SidebarItems = {
       aria: "Navigate to equipment borrowing history page",
     },
   ],
-  Employee: [
+  EMPLOYEE: [
     {
       title: "LOREM IPSUM",
       icon: <HandshakeRoundedIcon fontSize="large" />,
@@ -43,6 +43,14 @@ export const SidebarItems = {
       aria: "Navigate to equipment borrowing history page",
     },
   ],
-  OfficeAdmin: [],
-  SuperAdmin: [],
+  SUPERVISOR: [],
+  SYSTEM_ADMIN: [],
+  null: [
+    {
+      title: "Uli na, Dae ka pwede digdi",
+      icon: <ListAltRoundedIcon fontSize="large" />,
+      link: "",
+      aria: "Navigate to equipment borrowing history page",
+    },
+  ],
 };

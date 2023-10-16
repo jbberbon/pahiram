@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 // MUI
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
@@ -12,11 +10,6 @@ import styles from "./login.module.css";
 import Footer from "./Footer";
 
 function Login() {
-  const [isRemembered, setIsRemembered] = useState(false);
-  const onRemembered = () => {
-    setIsRemembered((prevIsRemembered) => !prevIsRemembered);
-  };
-
   const isCustom420 = useMediaQuery((theme) =>
     theme.breakpoints.down("custom420")
   );
@@ -135,7 +128,7 @@ function Login() {
           </Box>
 
           {/* Form Section ---- */}
-          <LoginForm isRemembered={isRemembered} onRemembered={onRemembered} />
+          <LoginForm />
 
           {/* Footer ---------- */}
           <Footer isMd={isMd} />

@@ -17,10 +17,19 @@ import SidebarItemsContainer from "./SidebarItemsContainer";
 // isOpen Store
 import useSidebarStore from "../../../Store/SidebarStore";
 
+// import React from "react";
+
+// const MemoizedSidebarItemsContainer = React.memo(SidebarItemsContainer);
+
+
 function Sidebar() {
   const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  const isOpen = useSidebarStore((state) => state.isOpen);
-  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+  // const isOpen = useSidebarStore((state) => state.isOpen);
+  // const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+  const { isOpen, toggleSidebar } = useSidebarStore();
+
+
+  console.log("SIDEBAR RERENDERED");
 
   return (
     <Drawer
@@ -71,6 +80,7 @@ function Sidebar() {
       </Box>
       <ProfileCard />
       <SidebarItemsContainer />
+      {/* <MemoizedSidebarItemsContainer /> */}
     </Drawer>
   );
 }

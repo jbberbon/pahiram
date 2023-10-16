@@ -11,13 +11,15 @@ import {
 import { SidebarItems } from "./SidebarItems";
 
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../../Store/UserStore";
 
 function SidebarItemsContainer() {
   const theme = useTheme();
   const mainTextColor = theme.palette.neutral.main;
   // const yellowHover = theme.palette.secondary.main.replace("1)", "0.1)");
 
-  const userRole = "Borrower";
+  const userRole = useUserStore((state) => state.userData.role);
+  console.log("User Role"+userRole)
   const sidebarItems = SidebarItems[userRole];
 
   const navigate = useNavigate();
