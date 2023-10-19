@@ -5,21 +5,24 @@ import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 export const SidebarItems = {
   BORROWER: [
     {
+      index: 0,
       title: "Dashboard",
       icon: <HandshakeRoundedIcon fontSize="large" />,
       link: "dashboard",
       aria: "Navigate to dashboard page",
     },
     {
+      index: 1,
       title: "FAQ",
       icon: <AccessTimeRoundedIcon fontSize="large" />,
       link: "faq",
       aria: "Navigate to track equipment page",
     },
     {
+      index: 2,
       title: "History",
       icon: <ListAltRoundedIcon fontSize="large" />,
-      link: "/history",
+      link: "history",
       aria: "Navigate to equipment borrowing history page",
     },
   ],
@@ -47,7 +50,7 @@ export const SidebarItems = {
   SYSTEM_ADMIN: [],
   null: [
     {
-      title: "Uli na, Dae ka pwede digdi",
+      title: "You've found an easter egg",
       icon: <ListAltRoundedIcon fontSize="large" />,
       link: "",
       aria: "Navigate to equipment borrowing history page",

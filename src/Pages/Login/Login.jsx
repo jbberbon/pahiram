@@ -1,3 +1,4 @@
+// import { useState, useEffect } from "react";
 // MUI
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
@@ -8,6 +9,14 @@ import LoginForm from "./LoginForm";
 // CSS Styles
 import styles from "./login.module.css";
 import Footer from "./Footer";
+
+// Router
+// import { Navigate, useNavigate } from "react-router-dom";
+
+// Zustand
+// import useUserStore from "../../Store/UserStore";
+// import useAuthStore from "../../Store/AuthStore";
+
 
 function Login() {
   const isCustom420 = useMediaQuery((theme) =>
@@ -92,7 +101,57 @@ function Login() {
     margin: `${isMd ? "16px 0 16px 0" : "32px 0 32px 0"}`,
   };
 
-  
+  // ------- Navigates to Dashboard if user is authenticated
+
+  // UNCOMMENT IF API IS READY
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // const { userData } = useUserStore();
+  // const { isAuthenticated, setIsAuthenticated } = useAuthStore();
+  // const token = userData.token;
+
+  // !!! *** Uncomment if API is READY
+  // useEffect(() => {
+  //   // Make an API request to validate the token
+  //   if (token) {
+  //     fetch("/api/isAuthenticated", {
+  //       method: "POST", // or 'GET' depending on your server's API
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         // You may include an Authorization header for token-based authentication
+  //         // 'Authorization': `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify({ token }),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         if (data.isAuthenticated) {
+  //           setIsAuthenticated(true);
+  //         } else {
+  //           setIsAuthenticated(false);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error validating token:", error);
+  //         setIsAuthenticated(false);
+  //       });
+  //   }
+  // }, [token]);
+
+
+  // For now, if token is not null, set is authenticated to true
+  // Delete later
+  // if (token) {
+  //   setIsAuthenticated(true);
+  // }
+
+  // const navigate = useNavigate();
+
+  // if (isAuthenticated) {
+  //   return (
+  //     navigate("/dashboard")
+  //   );
+  // }
 
   return (
     <div style={centerLoginPage}>

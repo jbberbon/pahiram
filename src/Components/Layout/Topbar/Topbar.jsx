@@ -13,8 +13,8 @@ import { useTheme, useMediaQuery } from "@mui/material";
 import useSidebarStore from "../../../Store/SidebarStore";
 import useColorModeStore from "../../../Store/ColorModeStore";
 
-
 function Topbar() {
+  console.log("Topbar Rerendered");
   //Using colors from custom palette
   const theme = useTheme();
   const toggleColorMode = useColorModeStore((state) => state.toggleColorMode);
@@ -41,8 +41,10 @@ function Topbar() {
 
   const mode = theme.palette.mode;
 
-  const isOpen = useSidebarStore((state) => state.isOpen);
-  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+  // const isOpen = useSidebarStore((state) => state.isOpen);
+  // const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+
+  const { isOpen, toggleSidebar } = useSidebarStore();
 
   return (
     <AppBar
@@ -62,7 +64,6 @@ function Topbar() {
           role="button"
           style={removeOutline}
           sx={{ mr: 2, color: iconColor }}
-          
           onClick={toggleSidebar}
         >
           <MenuIcon sx={{ color: iconColor }} />

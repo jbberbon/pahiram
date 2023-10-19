@@ -1,8 +1,10 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
-function Dashboard(props) {
+import useSidebarStore from "../Store/SidebarStore";
+
+function Dashboard() {
   const theme = useTheme();
   const drawerTransition = {
     transition: theme.transitions.create(["margin", "width"], {
@@ -13,11 +15,12 @@ function Dashboard(props) {
 
   const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
+  const { isOpen } = useSidebarStore();
   return (
     <Box
       flexGrow={1}
       pl={2}
-      marginLeft={props.isOpen && !isMd ? "280px" : "0px"}
+      marginLeft={isOpen && !isMd ? "280px" : "0px"}
       sx={drawerTransition}
     >
       Dashboard
@@ -25,8 +28,8 @@ function Dashboard(props) {
   );
 }
 
-Dashboard.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-};
+// Dashboard.propTypes = {
+//   isOpen: PropTypes.bool.isRequired,
+// };
 
 export default Dashboard;

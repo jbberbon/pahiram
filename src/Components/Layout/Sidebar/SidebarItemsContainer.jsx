@@ -7,27 +7,48 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-
-import { SidebarItems } from "./SidebarItems";
-
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
+import { SidebarItems } from "./SidebarItems";
+// import styles from './SidebarItemsContainer.module.css';
+
 
 function SidebarItemsContainer() {
+  // MUI Theming
   const theme = useTheme();
   const mainTextColor = theme.palette.neutral.main;
-  // const yellowHover = theme.palette.secondary.main.replace("1)", "0.1)");
 
-  const userRole = useUserStore((state) => state.userData.role);
-  console.log("User Role"+userRole)
+  // Zustand Destructuring
+  const { userData } = useUserStore();
+  const userRole = userData.role;
+
+  // Check Rerenders
+  console.log("Sidebar Child Rerendered");
+
+  // Access sidebar items fit for the role
   const sidebarItems = SidebarItems[userRole];
 
-  const navigate = useNavigate();
-
-  const handleMenuClick = (menuPath) => {
-    navigate(`/${menuPath}`);
+  // Access MenuIndex Store
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const handleListItemClick = (index) => {
+    setSelectedIndex(index);
   };
-  
+
+  const location = useLocation();
+  // Put background color on the menu aside to the first index upon initial load
+  useEffect(() => {
+    // Check the current User URL Path
+    const currentPath = location.pathname.replace("/", ""); // remove the slash
+
+    // Get the index of the active menu item
+    const activeIndex = sidebarItems.findIndex(
+      (item) => item.link === currentPath
+    );
+
+    // Set index
+    setSelectedIndex(activeIndex);
+  }, []);
 
   return (
     <List>
@@ -42,38 +63,42 @@ function SidebarItemsContainer() {
             paddingLeft: "8px",
           }}
         >
-          <ListItemButton
-            disableGutters={false}
-            sx={{
-              paddingLeft: "16px",
-              paddingRight: "16px",
-              height: 48,
-              borderRadius: "8px",
-              // "&:hover, &.Mui-focusVisible": { backgroundColor: yellowHover }
-            }}
-            aria-label={val.aria}
-            role="button"
-            onClick={() => handleMenuClick(val.link)}
-          >
-            <ListItemIcon
+          {/* Use the Link component for navigation */}
+          <Link to={val.link}>
+            <ListItemButton
+              disableGutters={false}
+              className="list-item-button"
               sx={{
-                minWidth: "48px",
-                color: mainTextColor,
+                paddingLeft: "16px",
+                paddingRight: "16px",
+                height: 48,
+                borderRadius: "8px",
               }}
+              aria-label={val.aria}
+              role="button"
+              selected={selectedIndex == key}
+              onClick={() => handleListItemClick(key)}
             >
-              {val.icon}
-            </ListItemIcon>
-            <ListItemText>
-              <Typography
-                color={mainTextColor}
-                noWrap={true}
-                variant="h6"
-                component={"h2"}
+              <ListItemIcon
+                sx={{
+                  minWidth: "48px",
+                  color: mainTextColor,
+                }}
               >
-                {val.title}
-              </Typography>
-            </ListItemText>
-          </ListItemButton>
+                {val.icon}
+              </ListItemIcon>
+              <ListItemText>
+                <Typography
+                  color={mainTextColor}
+                  noWrap={true}
+                  variant="h6"
+                  component={"h2"}
+                >
+                  {val.title}
+                </Typography>
+              </ListItemText>
+            </ListItemButton>
+          </Link>
         </ListItem>
       ))}
     </List>

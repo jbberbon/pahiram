@@ -13,6 +13,9 @@ import {
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
+import { Link } from "react-router-dom";
+import useUserStore from "../../../Store/UserStore";
+
 function TopbarAvatar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
@@ -30,6 +33,9 @@ function TopbarAvatar() {
     border: "none",
     outline: "none",
   };
+
+  // Delete userData and token upon logout
+  const { handleLogout } = useUserStore();
 
   return (
     <Box>
@@ -58,7 +64,7 @@ function TopbarAvatar() {
 
         sx={{ minWidth: "100px" }}
       >
-        <Box display={"flex"} flexDirection={"column"} >
+        <Box display={"flex"} flexDirection={"column"}>
           <List>
             <ListItem disablePadding>
               <ListItemButton>
@@ -71,14 +77,17 @@ function TopbarAvatar() {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon sx={{ minWidth: "30px" }}>
-                  <LogoutRoundedIcon sx={{ color: "neutral.dark" }} />
-                </ListItemIcon>
-                <ListItemText sx={{ color: "neutral.dark" }}>
-                  Logout
-                </ListItemText>
-              </ListItemButton>
+              {/* Link to login page */}
+              <Link to="/">
+                <ListItemButton onClick={handleLogout}>
+                  <ListItemIcon sx={{ minWidth: "30px" }}>
+                    <LogoutRoundedIcon sx={{ color: "neutral.dark" }} />
+                  </ListItemIcon>
+                  <ListItemText sx={{ color: "neutral.dark" }}>
+                    Logout
+                  </ListItemText>
+                </ListItemButton>
+              </Link>
             </ListItem>
           </List>
         </Box>

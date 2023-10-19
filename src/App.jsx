@@ -1,4 +1,6 @@
-import { Route, Routes } from "react-router-dom";
+// import { useEffect } from "react";
+
+import { Route, Routes, Navigate } from "react-router-dom";
 
 // Theme
 import { useMode } from "./Contexts/theme";
@@ -7,25 +9,28 @@ import { useMode } from "./Contexts/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
 // Pages
-import MainPage from "./Pages/MainPage";
 import Login from "./Pages/Login/Login";
+import Layout from "./Components/Layout/Layout";
+import Dashboard from "./Pages/Dashboard";
+import Faq from "./Pages/Faq";
+import History from "./Pages/History";
+import useUserStore from "./Store/UserStore";
 
 function App() {
   const [theme] = useMode();
+  const { isAuthenticated } = useUserStore();
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Routes>
-        <Route path="login" element={<Login />} />
-        <Route index element={<Login />} />
-        <Route path="home" element={<MainPage selectedMenu="home" />} />
-        <Route
-          path="dashboard"
-          element={<MainPage selectedMenu="dashboard" />}
-        />
-        <Route path="faq" element={<MainPage selectedMenu="faq" />} />
-        <Route path="*" element={<div>404 NOT FOUND</div>} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/history" element={<History />} />
+        </Routes>
+      </Layout>
     </ThemeProvider>
   );
 }
