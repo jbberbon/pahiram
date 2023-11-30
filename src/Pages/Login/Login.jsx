@@ -1,24 +1,59 @@
-// import { useState, useEffect } from "react";
-// MUI
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
-
-// Pages
 import LoginForm from "./LoginForm";
-
-// CSS Styles
-import styles from "./login.module.css";
 import Footer from "./Footer";
-
-// Router
-// import { Navigate, useNavigate } from "react-router-dom";
-
-// Zustand
 // import useUserStore from "../../Store/UserStore";
-// import useAuthStore from "../../Store/AuthStore";
-
+import styles from "./login.module.css";
 
 function Login() {
+  /*
+   * Logic ---------------------------------------------------------------
+   */
+  // UNCOMMENT IF API IS READY
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // const { userData } = useUserStore();
+  // const { isAuthenticated, setIsAuthenticated } = useAuthStore();
+  // const token = userData.token;
+
+  // !!! *** Uncomment if API is READY
+  // useEffect(() => {
+  //   // Make an API request to validate the token
+  //   if (token) {
+  //     fetch("/api/isAuthenticated", {
+  //       method: "POST", // or 'GET' depending on your server's API
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         // You may include an Authorization header for token-based authentication
+  //         // 'Authorization': `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify({ token }),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         if (data.isAuthenticated) {
+  //           setIsAuthenticated(true);
+  //         } else {
+  //           setIsAuthenticated(false);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error validating token:", error);
+  //         setIsAuthenticated(false);
+  //       });
+  //   }
+  // }, [token]);
+
+  // For now, if token is not null, set is authenticated to true
+  // Delete later
+  // if (token) {
+  //   setIsAuthenticated(true);
+  // }
+
+  /*
+   * THEMING && CSS --------------------------------------------------------
+   */
+  // MUI Breakpoints
   const isCustom420 = useMediaQuery((theme) =>
     theme.breakpoints.down("custom420")
   );
@@ -28,18 +63,7 @@ function Login() {
   const theme = useTheme();
 
   // Whole screen centering div
-  const centerLoginPage = {
-    position: "absolute",
-    top: "0",
-    bottom: "0",
-    left: "0",
-    right: "0",
-    margin: "auto",
-
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-
+  const backgroundColor = {
     backgroundColor: `${theme.palette.secondary.login}`,
   };
 
@@ -101,64 +125,16 @@ function Login() {
     margin: `${isMd ? "16px 0 16px 0" : "32px 0 32px 0"}`,
   };
 
-  // ------- Navigates to Dashboard if user is authenticated
-
-  // UNCOMMENT IF API IS READY
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // const { userData } = useUserStore();
-  // const { isAuthenticated, setIsAuthenticated } = useAuthStore();
-  // const token = userData.token;
-
-  // !!! *** Uncomment if API is READY
-  // useEffect(() => {
-  //   // Make an API request to validate the token
-  //   if (token) {
-  //     fetch("/api/isAuthenticated", {
-  //       method: "POST", // or 'GET' depending on your server's API
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         // You may include an Authorization header for token-based authentication
-  //         // 'Authorization': `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({ token }),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         if (data.isAuthenticated) {
-  //           setIsAuthenticated(true);
-  //         } else {
-  //           setIsAuthenticated(false);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error validating token:", error);
-  //         setIsAuthenticated(false);
-  //       });
-  //   }
-  // }, [token]);
-
-
-  // For now, if token is not null, set is authenticated to true
-  // Delete later
-  // if (token) {
-  //   setIsAuthenticated(true);
-  // }
-
-  // const navigate = useNavigate();
-
-  // if (isAuthenticated) {
-  //   return (
-  //     navigate("/dashboard")
-  //   );
-  // }
-
   return (
-    <div style={centerLoginPage}>
+    <div style={backgroundColor} className={styles.centerLoginPage}>
       <Box sx={mainDivStyle} className={styles.mainDiv} boxShadow={2}>
         {/* LEFT -------------------------- */}
         <Box sx={imgDiv}>
-          <img src="./assets/login2.jpg" className={styles.loginImg} />
+          <img
+            src="./assets/login2.jpg"
+            className={styles.loginImg}
+            alt="Cat taking a selfie"
+          />
         </Box>
 
         {/* RIGHT ------------------------- */}

@@ -1,36 +1,45 @@
-// import { useState, useEffect } from "react";
+import React, { Suspense } from "react";
+const LazyTopbar = React.lazy(() => import("./Topbar/Topbar"));
+const LazySidebar = React.lazy(() => import("./Sidebar/Sidebar"));
+const LazyProfile = React.lazy(() => import("../../Pages/Profile"));
 
-// Pages
-import Topbar from "./Topbar/Topbar";
-import Sidebar from "./Sidebar/Sidebar";
-// import MainContent from "./MainContent";
+import { Outlet } from "react-router-dom";
+import NO_SIDEBAR from "../../Utils/Constants/NO_SIDEBAR";
+import useCurrentPathname from "../../Utils/HelperFunctions/useCurrentPathname";
+// import Profile from "../../Pages/Profile"; 
 
-import PropTypes from "prop-types";
+const Layout = () => {
+  const currentPathname = useCurrentPathname();
 
-// CSS
-import styles from "./Layout.module.css";
+  const noSidebarTopbar = [""];
+  const noSidebar = NO_SIDEBAR;
 
-import useUserStore from "../../Store/UserStore";
-
-function Layout({ children }) {
-  const { isAuthenticated } = useUserStore();
+  if (noSidebar.includes(currentPathname)) {
+    return (
+      <Suspense fallback={<p>Loading ...</p>}>
+        <LazyTopbar />
+        <LazyProfile />
+        <Outlet />
+      </Suspense>
+    );
+  }
+  if (noSidebarTopbar.includes(currentPathname)) {
+    return (
+      <>
+        <LazyProfile />
+        <Outlet />
+      </>
+    );
+  }
 
   return (
-    // If user is authenticated, show top and sidebar
-    <div className={styles.layout}>
-      {isAuthenticated && (
-        <>
-          <Topbar />
-          <Sidebar />
-        </>
-      )}
-      {children}
-    </div>
+    <Suspense fallback={<p>Loading ...</p>}>
+      <LazyTopbar />
+      <LazySidebar />
+      <LazyProfile />
+      <Outlet />
+    </Suspense>
   );
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default Layout;

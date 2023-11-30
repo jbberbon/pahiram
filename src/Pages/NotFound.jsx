@@ -3,20 +3,16 @@ import { Link } from "react-router-dom";
 import useUserStore from "../Store/UserStore";
 import userRoles from "../Utils/Constants/USER_ROLES";
 
-function Faq() {
+function NotFound() {
   const { userData } = useUserStore();
-  const borrower = userRoles.borrower; 
+  const borrower = userRoles.borrower;
   return (
-    <Box
-      flexGrow={1}
-      pl={2}
-    >
-      FAQS
+    <Box flexGrow={1} pl={2}>
+      404 Not Found :(
       <br />
       <Link to={userData.role === borrower ? "/borrow-items" : "/dashboard"}>Go back</Link>
-
     </Box>
   );
 }
 
-export default Faq;
+export default NotFound;

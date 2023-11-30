@@ -1,4 +1,3 @@
-// MUI
 import {
   Box,
   Drawer,
@@ -7,22 +6,17 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
-
-// Pages
-import ProfileCard from "./ProfileCard";
-
-// Components
+import SidebarProfileCard from "./SidebarProfileCard";
 import SidebarItemsContainer from "./SidebarItemsContainer";
-
-// isOpen Store
 import useSidebarStore from "../../../Store/SidebarStore";
+import useColorModeStore from "../../../Store/ColorModeStore";
 
 function Sidebar() {
   const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const { isOpen, toggleSidebar } = useSidebarStore();
+  const { mode } = useColorModeStore();
 
-  // Check for rerender
-  console.log("SIDEBAR RERENDERED");
+  const drawerColor = mode === "light" ? "white" : "black";
 
   return (
     <Drawer
@@ -37,10 +31,13 @@ function Sidebar() {
         "& .MuiDrawer-paper": {
           width: "280px",
           boxSizing: "border-box",
+          backgroundColor: drawerColor,
         },
       }}
     >
-      {/* Sidebar Logo Title */}
+      {/*
+       * Sidebar Logo Title
+       */}
       <Box
         display={"flex"}
         flexDirection={"row"}
@@ -71,7 +68,7 @@ function Sidebar() {
           </Typography>
         </IconButton>
       </Box>
-      <ProfileCard />
+      <SidebarProfileCard />
       <SidebarItemsContainer />
     </Drawer>
   );

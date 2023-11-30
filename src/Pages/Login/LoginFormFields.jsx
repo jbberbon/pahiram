@@ -23,6 +23,7 @@ export const useFormFields = () => {
       id: "email",
       name: "email",
       type: "email",
+      ariaLabel: "Email field",
       hookForm: {
         ...register("email", {
           required: {
@@ -57,6 +58,7 @@ export const useFormFields = () => {
       id: "password",
       name: "password",
       type: "password",
+      ariaLabel: "Password field",
       hookForm: {
         ...register("password", {
           required: {
@@ -65,7 +67,7 @@ export const useFormFields = () => {
           },
           validate: {
             minCharacters: (fieldValue) => {
-              return fieldValue.length > 8 || "Minimum of 8 characters";
+              return fieldValue.length >= 8 || "Minimum of 8 characters";
             },
           },
         }),

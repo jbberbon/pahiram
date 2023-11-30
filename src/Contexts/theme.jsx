@@ -20,6 +20,7 @@ const tokens = (mode) => ({
           700: "#363C49",
           800: "#", // Placeholder
           900: "#21242C",
+          // 900: "000000"
         },
         primaryYellow: {
           100: "#FFF8E5",
@@ -221,6 +222,7 @@ const themeSettings = (mode) => {
             },
             secondary: {
               main: colors.primaryBlue[500],
+              lighter: colors.primaryBlue[600],
               login: "#F9F9FB",
             },
             success: {
@@ -239,7 +241,7 @@ const themeSettings = (mode) => {
               dark: colors.error[900],
             },
             neutral: {
-              dark: colors.neutral[400],
+              dark: colors.neutral[300],
               main: colors.neutral[500],
               light: colors.neutral[900],
             },

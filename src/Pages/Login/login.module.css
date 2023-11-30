@@ -1,3 +1,16 @@
+.centerLoginPage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .loginImg {
   width: 100%;
   height: 100% !important;
@@ -5,7 +18,7 @@
 }
 
 .mainDiv button:focus {
-  outline: none ;
+  outline: none;
 }
 
 .dialog button:focus {

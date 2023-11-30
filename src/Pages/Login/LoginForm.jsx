@@ -8,8 +8,6 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import HelpDialog from "./HelpDialog";
 
-import styles from "./login.module.css";
-
 import { useNavigate } from "react-router-dom";
 
 // ZUSTAND IMPORTS
@@ -17,7 +15,17 @@ import useUserStore from "../../Store/UserStore";
 
 import { useFormFields } from "./LoginFormFields";
 
+// ICONS
+// import HelpIcon from "/assets/icons/help-circle-outline.svg";
+
+// CSS
+import styles from "./LoginForm.module.css";
+
 function LoginForm() {
+  const navigate = useNavigate();
+  // Destructure user store
+  const { handleLogin } = useUserStore();
+
   // Destructure custom form field hook
   // Add "control" if youll use hook form devTool
   const { loginFormObject, handleSubmit, isSubmitSuccessful, reset } =
@@ -29,8 +37,16 @@ function LoginForm() {
     setIsRemembered((prev) => !prev);
   };
 
-  // Destructure user store
-  const { userData, handleLogin } = useUserStore();
+  // Onsubmit
+  // No API
+  const onSubmit = () => {
+    handleLogin(navigate);
+  };
+  // WITH API
+  // const onSubmit = (data) => {
+  //   handleLogin(data, isRemembered, navigate);
+  //   console.log("User Role: " + userRole);
+  // };
 
   // Successful Login -> Clear login form
   useEffect(() => {
@@ -38,17 +54,6 @@ function LoginForm() {
       reset();
     }
   }, [isSubmitSuccessful, reset]);
-
-  const navigate = useNavigate();
-  // Onsubmit
-  const onSubmit = (data) => {
-    handleLogin(data, isRemembered, navigate);
-    console.log("User Role: " + userRole);
-  };
-  // TESTING
-  const userRole = userData.role;
-
-  // const { isAuthenticated } = useUserStore();
 
   return (
     <>
@@ -66,18 +71,29 @@ function LoginForm() {
                 justifyContent={"space-between"}
                 width={"100%"}
               >
-                <Typography
-                  fontWeight={"600"}
-                  component={"span"}
-                  color="neutral.main"
-                >
-                  {formField.title}
-                </Typography>
+                <label htmlFor={formField.name}>
+                  <Typography
+                    fontWeight={"600"}
+                    component={"span"}
+                    color="neutral.main"
+                  >
+                    {formField.title}
+                  </Typography>
+                </label>
                 <IconButton
-                  className={styles.button}
+                  className={styles.helpButton}
                   disableRipple
                   onClick={formField.dialog.onClick}
+                  aria-label="Help button for login credentials"
                 >
+                  {/* <img
+                    src={HelpIcon}
+                    alt="Account Help Icon"
+                    style={{
+                      filter: "",
+                      width: "20px",
+                    }}
+                  /> */}
                   <InfoOutlinedIcon fontSize="small" />
                 </IconButton>
                 <HelpDialog
@@ -96,6 +112,7 @@ function LoginForm() {
                 fullWidth={true}
                 width="100%"
                 color="secondary"
+                aria-label={formField.ariaLabel}
               />
               <Typography color="error" paddingTop="4px">
                 {formField.errors}
@@ -117,6 +134,7 @@ function LoginForm() {
                 disableRipple
                 size="small"
                 onClick={handleIsRemembered}
+                aria-label="Remember me for 7 days"
               >
                 {isRemembered ? (
                   <CheckBoxRoundedIcon color="secondary" />
@@ -137,6 +155,7 @@ function LoginForm() {
               size="large"
               className={styles.loginBtn}
               color="secondary"
+              aria-label="Sign in"
             >
               <Typography variant="h6">Sign in</Typography>
             </Button>

@@ -1,7 +1,10 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import USER_ROLES from "../Utils/Constants/USER_ROLES";
+// import GenerateAvatarName from "../Utils/HelperFunctions/GenerateAvatarName";
 // import axios from "axios";
 
+const borrower = USER_ROLES.borrower;
 const useUserStore = create(
   persist(
     (set) => ({
@@ -14,67 +17,69 @@ const useUserStore = create(
       },
       isAuthenticated: false,
 
-      handleLogin: async (data, isRemembered, navigate) => {
-        try {
-          // !!!!!**** Uncomment when API is ready
-          // const postData = {
-          //   email: data.email,
-          //   password: data.password,
-          //   rememberUser: isRemembered,
-          // };
-          // const response = await axios.post("your-api-endpoint", postData);
-          // const userData = response.data;
-          // console.log("API Response:", response.data);
+      // TESTING with no API
+      handleLogin: (navigate) => {
+        set({
+          userData: {
+            firstName: "John Christian",
+            lastName: "Berbon",
+            email: "jbberbon@student.apc.edu.ph",
+            role: 1010,
+            avatarName: "JC",
+            token: null,
+          },
+          isAuthenticated: true,
+        });
 
-          // set(() => ({
-          //   userData: {
-          //     firstName: userData.firstName,
-          //     lastName: userData.lastName,
-          //     email: userData.email,
-          //     role: userData.role,
-          //     token: userData.token,
-          //   },
-          //   isAuthenticated: true,
-          // }));
-
-          // Comment when API is Ready
-          set(() => ({
-            userData: {
-              firstName: "Christian",
-              lastName: "Berbon",
-              email: "jbberbon@student.apc.edu.ph",
-              role: "BORROWER",
-              token: "TEST_TOKEN",
-            },
-            isAuthenticated: true,
-          }));
-          navigate("/dashboard");
-        } catch (error) {
-          console.error("API Error:", error);
-        }
+        const userRole = 1010;
+        const navigateTo =
+          userRole === borrower ? "/borrow-items" : "/dashboard";
+        navigate(navigateTo);
       },
 
-      setIsAuthenticated: async (token) => {
-        try {
-          // Uncomment when API is ready
-          // const postData = { token };
-          // const response = await axios.post("your-api-endpoint", postData);
-          // const data = response.data;
-          // console.log("API Response:", response.data);
+      // For TESTING with API
+      // handleLogin: async (data, isRemembered, navigate) => {
+      //   try {
+      //     // !!!!!**** Uncomment when API is ready
+      //     const config = {
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //     };
 
-          // set({
-          //   isAuthenticated: data.isAuthenticated,
-          // });
+      //     const postData = {
+      //       email: data.email,
+      //       password: data.password,
+      //       remember_me: isRemembered,
+      //     };
 
-          if (token) {
-            set({
-              isAuthenticated: true,
-            });
-          }
-        } catch (error) {
-          console.error("API Error:", error);
-        }
-      },
+      //     // console.log(postData);
+      //     const response = await axios.post(
+      //       "http://pahiram/api/login",
+      //       JSON.stringify(postData),
+      //       config
+      //     );
+      //     const responseData = response.data.data;
+      //     set(() => ({
+      //       userData: {
+      //         firstName: responseData.user.firstName,
+      //         lastName: responseData.user.lastName,
+      //         email: responseData.user.email,
+      //         role: responseData.user.user_role_id,
+      //         avatarName: GenerateAvatarName(responseData.user.firstName, responseData.user.lastName)
+      //         token: responseData.token.token,
+      //       },
+      //       isAuthenticated: true,
+      //     }));
+      //     console.log(response.data);
+      //
+      //     const userRole = responseData.role;
+      //     const navigateTo =  userRole === borrower ? "/borrow-items" : "/dashboard";
+      //     navigate(navigateTo);
+      //   } catch (error) {
+      //     console.log(error.response.data);
+      //   }
+      // },
 
       handleLogout: () =>
         set({

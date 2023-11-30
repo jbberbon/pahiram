@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  Avatar,
   Box,
   IconButton,
   List,
@@ -13,8 +12,9 @@ import {
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
-import { Link } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
+import useProfileStore from "../../../Store/ProfileStore";
+import ProfileAvatar from "../../ProfileAvatar/ProfileAvatar";
 
 function TopbarAvatar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -24,10 +24,14 @@ function TopbarAvatar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  const { handleProfileOpen, isProfileOpen } = useProfileStore();
+  const openProfileModal = () => {
+    handleProfileOpen();
+    console.log(isProfileOpen);
+  };
   //Remove IconButton Uneeded Outline
   const removeOutline = {
     border: "none",
@@ -45,7 +49,7 @@ function TopbarAvatar() {
         aria-label="profile"
         onClick={handleClick}
       >
-        <Avatar sx={{ width: 32, height: 32 }} alt="Christian" src="" />
+        <ProfileAvatar size={40} />
       </IconButton>
       <Popover
         id={id}
@@ -67,27 +71,30 @@ function TopbarAvatar() {
         <Box display={"flex"} flexDirection={"column"}>
           <List>
             <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon sx={{ minWidth: "30px" }}>
-                  <PersonOutlineRoundedIcon sx={{ color: "neutral.dark" }} />
-                </ListItemIcon>
-                <ListItemText sx={{ color: "neutral.dark" }}>
+              <ListItemButton onClick={openProfileModal}>
+                <ListItemText sx={{ color: "neutral.main" }}>
                   Profile
                 </ListItemText>
+                <ListItemIcon sx={{ minWidth: "20px", marginLeft: "10px" }}>
+                  <PersonOutlineRoundedIcon sx={{ color: "neutral.main" }} />
+                </ListItemIcon>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               {/* Link to login page */}
-              <Link to="/">
-                <ListItemButton onClick={handleLogout}>
-                  <ListItemIcon sx={{ minWidth: "30px" }}>
-                    <LogoutRoundedIcon sx={{ color: "neutral.dark" }} />
-                  </ListItemIcon>
-                  <ListItemText sx={{ color: "neutral.dark" }}>
-                    Logout
-                  </ListItemText>
-                </ListItemButton>
-              </Link>
+
+              <ListItemButton
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                <ListItemText sx={{ color: "neutral.main" }}>
+                  Logout
+                </ListItemText>
+                <ListItemIcon sx={{ minWidth: "20px", marginLeft: "10px" }}>
+                  <LogoutRoundedIcon sx={{ color: "neutral.main" }} />
+                </ListItemIcon>
+              </ListItemButton>
             </ListItem>
           </List>
         </Box>

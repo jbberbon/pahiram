@@ -1,10 +1,8 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
-// import PropTypes from "prop-types";
-
 import useSidebarStore from "../Store/SidebarStore";
 
-function History() {
+function BorrowItems() {
   const theme = useTheme();
   const drawerTransition = {
     transition: theme.transitions.create(["margin", "width"], {
@@ -23,13 +21,9 @@ function History() {
       marginLeft={isOpen && !isMd ? "280px" : "0px"}
       sx={drawerTransition}
     >
-      HISTORY
+      Send Request
     </Box>
   );
 }
 
-// Dashboard.propTypes = {
-//   isOpen: PropTypes.bool.isRequired,
-// };
-
-export default History;
+export default BorrowItems;
