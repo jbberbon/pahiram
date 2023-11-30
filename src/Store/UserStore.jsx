@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import USER_ROLES from "../Utils/Constants/USER_ROLES";
-// import GenerateAvatarName from "../Utils/HelperFunctions/GenerateAvatarName";
+// import GenerateAvatarName from "../Utils/HelperFunctions/UserStore/GenerateAvatarName";
 // import axios from "axios";
 
 const borrower = USER_ROLES.borrower;
@@ -13,8 +13,10 @@ const useUserStore = create(
         lastName: null,
         email: null,
         role: null,
+        isAdmin: null,
         token: null,
       },
+      chosenMenu: null,
       isAuthenticated: false,
 
       // TESTING with no API
@@ -25,13 +27,18 @@ const useUserStore = create(
             lastName: "Berbon",
             email: "jbberbon@student.apc.edu.ph",
             role: 1010,
+            isAdmin: false,
             avatarName: "JC",
             token: null,
           },
+          chosenMenu: null,
           isAuthenticated: true,
         });
 
         const userRole = 1010;
+
+        // I think this should be in the login function submission
+        // Move it Later
         const navigateTo =
           userRole === borrower ? "/borrow-items" : "/dashboard";
         navigate(navigateTo);
@@ -66,6 +73,7 @@ const useUserStore = create(
       //         lastName: responseData.user.lastName,
       //         email: responseData.user.email,
       //         role: responseData.user.user_role_id,
+      //         isAdmin: responseData.user.isAdmin,
       //         avatarName: GenerateAvatarName(responseData.user.firstName, responseData.user.lastName)
       //         token: responseData.token.token,
       //       },
@@ -88,6 +96,7 @@ const useUserStore = create(
             lastName: null,
             email: null,
             role: null,
+            isAdmin: null,
             token: null,
           },
           isAuthenticated: false,
