@@ -6,8 +6,9 @@ import Layout from "../../Components/Layout/Layout";
 function RequireAuth({ allowedRoles }) {
   const location = useLocation();
   const { userData, isAuthenticated } = useUserStore();
+  const userRole = userData.role;
 
-  if (isAuthenticated && allowedRoles.includes(userData.role)) {
+  if (isAuthenticated && allowedRoles.includes(userRole)) {
     return <Layout />;
   }
 
@@ -17,6 +18,7 @@ function RequireAuth({ allowedRoles }) {
 RequireAuth.propTypes = {
   allowedRoles: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
     .isRequired,
+  // requireAdmin: PropTypes.bool.isRequired,
 };
 
 export default RequireAuth;

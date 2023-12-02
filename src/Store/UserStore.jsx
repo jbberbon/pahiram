@@ -16,7 +16,7 @@ const useUserStore = create(
         isAdmin: null,
         token: null,
       },
-      chosenMenu: null,
+      // chosenMenu: null,
       isAuthenticated: false,
 
       // TESTING with no API
@@ -27,11 +27,11 @@ const useUserStore = create(
             lastName: "Berbon",
             email: "jbberbon@student.apc.edu.ph",
             role: 1010,
-            isAdmin: false,
+            isAdmin: true,
             avatarName: "JC",
             token: null,
           },
-          chosenMenu: null,
+          // chosenMenu: null,
           isAuthenticated: true,
         });
 

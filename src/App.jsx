@@ -26,28 +26,29 @@ const LazyBorrowingHistory = React.lazy(() =>
 import useUserStore from "./Store/UserStore";
 import RequireAuth from "./Utils/HelperFunctions/RequireAuth";
 import USER_ROLES from "./Utils/Constants/USER_ROLES";
+// import RequireAdminPrivilege from "./Utils/HelperFunctions/RequireAdminPrivilege";
 
 function App() {
   const [theme] = useMode();
   const { userData, isAuthenticated } = useUserStore();
+  const userRole = userData.role;
+  const isAdmin = userData.isAdmin;
 
   // destructured users
   const borrower = USER_ROLES.borrower;
   const inventoryManager = USER_ROLES.inventoryManager;
   const lendingManager = USER_ROLES.lendingManager;
   const supervisor = USER_ROLES.supervisor;
-  const admin = USER_ROLES.admin;
 
   // User Classifications
-  const allUsers = [
-    borrower,
-    inventoryManager,
-    lendingManager,
-    supervisor,
-    admin,
-  ];
-  const employees = [inventoryManager, lendingManager, supervisor, admin];
-  const redirect = userData.role === borrower ? "/borrow-items" : "/dashboard";
+  const allUsers = [borrower, inventoryManager, lendingManager, supervisor];
+  const employees = [inventoryManager, lendingManager, supervisor];
+  const redirect =
+    userRole === borrower
+      ? isAdmin
+        ? "/dashboard"
+        : "/borrow-items"
+      : "/borrow-items";
 
   return (
     <ThemeProvider theme={theme}>
@@ -93,16 +94,8 @@ function App() {
         />
 
         {/* Protected Routes */}
-        {/* All Users */}
+        {/* BORROWERS: All Users */}
         <Route element={<RequireAuth allowedRoles={allUsers} />}>
-          <Route
-            path="/penalties"
-            element={
-              <Suspense fallback={<p>Loading ...</p>}>
-                <LazyPenaltyRecords />
-              </Suspense>
-            }
-          />
           <Route
             path="/borrow-items"
             element={
@@ -127,10 +120,17 @@ function App() {
               </Suspense>
             }
           />
-        </Route>
-        {/* Employees */}
-        <Route element={<RequireAuth allowedRoles={employees} />}>
           <Route
+            path="/penalties"
+            element={
+              <Suspense fallback={<p>Loading ...</p>}>
+                <LazyPenaltyRecords />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={employees} />}>
+        <Route
             path="/dashboard"
             element={
               <Suspense fallback={<p>Loading ...</p>}>
