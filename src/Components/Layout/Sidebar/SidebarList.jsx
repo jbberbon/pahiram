@@ -1,23 +1,19 @@
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemButton from "@mui/material/ListItemButton";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import TextColorVariables from "../../../Utils/Theming/ColorVariables";
+
+import styles from "./SidebarList.module.css";
 
 function SidebarList({ sidebarItems, selectedLink, handleListItemClick }) {
-  // Themes
-  const theme = useTheme();
-  const mainTextColor = theme.palette.neutral.main;
-  const activeColor = theme.palette.neutral.main.replace("1)", "0.1)");
+  const { neutralMain } = TextColorVariables();
+  const selectedColor = neutralMain.replace("1)", "0.1)");
 
   return (
-    <List>
+    <List component="div" disablePadding>
       {sidebarItems.map((val, key) => (
         <ListItem
           key={key}
@@ -40,7 +36,7 @@ function SidebarList({ sidebarItems, selectedLink, handleListItemClick }) {
                 height: 48,
                 borderRadius: "8px",
                 "&.Mui-selected": {
-                  backgroundColor: activeColor,
+                  backgroundColor: selectedColor,
                 },
                 "&[data-focus='true'], &:hover": {
                   backgroundColor: "neutral.light !important",
@@ -54,21 +50,17 @@ function SidebarList({ sidebarItems, selectedLink, handleListItemClick }) {
               <ListItemIcon
                 sx={{
                   minWidth: "48px",
-                  color: mainTextColor,
+                  color: neutralMain,
                 }}
               >
                 {val.icon}
               </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  color={mainTextColor}
-                  noWrap={true}
-                  variant="h6"
-                  component={"h2"}
-                >
-                  {val.title}
-                </Typography>
-              </ListItemText>
+              <h2
+                className={styles.menuOptionsTitle}
+                style={{ color: neutralMain }}
+              >
+                {val.title}
+              </h2>
             </ListItemButton>
           </Link>
         </ListItem>

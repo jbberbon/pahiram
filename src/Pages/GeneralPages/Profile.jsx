@@ -1,6 +1,6 @@
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import useProfileStore from "../Store/ProfileStore";
+import useProfileStore from "../../Store/ProfileStore";
 
 function Profile() {
   const { isProfileOpen, handleProfileClose } = useProfileStore();

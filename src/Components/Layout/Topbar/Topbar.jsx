@@ -40,21 +40,18 @@ function Topbar() {
   };
 
   const mode = theme.palette.mode;
-
-  // const isOpen = useSidebarStore((state) => state.isOpen);
-  // const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
-
   const { isOpen, toggleSidebar } = useSidebarStore();
 
   return (
     <AppBar
       component="nav"
-      color="transparent"
       elevation={0}
       style={{
+        marginLeft: isOpen && !isMd ? "280px" : "0",
         width: isOpen && !isMd ? `calc(100% - 280px)` : "100%",
+        // width: "100%",
       }}
-      sx={drawerTransition}
+      sx={{ ...drawerTransition, bgcolor: "neutral.light" }}
     >
       <Toolbar>
         <IconButton

@@ -27,7 +27,7 @@ function ProfileCard() {
       onClick={openProfileModal}
       display={"flex"}
       alignItems={"center"}
-      height={"72px"}
+      // height={"72px"}
       gap={"16px"}
       margin={"16px 16px 16px 16px"}
       padding={"0 24px 0 16px"}
@@ -41,7 +41,9 @@ function ProfileCard() {
         },
       }}
     >
-      <ProfileAvatar size={40} />
+      <Box padding="16px 0 16px 0">
+        <ProfileAvatar size={40} />
+      </Box>
       <Box
         display={"flex"}
         flexDirection={"column"}

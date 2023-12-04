@@ -4,11 +4,19 @@ import { persist, createJSONStorage } from "zustand/middleware";
 const useSidebarStore = create(
   persist(
     (set) => ({
-      isOpen: false, // Initialize with the sidebar closed
-
-      // Action to toggle the sidebar
+      isOpen: true, // Initialize with the sidebar closed
       toggleSidebar: () => {
         set((state) => ({ isOpen: !state.isOpen }));
+      },
+
+      isOpenBorrowerMenu: false,
+      toggleBorrowerMenu: () => {
+        set((state) => ({ isOpenBorrowerMenu: !state.isOpenBorrowerMenu }));
+      },
+
+      isOpenManagementMenu: true,
+      toggleManagementMenu: () => {
+        set((state) => ({ isOpenManagementMenu: !state.isOpenManagementMenu }));
       },
     }),
     {

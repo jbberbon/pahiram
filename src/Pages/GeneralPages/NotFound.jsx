@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import useUserStore from "../Store/UserStore";
-import userRoles from "../Utils/Constants/USER_ROLES";
+import useUserStore from "../../Store/UserStore";
+import userRoles from "../../Utils/Constants/USER_ROLES";
 
 function NotFound() {
   const { userData } = useUserStore();

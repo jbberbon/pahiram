@@ -23,10 +23,8 @@ import styles from "./LoginForm.module.css";
 
 function LoginForm() {
   const navigate = useNavigate();
-  // Destructure user store
   const { handleLogin } = useUserStore();
 
-  // Destructure custom form field hook
   // Add "control" if youll use hook form devTool
   const { loginFormObject, handleSubmit, isSubmitSuccessful, reset } =
     useFormFields();
@@ -37,7 +35,6 @@ function LoginForm() {
     setIsRemembered((prev) => !prev);
   };
 
-  // Onsubmit
   // No API
   const onSubmit = () => {
     handleLogin(navigate);
@@ -145,7 +142,7 @@ function LoginForm() {
                 )}
               </IconButton>
 
-              <Typography color="neutral.main" fontWeight={500}>
+              <Typography component={"p"} color="neutral.main" fontWeight={500}>
                 Remember me for 7 days
               </Typography>
             </Box>

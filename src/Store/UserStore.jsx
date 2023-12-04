@@ -5,6 +5,10 @@ import USER_ROLES from "../Utils/Constants/USER_ROLES";
 // import axios from "axios";
 
 const borrower = USER_ROLES.borrower;
+const isAdmin = true;
+const userRole = 1010;
+const office = 3030;
+
 const useUserStore = create(
   persist(
     (set) => ({
@@ -12,11 +16,11 @@ const useUserStore = create(
         firstName: null,
         lastName: null,
         email: null,
+        office: null,
         role: null,
         isAdmin: null,
         token: null,
       },
-      // chosenMenu: null,
       isAuthenticated: false,
 
       // TESTING with no API
@@ -26,22 +30,20 @@ const useUserStore = create(
             firstName: "John Christian",
             lastName: "Berbon",
             email: "jbberbon@student.apc.edu.ph",
-            role: 1010,
-            isAdmin: true,
+            office: office,
+            role: userRole,
+            isAdmin: isAdmin,
             avatarName: "JC",
             token: null,
           },
-          // chosenMenu: null,
           isAuthenticated: true,
         });
 
-        const userRole = 1010;
-
         // I think this should be in the login function submission
         // Move it Later
-        const navigateTo =
-          userRole === borrower ? "/borrow-items" : "/dashboard";
-        navigate(navigateTo);
+        const redirect =
+          isAdmin || userRole != borrower ? "/dashboard" : "/borrow-items";
+        navigate(redirect);
       },
 
       // For TESTING with API
@@ -72,6 +74,7 @@ const useUserStore = create(
       //         firstName: responseData.user.firstName,
       //         lastName: responseData.user.lastName,
       //         email: responseData.user.email,
+      //         office: responsedata.user.office,
       //         role: responseData.user.user_role_id,
       //         isAdmin: responseData.user.isAdmin,
       //         avatarName: GenerateAvatarName(responseData.user.firstName, responseData.user.lastName)
@@ -82,8 +85,10 @@ const useUserStore = create(
       //     console.log(response.data);
       //
       //     const userRole = responseData.role;
-      //     const navigateTo =  userRole === borrower ? "/borrow-items" : "/dashboard";
-      //     navigate(navigateTo);
+      //     const isAdmin = responseData.isAdmin;
+      //     const redirect =
+      //        isAdmin || userRole != borrower ? "/dashboard" : "/borrow-items";
+      //     navigate(redirect);
       //   } catch (error) {
       //     console.log(error.response.data);
       //   }
@@ -95,6 +100,7 @@ const useUserStore = create(
             firstName: null,
             lastName: null,
             email: null,
+            office: null,
             role: null,
             isAdmin: null,
             token: null,

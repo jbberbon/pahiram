@@ -1,10 +1,8 @@
-import {
-  Box,
-  Drawer,
-  IconButton,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import SidebarProfileCard from "./SidebarProfileCard";
 import SidebarItemsContainer from "./SidebarItemsContainer";
@@ -20,6 +18,7 @@ function Sidebar() {
 
   return (
     <Drawer
+      elevation={0}
       anchor="left"
       open={isOpen}
       onClose={toggleSidebar}
@@ -29,6 +28,7 @@ function Sidebar() {
       sx={{
         flexShrink: 0,
         "& .MuiDrawer-paper": {
+          overflowY: "auto",
           width: "280px",
           boxSizing: "border-box",
           backgroundColor: drawerColor,
@@ -43,7 +43,7 @@ function Sidebar() {
         flexDirection={"row"}
         alignItems={"center"}
         justifyContent={"center"}
-        height={64}
+        // height={64}
       >
         <IconButton
           color="primary"
@@ -58,6 +58,7 @@ function Sidebar() {
           <Typography
             variant="h2"
             component={"h1"}
+            padding="5px 0 5px 0"
             ml={1}
             sx={{
               fontWeight: 700,

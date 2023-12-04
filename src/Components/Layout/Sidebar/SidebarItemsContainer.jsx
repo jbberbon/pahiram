@@ -1,43 +1,31 @@
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  useTheme,
-} from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
 import USER_ROLES from "../../../Utils/Constants/USER_ROLES";
 import useCurrentPathname from "../../../Utils/HelperFunctions/useCurrentPathname";
 import SidebarList from "./SidebarList";
-import ChooseSidebarList from "../../../Utils/HelperFunctions/ChooseSidebarList";
+import BORROWER_MENU_LIST from "../../../Utils/Constants/SidebarConstants/BORROWER_MENU_LIST";
+import SUPERVISOR_ADMIN_MENU_LIST from "../../../Utils/Constants/SidebarConstants/SUPERVISOR_ADMIN_MENU_LIST";
+import EMPLOYEE_MENU_LIST from "../../../Utils/Constants/SidebarConstants/EMPLOYEE_MENU_LIST";
+import ALL_MENU_LIST from "../../../Utils/Constants/SidebarConstants/ALL_MENU_LIST";
+import CollapseSidebarMenu from "./CollapseSidebarMenu";
+import useSidebarStore from "../../../Store/SidebarStore";
 
 function SidebarItemsContainer() {
-  // Themes
-  const theme = useTheme();
-  const mainTextColor = theme.palette.neutral.main;
-  const activeColor = theme.palette.neutral.main.replace("1)", "0.1)");
-
   const currentPathname = useCurrentPathname();
-
   const { userData } = useUserStore();
+
   const isAdmin = userData.isAdmin;
   // if user role is included in the role list if not, set to null;
   const userRole = Object.values(USER_ROLES).includes(userData.role)
     ? userData.role
     : null;
 
-  // Access sidebar items fit for the role
-  const sidebarItems = ChooseSidebarList();
-
-  console.log(sidebarItems);
-
   //-------------------------------------------------------------------------
-  const initialLink = userData.role === 1010 ? "borrow-items" : "dashboard";
-  const [selectedLink, setSelectedLink] = useState(initialLink);
+
+  const borrower = USER_ROLES.borrower;
+  const initialActiveLink =
+    isAdmin || userRole != borrower ? "/dashboard" : "/borrow-items";
+  const [selectedLink, setSelectedLink] = useState(initialActiveLink);
   const handleListItemClick = (index) => {
     setSelectedLink(index);
   };
@@ -47,95 +35,97 @@ function SidebarItemsContainer() {
     // Check the current User URL Path
     const currentPath = currentPathname.replace("/", ""); // removes the slash
 
-    // Find the link in sidebarItems that matches the current path
-    const activeLink = sidebarItems.reduce((foundLink, item) => {
+    // Find the link in all_menu_list that matches the current path
+    const activeLink = ALL_MENU_LIST.reduce((foundLink, item) => {
       return foundLink || (item.link === currentPath ? item.link : null);
     }, null);
-    console.log(activeLink);
-
     setSelectedLink(activeLink);
-  }, [currentPathname, sidebarItems]);
+  }, [currentPathname]);
 
+  // -------------------------------------------------------------------------
 
-  // if(userRole && userRole != borrower && isAdmin) {
+  const {
+    isOpenBorrowerMenu,
+    isOpenManagementMenu,
+    toggleBorrowerMenu,
+    toggleManagementMenu,
+  } = useSidebarStore();
 
-  // }
-
-
-
-  const borrower = USER_ROLES.borrower;
-  // For Borrowers only
+  // Non-admin borrowers
   if (userRole === borrower && !isAdmin) {
     return (
       <SidebarList
-        sidebarItems={sidebarItems}
+        sidebarItems={BORROWER_MENU_LIST}
         selectedLink={selectedLink}
         handleListItemClick={handleListItemClick}
       />
     );
   }
-
-  return (
-    // Admin
-
-    // Emp
-    <List>
-      {sidebarItems.map((val, key) => (
-        <ListItem
-          key={key}
-          sx={{
-            display: "block",
-            paddingTop: "4px",
-            paddingRight: "8px",
-            paddingBottom: "4px",
-            paddingLeft: "8px",
-          }}
+  // Non-admin employees
+  if (userRole != borrower && !isAdmin) {
+    return (
+      <>
+        {/*  Borrower list first */}
+        <CollapseSidebarMenu
+          menuTitle="Borrower Menu"
+          isOpen={isOpenBorrowerMenu}
+          setIsOpen={toggleBorrowerMenu}
         >
-          {/* Use the Link component for navigation */}
-          <Link to={val.link}>
-            <ListItemButton
-              disableGutters={false}
-              className="list-item-button"
-              sx={{
-                paddingLeft: "16px",
-                paddingRight: "16px",
-                height: 48,
-                borderRadius: "8px",
-                "&.Mui-selected": {
-                  backgroundColor: activeColor,
-                },
-                "&[data-focus='true'], &:hover": {
-                  backgroundColor: "neutral.light !important",
-                },
-              }}
-              aria-label={val.aria}
-              role="button"
-              selected={selectedLink === val.link}
-              onClick={() => handleListItemClick(val.link)}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: "48px",
-                  color: mainTextColor,
-                }}
-              >
-                {val.icon}
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  color={mainTextColor}
-                  noWrap={true}
-                  variant="h6"
-                  component={"h2"}
-                >
-                  {val.title}
-                </Typography>
-              </ListItemText>
-            </ListItemButton>
-          </Link>
-        </ListItem>
-      ))}
-    </List>
+          <SidebarList
+            sidebarItems={BORROWER_MENU_LIST}
+            selectedLink={selectedLink}
+            handleListItemClick={handleListItemClick}
+            initialIsOpen={false}
+          />
+        </CollapseSidebarMenu>
+        {/*  Pahiram Management */}
+        <CollapseSidebarMenu
+          menuTitle="Management"
+          isOpen={isOpenManagementMenu}
+          setIsOpen={toggleManagementMenu}
+        >
+          <SidebarList
+            sidebarItems={EMPLOYEE_MENU_LIST}
+            selectedLink={selectedLink}
+            handleListItemClick={handleListItemClick}
+            initialIsOpen={true}
+          />
+        </CollapseSidebarMenu>
+      </>
+    );
+  }
+  // 1. Borrowers + Admin
+  // 2. Employee + Admin
+  // 3. Supervisor + Admin
+  return (
+    <>
+      {/*  Borrower list first */}
+      <CollapseSidebarMenu
+        menuTitle="Borrower Menu"
+        isOpen={isOpenBorrowerMenu}
+        setIsOpen={toggleBorrowerMenu}
+      >
+        <SidebarList
+          sidebarItems={BORROWER_MENU_LIST}
+          selectedLink={selectedLink}
+          handleListItemClick={handleListItemClick}
+          initialIsOpen={false}
+        />
+      </CollapseSidebarMenu>
+      {/*  Pahiram Management */}
+      <CollapseSidebarMenu
+        menuTitle="Management"
+        isOpen={isOpenManagementMenu}
+        setIsOpen={toggleManagementMenu}
+      >
+        <SidebarList
+          sidebarItems={SUPERVISOR_ADMIN_MENU_LIST}
+          selectedLink={selectedLink}
+          handleListItemClick={handleListItemClick}
+          initialIsOpen={true}
+        />
+      </CollapseSidebarMenu>
+    </>
   );
 }
 
