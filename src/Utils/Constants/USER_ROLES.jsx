@@ -4,6 +4,11 @@ const USER_ROLES = {
   lendingManager: 3030,
   coSupervisor: 4040,
   supervisor: 5050,
+  // Admin is an attribute in DB
+  // This is just for the FRONT END Menu option
+  admin: 6060,
 };
 
-export default USER_ROLES;
+const getRoleConstants = () => USER_ROLES;
+
+export default getRoleConstants;

@@ -8,19 +8,21 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import TopbarAvatar from "./TopbarAvatar";
 
 // MUI Theming and Media Query
-import { useTheme, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material";
 // Zustand Stores
 import useSidebarStore from "../../../Store/SidebarStore";
 import useColorModeStore from "../../../Store/ColorModeStore";
+import BreakpointVariables from "../../../Utils/Theming/BreakpointVariables";
+import ColorVariables from "../../../Utils/Theming/ColorVariables";
 
 function Topbar() {
+  const { mode, toggleColorMode } = useColorModeStore();
+  const { isOpen, toggleSidebar } = useSidebarStore();
+  const { isMd } = BreakpointVariables();
   console.log("Topbar Rerendered");
-  //Using colors from custom palette
-  const theme = useTheme();
-  const toggleColorMode = useColorModeStore((state) => state.toggleColorMode);
-
+ 
   // Icon Color
-  const iconColor = theme.palette.neutral.main;
+  const { neutralMain } = ColorVariables();
 
   //Remove MUI IconButton Outline When Clicked
   const removeOutline = {
@@ -28,19 +30,14 @@ function Topbar() {
     outline: "none",
   };
 
-  //Responsive SHT
-  const isMd = useMediaQuery((theme) => theme.breakpoints.down("md"));
-
   //Transition Sht
+  const theme = useTheme();
   const drawerTransition = {
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   };
-
-  const mode = theme.palette.mode;
-  const { isOpen, toggleSidebar } = useSidebarStore();
 
   return (
     <AppBar
@@ -49,7 +46,6 @@ function Topbar() {
       style={{
         marginLeft: isOpen && !isMd ? "280px" : "0",
         width: isOpen && !isMd ? `calc(100% - 280px)` : "100%",
-        // width: "100%",
       }}
       sx={{ ...drawerTransition, bgcolor: "neutral.light" }}
     >
@@ -60,10 +56,10 @@ function Topbar() {
           aria-label="Toggle Side Bar For Navigation"
           role="button"
           style={removeOutline}
-          sx={{ mr: 2, color: iconColor }}
+          sx={{ mr: 2, color: neutralMain }}
           onClick={toggleSidebar}
         >
-          <MenuIcon sx={{ color: iconColor }} />
+          <MenuIcon sx={{ color: neutralMain }} />
         </IconButton>
         <Box flexGrow={1} />
         <IconButton
@@ -72,7 +68,7 @@ function Topbar() {
           style={removeOutline}
           sx={{
             mr: 1,
-            color: iconColor,
+            color: neutralMain,
           }}
           onClick={toggleColorMode}
         >

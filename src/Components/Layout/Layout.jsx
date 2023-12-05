@@ -1,15 +1,13 @@
-import React, { lazy, Suspense } from "react";
-const LazyTopbar = React.lazy(() => import("./Topbar/Topbar"));
-const LazySidebar = React.lazy(() => import("./Sidebar/Sidebar"));
-const LazyProfile = React.lazy(() =>
-  import("../../Pages/GeneralPages/Profile")
-);
-const LazyLoadingCircular = lazy(() => import('../LoadingAnimation/LoadingCircular'));
+import { startTransition, lazy, Suspense } from "react";
+const LazyTopbar = lazy(() => import("./Topbar/Topbar"));
+const LazySidebar = lazy(() => import("./Sidebar/Sidebar"));
+const LazyProfile = lazy(() => import("../../Pages/GeneralPages/Profile"));
 
 import { Outlet } from "react-router-dom";
 import NO_SIDEBAR from "../../Utils/Constants/SidebarConstants/NO_SIDEBAR";
 import useCurrentPathname from "../../Utils/HelperFunctions/useCurrentPathname";
-import TextColorVariables from "../../Utils/Theming/ColorVariables";
+import ColorVariables from "../../Utils/Theming/ColorVariables";
+import LoadingCircular from "../LoadingAnimation/LoadingCircular";
 
 const Layout = () => {
   const currentPathname = useCurrentPathname();
@@ -17,11 +15,11 @@ const Layout = () => {
   const noSidebarTopbar = [""];
   const noSidebar = NO_SIDEBAR;
 
-  const { neutralLight } = TextColorVariables();
+  const { neutralLight } = ColorVariables();
 
   if (noSidebar.includes(currentPathname)) {
     return (
-      <Suspense fallback={<LazyLoadingCircular />}>
+      <Suspense fallback={<LoadingCircular />}>
         <LazyTopbar />
         <LazyProfile />
         <div
@@ -31,14 +29,16 @@ const Layout = () => {
             backgroundColor: neutralLight,
           }}
         >
-          <Outlet />
+          {startTransition(() => (
+            <Outlet />
+          ))}
         </div>
       </Suspense>
     );
   }
   if (noSidebarTopbar.includes(currentPathname)) {
     return (
-      <Suspense fallback={<LazyLoadingCircular />}>
+      <Suspense fallback={<LoadingCircular />}>
         <LazyProfile />
         <div
           style={{
@@ -47,14 +47,16 @@ const Layout = () => {
             backgroundColor: neutralLight,
           }}
         >
-          <Outlet />
+          {startTransition(() => (
+            <Outlet />
+          ))}
         </div>
       </Suspense>
     );
   }
 
   return (
-    <Suspense fallback={<LazyLoadingCircular />}>
+    <Suspense fallback={<LoadingCircular />}>
       <LazyTopbar />
       <LazySidebar />
       <LazyProfile />

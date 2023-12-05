@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import USER_ROLES from "../Utils/Constants/USER_ROLES";
+import getRoleConstants from "../Utils/Constants/USER_ROLES";
 // import GenerateAvatarName from "../Utils/HelperFunctions/UserStore/GenerateAvatarName";
 // import axios from "axios";
 
-const borrower = USER_ROLES.borrower;
+const { borrower } = getRoleConstants();
 const isAdmin = true;
 const userRole = 1010;
 const office = 3030;

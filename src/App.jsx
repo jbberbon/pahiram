@@ -55,7 +55,7 @@ import useUserStore from "./Store/UserStore";
 import RequireAuth from "./Utils/HelperFunctions/RouteProtection/RequireAuth";
 import RequireAdminPrivilege from "./Utils/HelperFunctions/RouteProtection/RequireAdminPrivilege";
 
-import USER_ROLES from "./Utils/Constants/USER_ROLES";
+import getRoleConstants from "./Utils/Constants/USER_ROLES";
 
 
 function App() {
@@ -65,13 +65,14 @@ function App() {
   const isAdmin = userData.isAdmin;
 
   // destructured users
-  const borrower = USER_ROLES.borrower;
-  const inventoryManager = USER_ROLES.inventoryManager;
-  const lendingManager = USER_ROLES.lendingManager;
-  const supervisor = USER_ROLES.supervisor;
+  // const borrower = USER_ROLES.borrower;
+  // const inventoryManager = USER_ROLES.inventoryManager;
+  // const lendingManager = USER_ROLES.lendingManager;
+  // const supervisor = USER_ROLES.supervisor;
+  const {borrower, inventoryManager, lendingManager, coSupervisor, supervisor,} = getRoleConstants();
 
   // User Classifications
-  const allUsers = [borrower, inventoryManager, lendingManager, supervisor];
+  const allUsers = [borrower, inventoryManager, lendingManager, coSupervisor, supervisor];
   const redirect =
     isAdmin || userRole != borrower ? "/dashboard" : "/borrow-items";
 
