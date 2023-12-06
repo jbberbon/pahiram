@@ -16,7 +16,7 @@ const LazyUnauthorized = React.lazy(() =>
 // Pages
 // Borrowers
 const LazyBorrowItems = React.lazy(() =>
-  import("./Pages/BorrowerPages/BorrowItems")
+  import("./Pages/BorrowerPages/BorrowItems/BorrowItems")
 );
 const LazyBorrowingStatus = React.lazy(() =>
   import("./Pages/BorrowerPages/BorrowingStatus")

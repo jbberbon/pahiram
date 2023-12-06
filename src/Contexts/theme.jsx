@@ -208,6 +208,7 @@ const themeSettings = (mode) => {
               dark: colors.neutral[100],
               main: colors.neutral[100],
               light: colors.neutral[900],
+              background: "#1a1c21"
             },
             background: {
               default: colors.neutral[900],
@@ -244,6 +245,8 @@ const themeSettings = (mode) => {
               dark: colors.neutral[300],
               main: colors.neutral[500],
               light: colors.neutral[900],
+              background: "#FFFFFF"
+
             },
             background: {
               default: colors.neutral[900],
