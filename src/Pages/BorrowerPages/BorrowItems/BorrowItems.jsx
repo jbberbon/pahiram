@@ -1,28 +1,126 @@
-import { Box, Button } from "@mui/material";
 import MainDisplayLayout from "../../../Components/Layout/MainDisplay/MainDisplayLayout";
+import { useMode } from "../../../Contexts/theme";
+import OfficeSelector from "./OfficeSelector";
+import BreakpointVariables from "../../../Utils/Theming/BreakpointVariables";
+import TransactionForm from "./TransactionForm";
+
+import BorrowFormTitle from "./BorrowFormTitle";
+import { Button } from "@mui/material";
+import ChooseFormSubtitle from "./ChooseFormSubtitle";
+import ItemForm from "./ItemForm";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import SubmitBorrowRequestAPI from "../../../APIEndpoints/BorrowItemsAPI/SubmitBorrowRequestAPI";
+import convertDatesToApiFormat from "../../../Utils/HelperFunctions/DateFunction/convertDatesToApiFormat";
+import SuccessSnackbar from "./SuccessSnackbar";
+import ErrorSnackbar from "./ErrorSnackbar";
 
 // import PropTypes from "prop-types";
 
-function BorrowItems() {
-  const condition = false;
-  const full = "100vh";
-  const half = "50vh";
+const BorrowItems = () => {
+  const [theme] = useMode();
+  const neutralBackground = theme.palette.neutral.background;
+  const { isMd } = BreakpointVariables();
+  const [isSuccess, setIsSuccess] = useState(null);
+  const [error, setError] = useState(null);
+
+  // const { handleSubmit, control, reset, watch } = useForm();
+  const { handleSubmit, control, watch, setValue, reset } = useForm();
+
+  const selectedOffice = watch("department_code");
+  const endorser = watch("endorsed_by");
+  const items = watch("items");
+
+  const [fieldCount, setFieldCount] = useState(1);
+  const addFieldCount = () => {
+    if (fieldCount < 10) {
+      setFieldCount(fieldCount + 1);
+      console.log(fieldCount);
+    } else {
+      console.log("Max 10 fields");
+    }
+  };
+  const subtractFieldCount = () => {
+    if (fieldCount > 1) {
+      setFieldCount(fieldCount - 1);
+      console.log(fieldCount);
+    } else {
+      console.log("Min 1 field");
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      const inputPayload = convertDatesToApiFormat(data);
+      const submitRequest = await SubmitBorrowRequestAPI(inputPayload);
+
+      if (submitRequest.status) {
+        setIsSuccess(true);
+        setTimeout(() => {
+          reset();
+        }, 2000);
+      } else {
+        setError(submitRequest.message);
+      }
+    } catch (error) {
+      setIsSuccess(false);
+      setError(error);
+      console.error("Error submitting request:", error);
+    }
+  };
   return (
     <MainDisplayLayout>
-      <Box
-        sx={{ bgcolor: "neutral.background", height: condition ? full : half }}
-        display="flex"
-        flexDirection="column"
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: neutralBackground, // Make sure to define neutralBackground
+          padding: isMd ? "16px" : "32px",
+          width: "100%",
+          gap: "24px",
+        }}
       >
-        Hello world
-        <Button onClick={() => console.log("button Clicked")}>Button</Button>
-      </Box>
+        <BorrowFormTitle isMd={isMd} />
+        <OfficeSelector
+          control={control}
+          items={items}
+          setValue={setValue}
+          reset={reset}
+        />
+        <TransactionForm
+          control={control}
+          isOfficeSelected={!!selectedOffice}
+          endorser={endorser}
+          setValue={setValue}
+        />
+
+        <ChooseFormSubtitle
+          addFieldCount={addFieldCount}
+          isOfficeSelected={!!selectedOffice}
+        />
+        <ItemForm
+          control={control}
+          fieldCount={fieldCount}
+          subtractFieldCount={subtractFieldCount}
+          isOfficeSelected={!!selectedOffice}
+          setValue={setValue}
+          selectedOffice={selectedOffice}
+          items={items}
+        />
+
+        <Button type="submit" disabled={!selectedOffice}>
+          Submit
+        </Button>
+      </form>
+      <SuccessSnackbar isSuccess={isSuccess} setIsSuccess={setIsSuccess} />
+      <ErrorSnackbar error={error} setError={setError} />
     </MainDisplayLayout>
   );
-}
-
-// Dashboard.propTypes = {
-//   isOpen: PropTypes.bool.isRequired,
-// };s
+};
 
 export default BorrowItems;

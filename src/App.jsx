@@ -47,16 +47,18 @@ const LazyManageAccounts = React.lazy(() =>
   import("./Pages/ManagementPages/ManageAccounts")
 );
 // Loading Animations
-const LazyLoadingLinear = lazy(() => import('./Components/LoadingAnimation/LoadingLinear'));
-const LazyLoadingCircular = lazy(() => import('./Components/LoadingAnimation/LoadingCircular'));
-
+const LazyLoadingLinear = lazy(() =>
+  import("./Components/LoadingAnimation/LoadingLinear")
+);
+const LazyLoadingCircular = lazy(() =>
+  import("./Components/LoadingAnimation/LoadingCircular")
+);
 
 import useUserStore from "./Store/UserStore";
 import RequireAuth from "./Utils/HelperFunctions/RouteProtection/RequireAuth";
 import RequireAdminPrivilege from "./Utils/HelperFunctions/RouteProtection/RequireAdminPrivilege";
 
 import getRoleConstants from "./Utils/Constants/USER_ROLES";
-
 
 function App() {
   const [theme] = useMode();
@@ -69,10 +71,22 @@ function App() {
   // const inventoryManager = USER_ROLES.inventoryManager;
   // const lendingManager = USER_ROLES.lendingManager;
   // const supervisor = USER_ROLES.supervisor;
-  const {borrower, inventoryManager, lendingManager, coSupervisor, supervisor,} = getRoleConstants();
+  const {
+    borrower,
+    inventoryManager,
+    lendingManager,
+    coSupervisor,
+    supervisor,
+  } = getRoleConstants();
 
   // User Classifications
-  const allUsers = [borrower, inventoryManager, lendingManager, coSupervisor, supervisor];
+  const allUsers = [
+    borrower,
+    inventoryManager,
+    lendingManager,
+    coSupervisor,
+    supervisor,
+  ];
   const redirect =
     isAdmin || userRole != borrower ? "/dashboard" : "/borrow-items";
 

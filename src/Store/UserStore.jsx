@@ -5,9 +5,9 @@ import getRoleConstants from "../Utils/Constants/USER_ROLES";
 // import axios from "axios";
 
 const { borrower } = getRoleConstants();
-const isAdmin = true;
+const isAdmin = false;
 const userRole = 1010;
-const office = 3030;
+const office = null;
 
 const useUserStore = create(
   persist(

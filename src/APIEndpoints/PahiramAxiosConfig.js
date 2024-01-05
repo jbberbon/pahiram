@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: process.env.REACT_APP_PAHIRAM_BACKEND,
+const PahiramAxiosConfig = axios.create({
+  baseURL: "http://127.0.0.1/api",
   timeout: 5000,
   headers: {
     "Accept": "application/json",
@@ -9,4 +9,4 @@ const instance = axios.create({
   },
 });
 
-export default instance;
+export default PahiramAxiosConfig;

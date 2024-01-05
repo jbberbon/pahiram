@@ -266,10 +266,12 @@ const themeSettings = (mode) => {
       h2: {
         fontFamily: ["Inter", "sans-serif"].join(","),
         fontSize: "2rem",
+        fontWeight: "500"
       },
       h3: {
         fontFamily: ["Inter", "sans-serif"].join(","),
         fontSize: "1.5rem",
+        fontWeight: "500"
       },
       h4: {
         fontFamily: ["Inter", "sans-serif"].join(","),

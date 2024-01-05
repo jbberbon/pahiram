@@ -16,6 +16,7 @@ function MainDisplayLayout({ children }) {
       style={{
         padding: "80px 16px 16px 16px",
         width: isOpen && !isMd ? `calc(100% - 280px)` : "100%",
+        height: "100%",
         marginLeft: isOpen && !isMd ? "280px" : "0px",
         ...transitionStyles,
       }}

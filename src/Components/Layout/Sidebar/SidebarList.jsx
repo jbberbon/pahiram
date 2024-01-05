@@ -25,7 +25,9 @@ function SidebarList({ sidebarItems, selectedLink, handleListItemClick }) {
             paddingLeft: "8px",
           }}
         >
-          {/* Use the Link component for navigation */}
+          {/* 
+            * Use the Link component for navigation 
+            */}
           <Link to={val.link}>
             <ListItemButton
               disableGutters={false}
