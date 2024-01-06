@@ -4,12 +4,11 @@ import { Controller } from "react-hook-form";
 import PURPOSES from "../../../Utils/Constants/PURPOSES";
 
 import PropTypes from "prop-types";
-// import Button from "@mui/material/Button";
 
-import ErrorSnackbar from "./ErrorSnackbar";
 import { useState } from "react";
 import SearchUserField from "../../../Components/InputFields/SearchUserField";
 import useSearchEndorser from "../../../Hooks/useSearchEndorser";
+import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
 
 const TransactionForm = ({ control, isOfficeSelected, setValue }) => {
   const [userSearchInput, setUserSearchInput] = useState("");

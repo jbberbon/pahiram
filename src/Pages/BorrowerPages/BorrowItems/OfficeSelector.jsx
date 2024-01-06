@@ -1,4 +1,4 @@
-import { MenuItem, Typography } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
@@ -57,9 +57,19 @@ const OfficeSelector = ({ control, items, reset }) => {
             </MenuItem>
             {includedOfficeKeys.map((officeKey) => (
               <MenuItem key={OFFICES[officeKey]} value={OFFICES[officeKey]}>
-                <Typography variant="p" component={"p"} color={"neutral.main"}>
+                <h2
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: "500",
+                    padding: "4px 0",
+                    margin: 0,
+                  }}
+                >
                   {officeKey}
-                </Typography>
+                </h2>
+                {/* <Typography variant="p" component={"p"} color={"neutral.main"}>
+                  {officeKey}
+                </Typography> */}
               </MenuItem>
             ))}
           </TextField>

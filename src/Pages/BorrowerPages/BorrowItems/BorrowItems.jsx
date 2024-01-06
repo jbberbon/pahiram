@@ -12,15 +12,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import SubmitBorrowRequestAPI from "../../../APIEndpoints/BorrowItemsAPI/SubmitBorrowRequestAPI";
 import convertDatesToApiFormat from "../../../Utils/HelperFunctions/DateFunction/convertDatesToApiFormat";
-import SuccessSnackbar from "./SuccessSnackbar";
-import ErrorSnackbar from "./ErrorSnackbar";
+import SuccessSnackbar from "../../../Components/Snackbars/SuccessSnackbar";
+import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
 
 // import PropTypes from "prop-types";
 
 const BorrowItems = () => {
   const [theme] = useMode();
   const neutralBackground = theme.palette.neutral.background;
-  const { isMd } = BreakpointVariables();
+  const { isSm } = BreakpointVariables();
   const [isSuccess, setIsSuccess] = useState(null);
   const [error, setError] = useState(null);
 
@@ -80,12 +80,13 @@ const BorrowItems = () => {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: neutralBackground, // Make sure to define neutralBackground
-          padding: isMd ? "16px" : "32px",
+          // padding: isSm ? "16px" : "32px",
+          padding: "16px",
           width: "100%",
           gap: "24px",
         }}
       >
-        <BorrowFormTitle isMd={isMd} />
+        <BorrowFormTitle isMd={isSm} />
         <OfficeSelector
           control={control}
           items={items}
@@ -113,11 +114,37 @@ const BorrowItems = () => {
           items={items}
         />
 
-        <Button type="submit" disabled={!selectedOffice}>
-          Submit
+        <Button
+          variant="contained"
+          type="submit"
+          disabled={!selectedOffice}
+          disableElevation
+          sx={{
+            width: isSm ? "100%" : "25%",
+            marginLeft: isSm ? "0" : "auto",
+            "&:focus": {
+              outline: "none",
+            },
+          }}
+        >
+          <p
+            style={{
+              fontWeight: "500",
+              margin: 0,
+              padding: "2px 0",
+              color: "black",
+            }}
+          >
+            Submit Request
+          </p>
         </Button>
       </form>
-      <SuccessSnackbar isSuccess={isSuccess} setIsSuccess={setIsSuccess} />
+      <SuccessSnackbar
+        isSuccess={isSuccess}
+        setIsSuccess={setIsSuccess}
+        successMessage="Successfully submitted request"
+        errorMessage="Failed to submit request"
+      />
       <ErrorSnackbar error={error} setError={setError} />
     </MainDisplayLayout>
   );

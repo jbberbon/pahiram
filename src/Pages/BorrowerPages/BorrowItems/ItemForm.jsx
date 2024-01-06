@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import RemoveItemButton from "./RemoveItemButton";
 import Divider from "@mui/material/Divider";
 import useSearchItemModel from "../../../Hooks/useSearchItemModel";
-import ErrorSnackbar from "./ErrorSnackbar";
 import SearchItemModelField from "../../../Components/InputFields/SearchItemModelField";
+import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
 // import Button from "@mui/material/Button";
 
 const ItemForm = ({

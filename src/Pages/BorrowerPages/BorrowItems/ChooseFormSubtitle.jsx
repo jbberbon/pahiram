@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 
 const ChooseFormSubtitle = ({ addFieldCount, isOfficeSelected }) => {
@@ -22,25 +22,19 @@ const ChooseFormSubtitle = ({ addFieldCount, isOfficeSelected }) => {
       </h2>
       <Button
         onClick={addFieldCount}
-        variant="contained"
+        variant="text"
         disabled={!isOfficeSelected}
+        disableElevation
+        disableRipple
         sx={{
           padding: "8px 8px",
           margin: 0,
-          backgroundColor: "secondary.main",
-          color: "white",
-          "&:active": {
-            backgroundColor: "secondary.main",
-          },
-          "&:hover": {
-            backgroundColor: "secondary.main",
-          },
           "&:focus": {
             outline: "none",
           },
         }}
       >
-        <p style={{ margin: 0 }}>Add fields</p>
+        <p style={{ margin: 0, fontWeight: "500" }}>Add fields</p>
       </Button>
     </div>
   );

@@ -23,7 +23,7 @@ const useSearchEndorser = (endorser, isOfficeSelected) => {
   };
 
   useEffect(() => {
-    const delay = 1000;
+    const delay = 500;
     // Set a timeout to execute the API request after the specified delay
     const timeoutId = setTimeout(() => {
       if (endorser && isOfficeSelected) {
