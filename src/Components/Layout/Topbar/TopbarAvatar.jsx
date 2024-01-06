@@ -49,7 +49,7 @@ function TopbarAvatar() {
         aria-label="profile"
         onClick={handleClick}
       >
-        <ProfileAvatar size={40} />
+        <ProfileAvatar avatarSize={30} textSize="12px" />
       </IconButton>
       <Popover
         id={id}

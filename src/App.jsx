@@ -25,7 +25,7 @@ const LazyPenaltyRecords = React.lazy(() =>
   import("./Pages/BorrowerPages/PenaltyRecords")
 );
 const LazyBorrowRequests = React.lazy(() =>
-  import("./Pages/BorrowerPages/BorrowRequests")
+  import("./Pages/BorrowerPages/BorrowRequests/BorrowRequests")
 );
 //Employees
 const LazyDashboard = React.lazy(() =>

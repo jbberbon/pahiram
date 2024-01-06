@@ -42,7 +42,7 @@ function ProfileCard() {
       }}
     >
       <Box padding="16px 0 16px 0">
-        <ProfileAvatar size={40} />
+        <ProfileAvatar avatarSize={40} textSize="18px" />
       </Box>
       <Box
         display={"flex"}

@@ -1,4 +1,4 @@
-import MainDisplayLayout from "../../Components/Layout/MainDisplay/MainDisplayLayout";
+import MainDisplayLayout from "../../../Components/Layout/MainDisplay/MainDisplayLayout";
 // import PropTypes from "prop-types";
 
 function BorrowRequests() {

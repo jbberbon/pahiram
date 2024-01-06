@@ -43,7 +43,6 @@ function Sidebar() {
         flexDirection={"row"}
         alignItems={"center"}
         justifyContent={"center"}
-        // height={64}
       >
         <IconButton
           color="primary"
@@ -54,15 +53,16 @@ function Sidebar() {
           disableRipple={true}
           aria-label="navigate to home page"
         >
-          <DashboardRoundedIcon sx={{ fontSize: "2.5rem" }} />
+          <DashboardRoundedIcon sx={{ fontSize: "2rem" }} />
           <Typography
-            variant="h2"
             component={"h1"}
             padding="5px 0 5px 0"
             ml={1}
             sx={{
+              fontSize: "2rem",
               fontWeight: 700,
               display: "block",
+              marginLeft: "0"
             }}
           >
             Pahiram
