@@ -24,8 +24,8 @@ const LazyBorrowingStatus = React.lazy(() =>
 const LazyPenaltyRecords = React.lazy(() =>
   import("./Pages/BorrowerPages/PenaltyRecords")
 );
-const LazyBorrowingHistory = React.lazy(() =>
-  import("./Pages/BorrowerPages/BorrowingHistory")
+const LazyBorrowRequests = React.lazy(() =>
+  import("./Pages/BorrowerPages/BorrowRequests")
 );
 //Employees
 const LazyDashboard = React.lazy(() =>
@@ -153,10 +153,10 @@ function App() {
             }
           />
           <Route
-            path="/borrowing-history"
+            path="/borrow-requests"
             element={
               <Suspense fallback={<LazyLoadingLinear />}>
-                <LazyBorrowingHistory />
+                <LazyBorrowRequests />
               </Suspense>
             }
           />

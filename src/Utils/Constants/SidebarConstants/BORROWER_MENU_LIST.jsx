@@ -1,5 +1,5 @@
 import HandshakeRoundedIcon from "@mui/icons-material/HandshakeRounded";
-import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
+// import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 
@@ -10,16 +10,16 @@ const BORROWER_MENU_LIST = [
     link: "borrow-items",
     aria: "Navigate to dashboard page",
   },
+  // {
+  //   title: "Borrowing Status",
+  //   icon: <ListAltRoundedIcon fontSize="large" />,
+  //   link: "borrowing-status",
+  //   aria: "Navigate to borrowing status page",
+  // },
   {
-    title: "Borrowing Status",
-    icon: <ListAltRoundedIcon fontSize="large" />,
-    link: "borrowing-status",
-    aria: "Navigate to borrowing status page",
-  },
-  {
-    title: "Borrowing History",
+    title: "Borrow Requests",
     icon: <HistoryRoundedIcon fontSize="large" />,
-    link: "borrowing-history",
+    link: "borrow-requests",
     aria: "Navigate to equipment borrowing history page",
   },
   {
