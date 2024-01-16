@@ -16,7 +16,7 @@ const ErrorSnackbar = ({ error, setError }) => {
       open={error ? true : false}
       autoHideDuration={6000}
       onClose={() => setError(null)}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }} 
       style={{ top: 70 }}
     >
       <Alert

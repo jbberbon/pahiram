@@ -74,7 +74,7 @@ const ItemForm = ({
                   options={results}
                   loading={loading}
                   setValue={setValue}
-                  placeholder="Enter endorser name"
+                  placeholder="Enter item name"
                 />
               )}
             />

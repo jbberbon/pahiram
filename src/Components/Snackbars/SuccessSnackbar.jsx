@@ -1,43 +1,3 @@
-// import IconButton from "@mui/material/IconButton";
-// import Snackbar from "@mui/material/Snackbar";
-// import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-
-// import PropTypes from "prop-types";
-
-// const SuccessSnackbar = ({ isSuccess, setIsSuccess }) => {
-//   return (
-//     <Snackbar
-//       open={isSuccess}
-//       autoHideDuration={6000}
-//       onClose={() => setIsSuccess(null)}
-//       message={isSuccess ? "Successfully submitted request. :)" : "Failed to submit request. Try again later."}
-//       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-//       style={{ top: 70 }}
-//       action={
-//         <IconButton
-//           size="small"
-//           color="inherit"
-//           onClick={() => setIsSuccess(null)}
-//           sx={{
-//             "&:focus": {
-//               outline: "none",
-//             },
-//           }}
-//         >
-//           <CloseRoundedIcon fontSize="small" />
-//         </IconButton>
-//       }
-//     />
-//   );
-// };
-
-// SuccessSnackbar.propTypes = {
-//   isSuccess: PropTypes.bool,
-//   setIsSuccess: PropTypes.func.isRequired,
-// };
-
-// export default SuccessSnackbar;
-
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
@@ -53,12 +13,11 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const SuccessSnackbar = ({
   isSuccess,
   setIsSuccess,
-  successMessage,
-  errorMessage,
+  // successMessage,
 }) => {
   return (
     <Snackbar
-      open={isSuccess}
+      open={isSuccess !== null}
       autoHideDuration={6000}
       onClose={() => setIsSuccess(null)}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -80,7 +39,7 @@ const SuccessSnackbar = ({
           </IconButton>
         }
         onClose={() => setIsSuccess(null)}
-        severity={isSuccess ? "sucess" : "error"}
+        severity={"success"}
         sx={{
           width: "100%",
           "&:focus": {
@@ -88,17 +47,16 @@ const SuccessSnackbar = ({
           },
         }}
       >
-        {isSuccess ? successMessage : errorMessage + ". " + "Try again later"}
+        {isSuccess}
       </Alert>
     </Snackbar>
   );
 };
 
 SuccessSnackbar.propTypes = {
-  isSuccess: PropTypes.bool,
+  isSuccess: PropTypes.any,
   setIsSuccess: PropTypes.func.isRequired,
-  successMessage: PropTypes.string.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  successMessage: PropTypes.string,
 };
 
-export default SuccessSnackbar; 
+export default SuccessSnackbar;

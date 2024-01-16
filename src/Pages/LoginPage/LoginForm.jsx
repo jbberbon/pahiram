@@ -20,14 +20,31 @@ import { useFormFields } from "./LoginFormFields";
 
 // CSS
 import styles from "./LoginForm.module.css";
+import useLogin from "../../Hooks/AuthHooks/useLogin";
+import ErrorSnackbar from "../../Components/Snackbars/ErrorSnackbar";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const { handleLogin } = useUserStore();
+  const { setUserData } = useUserStore();
 
   // Add "control" if youll use hook form devTool
-  const { loginFormObject, handleSubmit, isSubmitSuccessful, reset } =
-    useFormFields();
+  const {
+    loginFormObject,
+    handleSubmit,
+    isSubmitSuccessful,
+    reset,
+    getValues,
+  } = useFormFields();
+
+  const {
+    handleLogin,
+    userData,
+    isLoginLoading,
+    isLoginSuccess,
+    isLoginError,
+    setLoginSuccess,
+    setLoginError,
+  } = useLogin();
 
   // Remember me for 7 Days
   const [isRemembered, setIsRemembered] = useState(false);
@@ -37,7 +54,10 @@ function LoginForm() {
 
   // No API
   const onSubmit = () => {
-    handleLogin(navigate);
+    const formValues = getValues();
+    const finalFormValues = { ...formValues, remember_me: false };
+    handleLogin(finalFormValues);
+    console.log(formValues);
   };
   // WITH API
   // const onSubmit = (data) => {
@@ -47,10 +67,11 @@ function LoginForm() {
 
   // Successful Login -> Clear login form
   useEffect(() => {
-    if (isSubmitSuccessful) {
+    if (userData) {
+      setUserData(userData);
       reset();
     }
-  }, [isSubmitSuccessful, reset]);
+  }, [setUserData, userData, reset]);
 
   return (
     <>
@@ -159,6 +180,7 @@ function LoginForm() {
           </Box>
         </form>
       </Box>
+      <ErrorSnackbar error={isLoginError} setError={setLoginError} />
       {/* <DevTool control={control} /> */}
     </>
   );

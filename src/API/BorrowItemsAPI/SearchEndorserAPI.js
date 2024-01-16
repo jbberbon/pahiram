@@ -1,8 +1,7 @@
 import ApcisAxiosConfig from "../ApcisAxiosConfig";
 
+const bearerToken = "37|yNkQIaLDWyJzqfZsRqmCTMckoQCgc4vTM9L5wpnh4468a503";
 const SearchEndorserAPI = async (name) => {
-  const bearerToken = "5|CcW29NQdih3SUokRffPz9aDHrDO3zW11puv2qMzTdefc2be5";
-
   try {
     const response = await ApcisAxiosConfig.get(`/users/search/${name}`, {
       headers: {

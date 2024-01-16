@@ -1,8 +1,8 @@
 import Typography from "@mui/material/Typography";
 import { useMode } from "../../../Contexts/theme";
+import backgroundImage from "/assets/subtle-prism.svg";
 
 import PropTypes from "prop-types";
-
 
 const BorrowFormTitle = ({ isMd }) => {
   const [theme] = useMode();
@@ -18,6 +18,8 @@ const BorrowFormTitle = ({ isMd }) => {
         width: "100%",
         backgroundColor: secondaryMain,
         padding: "16px",
+        borderRadius: "8px",
+        background: `url(${backgroundImage})`,
       }}
     >
       <Typography

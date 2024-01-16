@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SearchItemAPI from "../APIEndpoints/BorrowItemsAPI/SearchItemAPI";
+import SearchItemAPI from "../API/BorrowItemsAPI/SearchItemAPI";
 
 const useSearchItemModel = (officeCode, isOfficeSelected) => {
   const [results, setResults] = useState([]);
@@ -9,10 +9,21 @@ const useSearchItemModel = (officeCode, isOfficeSelected) => {
   const searchItemModel = async (officeCode) => {
     try {
       setLoading(true);
-      const data = await SearchItemAPI(officeCode); // Use the SearchEndorser function
+      const response = await SearchItemAPI(officeCode); // Use the SearchEndorser function
 
-      setResults(data.data);
-      console.log(data);
+      // Check if server is down
+      if (typeof response === "undefined" || response === null) {
+        setError("Failed to retrieve item list. Please try again later.");
+        return;
+      }
+
+      // Check if has data and status is true
+      if (response?.data && response?.status) {
+        setResults(response.data);
+      } else {
+        // Retrieve error message from api
+        setError(response?.data?.message || "An unexpected error occurred");
+      }
     } catch (error) {
       console.error("Error searching endorser:", error);
       setError("Failed to retrieve items. Please try again later.");
@@ -22,7 +33,7 @@ const useSearchItemModel = (officeCode, isOfficeSelected) => {
   };
 
   useEffect(() => {
-    const delay = 1000;
+    const delay = 100;
     // Set a timeout to execute the API request after the specified delay
     const timeoutId = setTimeout(() => {
       if (officeCode && isOfficeSelected) {

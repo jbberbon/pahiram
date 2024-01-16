@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import SearchEndorserAPI from "../APIEndpoints/BorrowItemsAPI/SearchEndorserAPi";
-
+// import SearchItemAPI from "../APIEndpoints/BorrowItemsAPI/SearchItemAPI";
+import SearchEndorserAPI from "../API/BorrowItemsAPI/SearchEndorserAPI";
 
 const useSearchEndorser = (endorser, isOfficeSelected) => {
   const [results, setResults] = useState([]);
@@ -10,10 +10,22 @@ const useSearchEndorser = (endorser, isOfficeSelected) => {
   const searchEndorser = async (name) => {
     try {
       setLoading(true);
-      const data = await SearchEndorserAPI(name); // Use the SearchEndorser function
+      const response = await SearchEndorserAPI(name); // Use the SearchItemAPI function
 
-      setResults(data.data);
-      console.log(data);
+      // Check if server is down
+      if (typeof response === "undefined" || response === null) {
+        setError("Unable to search for users. Please try again later.");
+        return;
+      }
+
+      // Check if has data and status is true
+      if (response?.data && response?.status) {
+        setResults(response.data);
+        setError(null); // Clear any previous error
+      } else {
+        // Retrieve error message from API
+        setError(response?.data?.message || "An unexpected error occurred");
+      }
     } catch (error) {
       console.error("Error searching endorser:", error);
       setError("Failed to search endorser. Please try again later.");
@@ -23,7 +35,7 @@ const useSearchEndorser = (endorser, isOfficeSelected) => {
   };
 
   useEffect(() => {
-    const delay = 500;
+    const delay = 100;
     // Set a timeout to execute the API request after the specified delay
     const timeoutId = setTimeout(() => {
       if (endorser && isOfficeSelected) {

@@ -1,32 +1,27 @@
 import MainDisplayLayout from "../../../Components/Layout/MainDisplay/MainDisplayLayout";
-import { useMode } from "../../../Contexts/theme";
 import OfficeSelector from "./OfficeSelector";
 import BreakpointVariables from "../../../Utils/Theming/BreakpointVariables";
 import TransactionForm from "./TransactionForm";
 
 import BorrowFormTitle from "./BorrowFormTitle";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import ChooseFormSubtitle from "./ChooseFormSubtitle";
 import ItemForm from "./ItemForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import SubmitBorrowRequestAPI from "../../../APIEndpoints/BorrowItemsAPI/SubmitBorrowRequestAPI";
 import convertDatesToApiFormat from "../../../Utils/HelperFunctions/DateFunction/convertDatesToApiFormat";
 import SuccessSnackbar from "../../../Components/Snackbars/SuccessSnackbar";
 import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
+import ColorVariables from "../../../Utils/Theming/ColorVariables";
+import useSubmitRequest from "../../../Hooks/BorrowRequestHooks/useSubmitRequest";
 
 // import PropTypes from "prop-types";
 
 const BorrowItems = () => {
-  const [theme] = useMode();
-  const neutralBackground = theme.palette.neutral.background;
+  const { neutralBackground } = ColorVariables();
   const { isSm } = BreakpointVariables();
-  const [isSuccess, setIsSuccess] = useState(null);
-  const [error, setError] = useState(null);
 
-  // const { handleSubmit, control, reset, watch } = useForm();
   const { handleSubmit, control, watch, setValue, reset } = useForm();
-
   const selectedOffice = watch("department_code");
   const endorser = watch("endorsed_by");
   const items = watch("items");
@@ -49,26 +44,49 @@ const BorrowItems = () => {
     }
   };
 
-  const onSubmit = async (data) => {
-    try {
-      console.log(data);
-      const inputPayload = convertDatesToApiFormat(data);
-      const submitRequest = await SubmitBorrowRequestAPI(inputPayload);
+  const [isFormResetting, setFormResetting] = useState(false);
+  const {
+    isSubmitSuccess,
+    isSubmitError,
+    isSubmitLoading,
+    setSubmitError,
+    setSubmitSuccess,
+    handleSubmitRequest,
+  } = useSubmitRequest();
 
-      if (submitRequest.status) {
-        setIsSuccess(true);
-        setTimeout(() => {
-          reset();
-        }, 2000);
-      } else {
-        setError(submitRequest.message);
-      }
-    } catch (error) {
-      setIsSuccess(false);
-      setError(error);
-      console.error("Error submitting request:", error);
+  const onSubmit = async (data) => {
+    const inputPayload = convertDatesToApiFormat(data);
+
+    if (inputPayload.endorsed_by) {
+      // Assuming that endorsed_by is a non-empty string or a truthy value
+      inputPayload.apcis_token =
+        "10|h6DJG3p2n2VD6PHXBy218Y2EgzGHsZCXsQUPYWRDf22f2c66";
+    } else {
+      // If endorsed_by is falsy or an empty string, remove it from the payload
+      delete inputPayload.endorsed_by;
     }
+    await handleSubmitRequest(inputPayload);
   };
+
+  // Reset the form after successfull submission
+  useEffect(() => {
+    let timeoutId;
+
+    if (isSubmitSuccess) {
+      setFormResetting(true);
+      timeoutId = setTimeout(() => {
+        reset();
+        setSubmitSuccess(null);
+      }, 3000);
+    }
+
+    return () => {
+      // Cleanup the timeout if the component unmounts or isSubmitSuccess changes
+      clearTimeout(timeoutId);
+      setFormResetting(false);
+    };
+  }, [isSubmitSuccess, reset, setSubmitSuccess]);
+
   return (
     <MainDisplayLayout>
       <form
@@ -79,11 +97,12 @@ const BorrowItems = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: neutralBackground, // Make sure to define neutralBackground
-          // padding: isSm ? "16px" : "32px",
+          backgroundColor: neutralBackground,
           padding: "16px",
           width: "100%",
           gap: "24px",
+          boxShadow: "4px 4px 7px 2px rgba(0,0,0,0.1)",
+          borderRadius: "8px",
         }}
       >
         <BorrowFormTitle isMd={isSm} />
@@ -117,7 +136,7 @@ const BorrowItems = () => {
         <Button
           variant="contained"
           type="submit"
-          disabled={!selectedOffice}
+          disabled={!selectedOffice || isSubmitLoading || isFormResetting}
           disableElevation
           sx={{
             width: isSm ? "100%" : "25%",
@@ -135,17 +154,17 @@ const BorrowItems = () => {
               color: "black",
             }}
           >
-            Submit Request
+            {isSubmitLoading || isFormResetting ? "Loading" : "Submit Request"}
           </p>
         </Button>
       </form>
       <SuccessSnackbar
-        isSuccess={isSuccess}
-        setIsSuccess={setIsSuccess}
+        isSuccess={isSubmitSuccess}
+        setIsSuccess={setSubmitSuccess}
         successMessage="Successfully submitted request"
         errorMessage="Failed to submit request"
       />
-      <ErrorSnackbar error={error} setError={setError} />
+      <ErrorSnackbar error={isSubmitError} setError={setSubmitError} />
     </MainDisplayLayout>
   );
 };

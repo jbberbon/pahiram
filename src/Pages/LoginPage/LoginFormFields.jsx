@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const useFormFields = () => {
-  const { register, control, handleSubmit, formState, reset } = useForm();
+  const { register, control, handleSubmit, formState, reset, getValues } = useForm();
   const { errors, isSubmitSuccessful } = formState;
 
   // Dialog Help States
@@ -82,5 +82,5 @@ export const useFormFields = () => {
     },
   ];
 
-  return { loginFormObject, handleSubmit, errors, isSubmitSuccessful, reset, control };
+  return { loginFormObject, handleSubmit, errors, isSubmitSuccessful, reset, control, getValues };
 };
