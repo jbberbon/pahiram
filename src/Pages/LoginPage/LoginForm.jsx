@@ -8,7 +8,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import HelpDialog from "./HelpDialog";
 
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 // ZUSTAND IMPORTS
 import useUserStore from "../../Store/UserStore";
@@ -24,14 +24,14 @@ import useLogin from "../../Hooks/AuthHooks/useLogin";
 import ErrorSnackbar from "../../Components/Snackbars/ErrorSnackbar";
 
 function LoginForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { setUserData } = useUserStore();
 
   // Add "control" if youll use hook form devTool
   const {
     loginFormObject,
     handleSubmit,
-    isSubmitSuccessful,
+    // isSubmitSuccessful,
     reset,
     getValues,
   } = useFormFields();
@@ -39,10 +39,10 @@ function LoginForm() {
   const {
     handleLogin,
     userData,
-    isLoginLoading,
-    isLoginSuccess,
+    // isLoginLoading,
+    // isLoginSuccess,
     isLoginError,
-    setLoginSuccess,
+    // setLoginSuccess,
     setLoginError,
   } = useLogin();
 
@@ -52,18 +52,12 @@ function LoginForm() {
     setIsRemembered((prev) => !prev);
   };
 
-  // No API
   const onSubmit = () => {
     const formValues = getValues();
-    const finalFormValues = { ...formValues, remember_me: false };
+    const finalFormValues = { ...formValues, remember_me: isRemembered };
     handleLogin(finalFormValues);
     console.log(formValues);
   };
-  // WITH API
-  // const onSubmit = (data) => {
-  //   handleLogin(data, isRemembered, navigate);
-  //   console.log("User Role: " + userRole);
-  // };
 
   // Successful Login -> Clear login form
   useEffect(() => {
