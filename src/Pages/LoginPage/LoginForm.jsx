@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-// import { DevTool } from "@hookform/devtools";
-
-// import { Button, IconButton, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
@@ -9,24 +6,19 @@ import Typography from "@mui/material/Typography";
 import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-
 import HelpDialog from "./HelpDialog";
 import useUserStore from "../../Store/UserStore";
 import { useFormFields } from "./LoginFormFields";
-
-// ICONS
-// import HelpIcon from "/assets/icons/help-circle-outline.svg";
-
-// CSS
-import styles from "./LoginForm.module.css";
 import useLogin from "../../Hooks/AuthHooks/useLogin";
 import ErrorSnackbar from "../../Components/Snackbars/ErrorSnackbar";
 
+// import { DevTool } from "@hookform/devtools";
+import styles from "./LoginForm.module.css";
+
 function LoginForm() {
-  // const navigate = useNavigate();
   const { setAuthDataAndUserData } = useUserStore();
 
-  // Add "control" if youll use hook form devTool
+  // Add "control" if you`ll use hook form devTool
   const { loginFormObject, handleSubmit, reset, getValues } = useFormFields();
 
   const {
@@ -62,7 +54,6 @@ function LoginForm() {
 
   return (
     <>
-      {/* <Box width={"100%"} padding={"0 8px"}> */}
       <div style={{ width: "100%", padding: "0 8px" }}>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -94,14 +85,6 @@ function LoginForm() {
                   onClick={formField.dialog.onClick}
                   aria-label="Help button for login credentials"
                 >
-                  {/* <img
-                    src={HelpIcon}
-                    alt="Account Help Icon"
-                    style={{
-                      filter: "",
-                      width: "20px",
-                    }}
-                  /> */}
                   <InfoOutlinedIcon fontSize="small" />
                 </IconButton>
                 <HelpDialog
