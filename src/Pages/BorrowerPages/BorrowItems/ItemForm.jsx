@@ -159,7 +159,7 @@ ItemForm.propTypes = {
   subtractFieldCount: PropTypes.func.isRequired,
   isOfficeSelected: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
-  selectedOffice: PropTypes.number,
+  selectedOffice: PropTypes.string,
   items: PropTypes.array,
 };
 

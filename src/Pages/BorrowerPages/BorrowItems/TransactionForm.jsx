@@ -1,7 +1,7 @@
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { Controller } from "react-hook-form";
-import PURPOSES from "../../../Utils/Constants/PURPOSES";
+// import PURPOSES from "../../../Utils/Constants/PURPOSES";
 
 import PropTypes from "prop-types";
 
@@ -9,6 +9,7 @@ import { useState } from "react";
 import SearchUserField from "../../../Components/InputFields/SearchUserField";
 import useSearchEndorser from "../../../Hooks/useSearchEndorser";
 import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
+import { BORROW_PURPOSES } from "../../../Utils/Constants/BackendConstants/BORROW_PURPOSES";
 
 const TransactionForm = ({ control, isOfficeSelected, setValue }) => {
   const [userSearchInput, setUserSearchInput] = useState("");
@@ -16,6 +17,8 @@ const TransactionForm = ({ control, isOfficeSelected, setValue }) => {
     userSearchInput,
     isOfficeSelected
   );
+
+  const borrowPurposeKeys = Object.keys(BORROW_PURPOSES);
 
   return (
     <div
@@ -58,7 +61,7 @@ const TransactionForm = ({ control, isOfficeSelected, setValue }) => {
       />
       <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
         <Controller
-          name="purpose_code"
+          name="purpose"
           control={control}
           defaultValue=""
           rules={{ required: "Purpose is required" }}
@@ -73,9 +76,9 @@ const TransactionForm = ({ control, isOfficeSelected, setValue }) => {
               helperText={fieldState?.error?.message}
               sx={{ flex: "1 1 15rem" }}
             >
-              {PURPOSES.map((purpose) => (
-                <MenuItem key={purpose.code} value={purpose.code}>
-                  {purpose.generalPurpose}
+              {borrowPurposeKeys.map((purposeKey) => (
+                <MenuItem key={purposeKey} value={purposeKey}>
+                  {BORROW_PURPOSES[purposeKey].purpose}
                 </MenuItem>
               ))}
             </TextField>

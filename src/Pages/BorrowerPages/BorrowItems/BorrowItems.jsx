@@ -14,6 +14,7 @@ import SuccessSnackbar from "../../../Components/Snackbars/SuccessSnackbar";
 import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
 import ColorVariables from "../../../Utils/Theming/ColorVariables";
 import useSubmitRequest from "../../../Hooks/BorrowRequestHooks/useSubmitRequest";
+import { getApcisToken } from "../../../Utils/HelperFunctions/UserStore/GetToken";
 
 // import PropTypes from "prop-types";
 
@@ -22,7 +23,7 @@ const BorrowItems = () => {
   const { isSm } = BreakpointVariables();
 
   const { handleSubmit, control, watch, setValue, reset } = useForm();
-  const selectedOffice = watch("department_code");
+  const selectedOffice = watch("department");
   const endorser = watch("endorsed_by");
   const items = watch("items");
 
@@ -59,8 +60,7 @@ const BorrowItems = () => {
 
     if (inputPayload.endorsed_by) {
       // Assuming that endorsed_by is a non-empty string or a truthy value
-      inputPayload.apcis_token =
-        "10|h6DJG3p2n2VD6PHXBy218Y2EgzGHsZCXsQUPYWRDf22f2c66";
+      inputPayload.apcis_token = getApcisToken();
     } else {
       // If endorsed_by is falsy or an empty string, remove it from the payload
       delete inputPayload.endorsed_by;
@@ -71,15 +71,15 @@ const BorrowItems = () => {
   // Reset the form after successfull submission
   useEffect(() => {
     let timeoutId;
-
     if (isSubmitSuccess) {
       setFormResetting(true);
       timeoutId = setTimeout(() => {
         reset();
         setSubmitSuccess(null);
+        // Refresh the window HAHAHA 
+        window.location.reload();
       }, 3000);
     }
-
     return () => {
       // Cleanup the timeout if the component unmounts or isSubmitSuccess changes
       clearTimeout(timeoutId);

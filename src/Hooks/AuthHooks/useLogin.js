@@ -9,6 +9,7 @@ const useLogin = () => {
 
   const handleLogin = async (requestBody) => {
     try {
+      setLoginLoading(true);
       const response = await loginRequest(requestBody);
       if (response?.status === false) {
         setLoginError(response.message);

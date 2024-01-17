@@ -1,52 +1,62 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import GenerateAvatarName from "../Utils/HelperFunctions/UserStore/GenerateAvatarName";
 
 const useUserStore = create(
   persist(
     (set) => ({
       userData: {
-        firstName: null,
-        lastName: null,
-        email: null,
-        office: null,
-        role: null,
-        isAdmin: null,
+        avatarName: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        office: "",
+        role: "",
+        isAdmin: false,
+      },
+      authData: {
+        isAuthenticated: false,
         apcisToken: null,
         pahiramToken: null,
       },
-      isAuthenticated: false,
-
-      setUserData: (response) => {
+      setAuthDataAndUserData: (response) => {
         set({
           userData: {
+            avatarName: GenerateAvatarName(
+              response?.user?.first_name,
+              response?.user?.last_name
+            ),
             firstName: response?.user?.first_name,
             lastName: response?.user?.last_name,
             email: response?.user?.email,
             office: response?.user?.department_code,
-            role: response?.user?.role_code,
+            role: response?.user?.role,
             isAdmin: response?.user?.is_admin,
-            avatarName: "CC",
+          },
+          authData: {
+            isAuthenticated: true,
             apcisToken: response?.apcis_token,
             pahiramToken: response?.pahiram_token,
           },
-          isAuthenticated: true,
         });
       },
 
       handleLogout: () =>
         set({
           userData: {
-            firstName: null,
-            lastName: null,
-            email: null,
-            office: null,
-            role: null,
-            isAdmin: null,
-            avatarName: null,
-            apcisToken: null,
-            pahiramToken: null,
+            avatarName: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            office: "",
+            role: "",
+            isAdmin: "",
           },
-          isAuthenticated: false,
+          authData: {
+            isAuthenticated: false,
+            apcisToken: "",
+            pahiramToken: "",
+          },
         }),
     }),
     {
