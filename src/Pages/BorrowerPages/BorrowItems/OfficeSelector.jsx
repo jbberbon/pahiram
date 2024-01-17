@@ -2,7 +2,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
-import OFFICES from "../../../Utils/Constants/OFFICES";
+import { OFFICES } from "../../../Utils/Constants/BackendConstants/OFFICES";
 
 const OfficeSelector = ({ control, items, reset }) => {
   const includedOfficeKeys = ["BMO", "ESLO", "ITRO"];
@@ -10,13 +10,13 @@ const OfficeSelector = ({ control, items, reset }) => {
   return (
     <div style={{ width: "100%" }}>
       <Controller
-        name="department_code"
+        name="department"
         control={control}
-        defaultValue={OFFICES.SELECT_OFFICE}
+        defaultValue={"SELECT_OFFICE"}
         rules={{
           required: "Select an office",
           validate: (value) =>
-            value !== OFFICES.SELECT_OFFICE || "Select an office",
+            value !== OFFICES.SELECT_OFFICE.office || "Select Office",
         }}
         render={({ field, fieldState }) => (
           <TextField
@@ -37,13 +37,15 @@ const OfficeSelector = ({ control, items, reset }) => {
             }}
             onChange={(e) => {
               field.onChange(e);
-              if (items) {
+              console.log(items)
+              if (items || items !== undefined) {
                 reset();
                 console.log(items);
               }
             }}
+            // disabled={items !== undefined || Object.keys(items).length !== 0}
           >
-            <MenuItem disabled value={0}>
+            <MenuItem disabled value={"SELECT_OFFICE"}>
               <h2
                 style={{
                   fontSize: "1rem",
@@ -56,7 +58,10 @@ const OfficeSelector = ({ control, items, reset }) => {
               </h2>
             </MenuItem>
             {includedOfficeKeys.map((officeKey) => (
-              <MenuItem key={OFFICES[officeKey]} value={OFFICES[officeKey]}>
+              <MenuItem
+                key={OFFICES[officeKey].acronym}
+                value={OFFICES[officeKey].acronym}
+              >
                 <h2
                   style={{
                     fontSize: "1rem",
@@ -65,11 +70,8 @@ const OfficeSelector = ({ control, items, reset }) => {
                     margin: 0,
                   }}
                 >
-                  {officeKey}
+                  {OFFICES[officeKey].acronym}
                 </h2>
-                {/* <Typography variant="p" component={"p"} color={"neutral.main"}>
-                  {officeKey}
-                </Typography> */}
               </MenuItem>
             ))}
           </TextField>

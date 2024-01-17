@@ -5,7 +5,8 @@ import Layout from "../../../Components/Layout/Layout";
 
 function RequireAuth({ allowedRoles }) {
   const location = useLocation();
-  const { userData, isAuthenticated } = useUserStore();
+  const { userData, authData } = useUserStore();
+  const isAuthenticated = authData.isAuthenticated;
 
   if (isAuthenticated && allowedRoles.includes(userData.role)) {
     return <Layout />;
@@ -16,7 +17,6 @@ function RequireAuth({ allowedRoles }) {
 
   return <Navigate to="/" state={{ from: location }} replace />;
 }
-
 
 RequireAuth.propTypes = {
   allowedRoles: PropTypes.oneOfType([PropTypes.array, PropTypes.string])

@@ -2,14 +2,15 @@ import { useLocation, Navigate } from "react-router-dom";
 import useUserStore from "../../../Store/UserStore";
 import PropTypes from "prop-types";
 import RequireAuth from "./RequireAuth";
-import getRoleConstants from "../../Constants/USER_ROLES";
+import { getBorrowerKey } from "../ConstantFunctions/UserRoleConstantHelper";
 
 function RequireAdminPrivilege({ allowedRoles }) {
   const location = useLocation();
   const { userData } = useUserStore();
   const userRole = userData.role;
   const isAdmin = userData.isAdmin;
-  const { borrower } = getRoleConstants();
+
+  const borrower = getBorrowerKey();
 
   // Check if the user is authenticated and is an admin
   if (isAdmin || userRole != borrower) {

@@ -58,37 +58,19 @@ import useUserStore from "./Store/UserStore";
 import RequireAuth from "./Utils/HelperFunctions/RouteProtection/RequireAuth";
 import RequireAdminPrivilege from "./Utils/HelperFunctions/RouteProtection/RequireAdminPrivilege";
 
-import getRoleConstants from "./Utils/Constants/USER_ROLES";
+// import getRoleConstants from "./Utils/Constants/USER_ROLES";
+import { USER_ROLES } from "./Utils/Constants/BackendConstants/USER_ROLES";
 
 function App() {
   const [theme] = useMode();
-  const { userData, isAuthenticated } = useUserStore();
+  const { userData, authData } = useUserStore();
   const userRole = userData.role;
   const isAdmin = userData.isAdmin;
+  const isAuthenticated = authData.isAuthenticated;
 
-  // destructured users
-  // const borrower = USER_ROLES.borrower;
-  // const inventoryManager = USER_ROLES.inventoryManager;
-  // const lendingManager = USER_ROLES.lendingManager;
-  // const supervisor = USER_ROLES.supervisor;
-  const {
-    borrower,
-    inventoryManager,
-    lendingManager,
-    coSupervisor,
-    supervisor,
-  } = getRoleConstants();
-
-  // User Classifications
-  const allUsers = [
-    borrower,
-    inventoryManager,
-    lendingManager,
-    coSupervisor,
-    supervisor,
-  ];
+  const allUserRoles = Object.keys(USER_ROLES);
   const redirect =
-    isAdmin || userRole != borrower ? "/dashboard" : "/borrow-items";
+    isAdmin || userRole != "BORROWER" ? "/dashboard" : "/borrow-items";
 
   return (
     <ThemeProvider theme={theme}>
@@ -135,7 +117,7 @@ function App() {
 
         {/* Protected Routes ----------------------------------------------------------*/}
         {/* All Users without Admin Privilege */}
-        <Route element={<RequireAuth allowedRoles={allUsers} />}>
+        <Route element={<RequireAuth allowedRoles={allUserRoles} />}>
           <Route
             path="/borrow-items"
             element={
@@ -173,7 +155,7 @@ function App() {
          * Requires Admin Privilege
          * EVEN IF ROLE IS BORROWER
          */}
-        <Route element={<RequireAdminPrivilege allowedRoles={allUsers} />}>
+        <Route element={<RequireAdminPrivilege allowedRoles={allUserRoles} />}>
           <Route
             path="/dashboard"
             element={

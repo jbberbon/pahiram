@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useUserStore from "../../../Store/UserStore";
-import getRoleConstants from "../../../Utils/Constants/USER_ROLES";
 import useCurrentPathname from "../../../Utils/HelperFunctions/useCurrentPathname";
 import SidebarList from "./SidebarList";
 import BORROWER_MENU_LIST from "../../../Utils/Constants/SidebarConstants/BORROWER_MENU_LIST";
@@ -9,24 +8,22 @@ import EMPLOYEE_MENU_LIST from "../../../Utils/Constants/SidebarConstants/EMPLOY
 import ALL_MENU_LIST from "../../../Utils/Constants/SidebarConstants/ALL_MENU_LIST";
 import CollapseSidebarMenu from "./CollapseSidebarMenu";
 import useSidebarStore from "../../../Store/SidebarStore";
+import { getBorrowerKey } from "../../../Utils/HelperFunctions/ConstantFunctions/UserRoleConstantHelper";
 
 function SidebarItemsContainer() {
   const currentPathname = useCurrentPathname();
   const { userData } = useUserStore();
-
   const isAdmin = userData.isAdmin;
-  // if user role is included in the role list if not, set to null;
-  // const userRole = Object.values(USER_ROLES).includes(userData.role)
-  //   ? userData.role
-  //   : null;
   const userRole = userData.role;
+  const borrower = getBorrowerKey();
 
   //-------------------------------------------------------------------------
 
-  const borrower = getRoleConstants().borrower;
   const initialActiveLink =
     isAdmin || userRole != borrower ? "/dashboard" : "/borrow-items";
+
   const [selectedLink, setSelectedLink] = useState(initialActiveLink);
+  
   const handleListItemClick = (index) => {
     setSelectedLink(index);
   };

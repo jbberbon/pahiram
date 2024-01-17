@@ -16,12 +16,6 @@ const ALL_MENU_LIST = [
     link: "borrow-items",
     aria: "Navigate to dashboard page",
   },
-  // {
-  //   title: "Borrowing Status",
-  //   icon: <ListAltRoundedIcon fontSize="large" />,
-  //   link: "borrowing-status",
-  //   aria: "Navigate to borrowing status page",
-  // },
   {
     title: "Borrow Requests",
     icon: <HistoryRoundedIcon fontSize="large" />,
