@@ -22,7 +22,7 @@ const useEditRequest = () => {
         return;
       }
       setEditSuccess(response?.message);
-
+      setEditLoading(false);
       // Successful
     } catch (error) {
       console.error(error);

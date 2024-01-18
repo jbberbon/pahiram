@@ -20,13 +20,13 @@ const SearchUserField = ({
   const [selectedOption, setSelectedOption] = useState(defaultValue || "");
 
   const isOptionEqualToValue = (option, value) =>
-    option.apc_id === value.apc_id;
+    option?.apc_id === value?.apc_id;
 
   return (
     <Autocomplete
       {...field}
-      options={options && options.length > 0 ? options : []}
-      getOptionLabel={(option) => (option && option.full_name) || ""}
+      options={options && options?.length > 0 ? options : []}
+      getOptionLabel={(option) => (option && option?.full_name) || ""}
       disabled={disabled}
       renderInput={(params) => (
         <TextField
@@ -54,7 +54,7 @@ const SearchUserField = ({
       }}
       renderOption={(props, option) => (
         <li {...props}>
-          {loading ? <CircularProgress size={20} /> : option.full_name}
+          {loading ? <CircularProgress size={20} /> : option?.full_name}
         </li>
       )}
       isOptionEqualToValue={isOptionEqualToValue}
@@ -72,7 +72,7 @@ SearchUserField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   setSearchInput: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
-  defaultValue: PropTypes.object,
+  defaultValue: PropTypes.any,
 };
 
 export default SearchUserField;

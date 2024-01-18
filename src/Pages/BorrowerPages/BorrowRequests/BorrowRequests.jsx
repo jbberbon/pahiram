@@ -41,14 +41,25 @@ function BorrowRequests() {
     isLoading,
   } = useCancelRequest();
 
-  const filteredActiveRequests = borrowRequestList?.filter(
-    (request) =>
-      request.transac_status === 1010 || request.transac_status === 2020
+  const pendingEndorserApproval = "PENDING_ENDORSER_APPROVAL";
+  const pendingBorrowApproval = "PENDING_BORROWING_APPROVAL";
+  const approvedTransac = "APPROVED";
+  const onGoing = "ON_GOING";
+  const overdueTransac = "OVERDUE_TRANSACTION_COMPLETION";
+  const validStatuses = [
+    pendingEndorserApproval,
+    pendingBorrowApproval,
+    approvedTransac,
+    onGoing,
+    overdueTransac,
+  ];
+
+  const filteredActiveRequests = borrowRequestList?.filter((request) =>
+    validStatuses.includes(request.transac_status)
   );
 
   const filteredPreviousRequests = borrowRequestList?.filter(
-    (request) =>
-      request.transac_status !== 1010 || request.transac_status !== 2020
+    (request) => !validStatuses.includes(request.transac_status)
   );
 
   return (
@@ -66,27 +77,21 @@ function BorrowRequests() {
         >
           {borrowRequestList?.length > 0 &&
           filteredActiveRequests?.length > 0 ? (
-            borrowRequestList
-              .filter(
-                (request) =>
-                  request.transac_status === 1010 ||
-                  request.transac_status === 2020
-              )
-              .map((request) => (
-                <RequestItemCard
-                  key={request.id}
-                  transacId={request.id}
-                  submitDate={request.created_at}
-                  department={request.department}
-                  endorser={request?.endorsed_by}
-                  onClick={() => {
-                    fetchSpecificRequest(request.id);
-                    if (!isLoading) {
-                      setModalOpen(true);
-                    }
-                  }}
-                />
-              ))
+            filteredActiveRequests.map((request) => (
+              <RequestItemCard
+                key={request?.id}
+                transacId={request?.id}
+                submitDate={request?.created_at}
+                department={request?.department}
+                endorser={request?.endorsed_by}
+                onClick={() => {
+                  fetchSpecificRequest(request?.id);
+                  if (!isLoading) {
+                    setModalOpen(true);
+                  }
+                }}
+              />
+            ))
           ) : isLoadingRequestList ? (
             <EmptyItems message="Fetching data. Please wait" />
           ) : (
@@ -106,27 +111,21 @@ function BorrowRequests() {
         >
           {borrowRequestList?.length > 0 &&
           filteredPreviousRequests?.length > 0 ? (
-            borrowRequestList
-              .filter(
-                (request) =>
-                  request.transac_status !== 1010 &&
-                  request.transac_status !== 2020
-              )
-              .map((request) => (
-                <RequestItemCard
-                  key={request.id}
-                  transacId={request.id}
-                  submitDate={request.created_at}
-                  department={request.department}
-                  endorser={request?.endorsed_by}
-                  onClick={() => {
-                    fetchSpecificRequest(request.id);
-                    if (!isLoading) {
-                      setModalOpen(true);
-                    }
-                  }}
-                />
-              ))
+            filteredPreviousRequests.map((request) => (
+              <RequestItemCard
+                key={request?.id}
+                transacId={request?.id}
+                submitDate={request?.created_at}
+                department={request?.department}
+                endorser={request?.endorsed_by}
+                onClick={() => {
+                  fetchSpecificRequest(request?.id);
+                  if (!isLoading) {
+                    setModalOpen(true);
+                  }
+                }}
+              />
+            ))
           ) : isLoadingRequestList ? (
             <EmptyItems message="Fetching data. Please wait" />
           ) : (

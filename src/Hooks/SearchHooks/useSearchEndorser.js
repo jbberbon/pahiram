@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-// import SearchItemAPI from "../APIEndpoints/BorrowItemsAPI/SearchItemAPI";
-import SearchEndorserAPI from "../API/BorrowItemsAPI/SearchEndorserAPI";
+import { searchUserByName } from "../../API/Endpoints/searchEndpoints";
+import { getApcisRequest } from "../../API/HttpRequests/apcisAxiosCalls";
 
 const useSearchEndorser = (endorser, isOfficeSelected) => {
   const [results, setResults] = useState([]);
@@ -10,27 +10,18 @@ const useSearchEndorser = (endorser, isOfficeSelected) => {
   const searchEndorser = async (name) => {
     try {
       setLoading(true);
-      const response = await SearchEndorserAPI(name); // Use the SearchItemAPI function
+      const endpoint = searchUserByName(name);
+      const response = await getApcisRequest(endpoint);
 
-      // Check if server is down
-      if (typeof response === "undefined" || response === null) {
-        setError("Unable to search for users. Please try again later.");
-        return;
+      if (response?.status === false) {
+        setError(response?.message);
       }
-
-      // Check if has data and status is true
-      if (response?.data && response?.status) {
-        setResults(response.data);
-        setError(null); // Clear any previous error
-      } else {
-        // Retrieve error message from API
-        setError(response?.data?.message || "An unexpected error occurred");
-      }
-    } catch (error) {
-      console.error("Error searching endorser:", error);
-      setError("Failed to search endorser. Please try again later.");
-    } finally {
+      setResults(response?.data);
       setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error searching endorser:", error);
+      setError(error);
     }
   };
 

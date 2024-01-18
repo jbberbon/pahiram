@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { loginRequest } from "../../API/HttpRequests/authAxiosCalls";
+// import useUserStore from "../../Store/UserStore";
 
 const useLogin = () => {
   const [isLoginLoading, setLoginLoading] = useState(false);
   const [isLoginSuccess, setLoginSuccess] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isLoginError, setLoginError] = useState(null);
+  // const { setAuthDataAndUserData } = useUserStore();
+
 
   const handleLogin = async (requestBody) => {
     try {
@@ -17,6 +20,8 @@ const useLogin = () => {
         return;
       }
       setUserData(response?.data);
+
+      // setAuthDataAndUserData(response?.data);
       setLoginLoading(false);
       setLoginSuccess(response?.message);
     } catch (error) {

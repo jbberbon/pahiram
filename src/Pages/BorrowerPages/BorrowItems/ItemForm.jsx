@@ -3,9 +3,9 @@ import { Controller, useFieldArray } from "react-hook-form";
 import PropTypes from "prop-types";
 import RemoveItemButton from "./RemoveItemButton";
 import Divider from "@mui/material/Divider";
-import useSearchItemModel from "../../../Hooks/useSearchItemModel";
 import SearchItemModelField from "../../../Components/InputFields/SearchItemModelField";
 import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
+import useSearchItemModel from "../../../Hooks/SearchHooks/useSearchItemModel";
 // import Button from "@mui/material/Button";
 
 const ItemForm = ({
@@ -15,7 +15,6 @@ const ItemForm = ({
   isOfficeSelected,
   setValue,
   selectedOffice,
-  // items,
 }) => {
   const { remove } = useFieldArray({
     control,
@@ -27,7 +26,7 @@ const ItemForm = ({
     subtractFieldCount();
   };
 
-  // !!!Custom hook for searching items
+  // Custom hook for searching items
   const { results, loading, error, setError } = useSearchItemModel(
     selectedOffice,
     isOfficeSelected

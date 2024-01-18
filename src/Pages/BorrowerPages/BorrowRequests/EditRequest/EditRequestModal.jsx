@@ -5,13 +5,14 @@ import PageTitle from "../../../../Components/Text/BorrowRequestsTitle";
 import { useForm, Controller } from "react-hook-form";
 // import { TextField } from "@mui/material";
 import SearchUserField from "../../../../Components/InputFields/SearchUserField";
-import useSearchEndorser from "../../../../Hooks/useSearchEndorser";
 import { useState } from "react";
 import ErrorSnackbar from "../../../../Components/Snackbars/ErrorSnackbar";
 import { MenuItem, TextField } from "@mui/material";
-import PURPOSES from "../../../../Utils/Constants/PURPOSES";
 import useEditRequest from "../../../../Hooks/BorrowRequestHooks/useEditRequest";
 import SuccessSnackbar from "../../../../Components/Snackbars/SuccessSnackbar";
+import useSearchEndorser from "../../../../Hooks/SearchHooks/useSearchEndorser";
+import { BORROW_PURPOSES } from "../../../../Utils/Constants/BackendConstants/BORROW_PURPOSES";
+import { getApcisToken } from "../../../../Utils/HelperFunctions/UserStore/GetToken";
 
 const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
   const [userSearchInput, setUserSearchInput] = useState("");
@@ -32,10 +33,12 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
     handleEditRequest,
   } = useEditRequest();
 
+  const apcisToken = getApcisToken();
   const onSubmitEdit = async () => {
-    const apcisToken = "5|CcW29NQdih3SUokRffPz9aDHrDO3zW11puv2qMzTdefc2be5";
     try {
       const formData = getValues();
+
+      // delete formData.endorsed_by;
 
       const requestBody = {
         request_data: { ...formData, apcis_token: apcisToken },
@@ -79,6 +82,9 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
                   message:
                     "Invalid input. Only letters, numbers, and hyphens are allowed.",
                 },
+                required: specificRequestData?.endorsed_by?.apc_id
+                  ? "You cannot remove existing endorser"
+                  : false,
               }}
               render={({ field, fieldState }) => (
                 <SearchUserField
@@ -95,7 +101,7 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
                   loading={loading}
                   setValue={setValue}
                   placeholder="Enter endorser name"
-                  defaultValue={specificRequestData?.endorsed_by}
+                  defaultValue={specificRequestData?.endorsed_by || ""}
                 />
               )}
             />
@@ -107,9 +113,9 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
               }}
             >
               <Controller
-                name="purpose_code"
+                name="purpose"
                 control={control}
-                defaultValue={specificRequestData.purpose}
+                defaultValue={specificRequestData?.purpose}
                 rules={{ required: "Purpose is required" }}
                 render={({ field, fieldState }) => (
                   <TextField
@@ -122,9 +128,9 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
                     helperText={fieldState?.error?.message}
                     sx={{ flex: "1 1 8rem" }}
                   >
-                    {PURPOSES.map((purpose) => (
-                      <MenuItem key={purpose.code} value={purpose.code}>
-                        {purpose.generalPurpose}
+                    {Object.entries(BORROW_PURPOSES).map(([key, purpose]) => (
+                      <MenuItem key={key} value={key}>
+                        {purpose.purpose}
                       </MenuItem>
                     ))}
                   </TextField>
@@ -133,7 +139,7 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
               <Controller
                 name="user_defined_purpose"
                 control={control}
-                defaultValue={specificRequestData.user_defined_purpose}
+                defaultValue={specificRequestData?.user_defined_purpose}
                 rules={{
                   required: "Purpose is required",
                   minLength: {

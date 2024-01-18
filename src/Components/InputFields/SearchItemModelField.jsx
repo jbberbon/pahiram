@@ -42,11 +42,6 @@ const SearchItemModelField = ({
           shouldValidate: true,
         });
       }}
-      // onInputChange={(e) => {
-      //   if (e && e.target) {
-      //     setSearchInput(e.target.value);
-      //   }
-      // }}
       renderOption={(props, option) => (
         <li {...props}>
           {loading ? <CircularProgress size={20} /> : option.model_name}

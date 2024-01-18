@@ -20,6 +20,7 @@ const useGetSpecificBorrowRequest = () => {
       setSpecificRequest(response.data);
       setSpecificRequestLoading(false);
     } catch (error) {
+      setSpecificRequestLoading(false);
       setErrorSpecificRequest(error);
       console.error("Error fetching details:", error);
     }

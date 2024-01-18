@@ -4,7 +4,7 @@ export const BORROW_PURPOSES = {
     description: "For general academic projects, assignments, or coursework",
   },
   ORG_CLUB_ACTIVITY: {
-    purpose: "Org/Club Activity",
+    purpose: "Org / Club Activity",
     description: "For org or club-related events and activities",
   },
   UPSKILLING: {

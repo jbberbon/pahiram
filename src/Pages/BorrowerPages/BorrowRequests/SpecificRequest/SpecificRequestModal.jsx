@@ -4,12 +4,14 @@ import PageTitle from "../../../../Components/Text/BorrowRequestsTitle";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-// import Divider from "@mui/material/Divider";
+import Divider from "@mui/material/Divider";
 
 import convertDateForHumanConsumption from "../../../../Utils/HelperFunctions/DateFunction/convertDateForHumanConsumption";
 import BreakpointVariables from "../../../../Utils/Theming/BreakpointVariables";
 import { useState } from "react";
 import EditRequestModal from "../EditRequest/EditRequestModal";
+import { findTransacStatus } from "../../../../Utils/HelperFunctions/ConstantFunctions/TransacStatusConstantHelper";
+import BorrowedItemsTable from "./BorrowedItemsTable";
 
 function SpecificRequestModal({
   isModalOpen,
@@ -20,17 +22,33 @@ function SpecificRequestModal({
 }) {
   const [isEditOpen, setEditOpen] = useState(false);
   const { isSm } = BreakpointVariables();
-  const truncatedId = specificRequestData?.id
-    ? specificRequestData.id.slice(0, 20)
-    : "";
+  const transacData = specificRequestData?.transac_data;
+  const borrowedItems = specificRequestData?.items;
+  const truncatedId = transacData?.id ? transacData?.id.slice(0, 20) : "";
 
   const handleCopyClick = () => {
-    navigator.clipboard.writeText(specificRequestData?.id);
+    navigator.clipboard.writeText(transacData?.id);
+    console.log(borrowedItems);
   };
 
-  const parsedSubmittedDate = specificRequestData?.created_at
-    ? convertDateForHumanConsumption(specificRequestData?.created_at)
+  const parsedSubmittedDate = transacData?.created_at
+    ? convertDateForHumanConsumption(transacData?.created_at)
     : "";
+
+  const transacStatus = findTransacStatus(transacData?.transac_status);
+
+  const pendingEndorserApproval = "PENDING_ENDORSER_APPROVAL";
+  const pendingBorrowApproval = "PENDING_BORROWING_APPROVAL";
+  const approvedTransac = "APPROVED";
+  const onGoing = "ON_GOING";
+  const overdueTransac = "OVERDUE_TRANSACTION_COMPLETION";
+  const activeStatuses = [
+    pendingEndorserApproval,
+    pendingBorrowApproval,
+    approvedTransac,
+    onGoing,
+    overdueTransac,
+  ];
   return (
     <>
       <CustomModal isModalOpen={isModalOpen} setModalOpen={setModalOpen}>
@@ -58,6 +76,7 @@ function SpecificRequestModal({
                 margin: 0,
                 whiteSpace: "nowrap",
                 minWidth: "110px",
+                fontSize: "0.875rem",
               }}
             >
               Request ID
@@ -66,6 +85,7 @@ function SpecificRequestModal({
               style={{
                 padding: 0,
                 margin: 0,
+                fontSize: "0.875rem",
               }}
             >
               {truncatedId}...
@@ -96,6 +116,7 @@ function SpecificRequestModal({
                 margin: 0,
                 whiteSpace: "nowrap",
                 minWidth: "110px",
+                fontSize: "0.875rem",
               }}
             >
               Office
@@ -104,9 +125,10 @@ function SpecificRequestModal({
               style={{
                 padding: 0,
                 margin: 0,
+                fontSize: "0.875rem",
               }}
             >
-              {specificRequestData?.department}
+              {transacData?.department}
             </p>
           </div>
           <div
@@ -123,6 +145,7 @@ function SpecificRequestModal({
                 margin: 0,
                 whiteSpace: "nowrap",
                 minWidth: "110px",
+                fontSize: "0.875rem",
               }}
             >
               Submitted on
@@ -131,6 +154,7 @@ function SpecificRequestModal({
               style={{
                 padding: 0,
                 margin: 0,
+                fontSize: "0.875rem",
               }}
             >
               {parsedSubmittedDate}
@@ -151,6 +175,7 @@ function SpecificRequestModal({
                 margin: 0,
                 whiteSpace: "nowrap",
                 minWidth: "110px",
+                fontSize: "0.875rem",
               }}
             >
               Purpose
@@ -159,9 +184,10 @@ function SpecificRequestModal({
               style={{
                 padding: 0,
                 margin: 0,
+                fontSize: "0.875rem",
               }}
             >
-              {specificRequestData?.user_defined_purpose}
+              {transacData?.user_defined_purpose}
             </p>
           </div>
           <div
@@ -178,6 +204,7 @@ function SpecificRequestModal({
                 margin: 0,
                 whiteSpace: "nowrap",
                 minWidth: "110px",
+                fontSize: "0.875rem",
               }}
             >
               Endorser
@@ -186,10 +213,11 @@ function SpecificRequestModal({
               style={{
                 padding: 0,
                 margin: 0,
+                fontSize: "0.875rem",
               }}
             >
-              {specificRequestData?.endorsed_by?.full_name
-                ? specificRequestData?.endorsed_by?.full_name
+              {transacData?.endorsed_by?.full_name
+                ? transacData?.endorsed_by?.full_name
                 : "None"}
             </p>
           </div>
@@ -207,6 +235,7 @@ function SpecificRequestModal({
                 margin: 0,
                 whiteSpace: "nowrap",
                 minWidth: "110px",
+                fontSize: "0.875rem",
               }}
             >
               Status
@@ -215,14 +244,30 @@ function SpecificRequestModal({
               style={{
                 padding: 0,
                 margin: 0,
+                fontSize: "0.875rem",
               }}
             >
-              {specificRequestData?.transac_status}
+              {transacStatus?.transac_status}
             </p>
           </div>
-          {(specificRequestData?.transac_status == 1010 ||
-            specificRequestData?.transac_status === 2020) && (
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+
+          <span></span>
+          <span></span>
+
+          <Divider />
+          <PageTitle fontSize="1rem">Borrowed Items</PageTitle>
+          {borrowedItems && (
+            <BorrowedItemsTable borrowedItems={borrowedItems} />
+          )}
+
+          {activeStatuses.includes(transacData?.transac_status) && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "8px",
+              }}
+            >
               <Button
                 sx={{
                   "&:focus": {
@@ -233,9 +278,21 @@ function SpecificRequestModal({
                   // console.log(specificRequestData)
                   setEditOpen(true);
                   setModalOpen(false);
+                  console.log(
+                    // TRANSAC_STATUSES[specificRequestData?.transac_status]
+                    transacStatus.transac_status
+                  );
                 }}
               >
-                Edit Request
+                <p
+                  style={{
+                    padding: 0,
+                    margin: 0,
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  Edit Request
+                </p>
               </Button>
               <Button
                 sx={{
@@ -244,21 +301,31 @@ function SpecificRequestModal({
                   },
                 }}
                 onClick={() => {
-                  handleCancelRequest(specificRequestData.id);
+                  handleCancelRequest(transacData.id);
                   setModalOpen(false);
                 }}
               >
-                Cancel Request
+                <p
+                  style={{
+                    padding: 0,
+                    margin: 0,
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  Cancel Request
+                </p>
               </Button>
             </div>
           )}
         </div>
       </CustomModal>
-      <EditRequestModal
-        isEditOpen={isEditOpen}
-        setEditOpen={setEditOpen}
-        specificRequestData={specificRequestData}
-      />
+      {transacData && (
+        <EditRequestModal
+          isEditOpen={isEditOpen}
+          setEditOpen={setEditOpen}
+          specificRequestData={transacData}
+        />
+      )}
     </>
   );
 }
