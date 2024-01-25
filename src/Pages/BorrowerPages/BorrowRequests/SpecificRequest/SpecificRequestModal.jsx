@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import CustomModal from "../../../../Components/CustomModal/CustomModal";
-import PageTitle from "../../../../Components/Text/BorrowRequestsTitle";
+import PageTitle from "../../../../Components/Text/PageTitle";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -41,14 +41,24 @@ function SpecificRequestModal({
   const pendingBorrowApproval = "PENDING_BORROWING_APPROVAL";
   const approvedTransac = "APPROVED";
   const onGoing = "ON_GOING";
-  const overdueTransac = "OVERDUE_TRANSACTION_COMPLETION";
   const activeStatuses = [
     pendingEndorserApproval,
     pendingBorrowApproval,
     approvedTransac,
     onGoing,
-    overdueTransac,
   ];
+
+  const isOngoing = transacData?.transac_status === onGoing;
+  const isApproved = transacData?.transac_status === approvedTransac;
+  const isPendingApproval =
+    transacData?.transac_status === pendingBorrowApproval &&
+    transacData?.endorsed_by?.full_name !== undefined;
+  const isEditDisabled = isOngoing || isApproved || isPendingApproval;
+
+  // console.log("transacData?.transac_status:", transacData?.transac_status);
+  // console.log("isOngoing:", isOngoing);
+  // console.log("isApproved:", isApproved);
+  // console.log("isPendingApproval:", isPendingApproval);
   return (
     <>
       <CustomModal isModalOpen={isModalOpen} setModalOpen={setModalOpen}>
@@ -59,9 +69,19 @@ function SpecificRequestModal({
             width: "100%",
             padding: isSm ? "20px" : "18px",
             gap: "12px",
+            margin: "auto"
           }}
         >
-          <PageTitle fontSize="1rem">Borrow Request Details</PageTitle>
+          <Divider
+            textAlign="left"
+            sx={{
+              "&:before": { width: 0 },
+              "& .MuiDivider-wrapper": { padding: "0 16px 0 0" },
+              // marginTop: "16px",
+            }}
+          >
+            <PageTitle fontSize="1rem">Borrow Request Details</PageTitle>
+          </Divider>
           <div
             style={{
               display: "flex",
@@ -251,13 +271,19 @@ function SpecificRequestModal({
             </p>
           </div>
 
-          <span></span>
-          <span></span>
+          <Divider
+            textAlign="left"
+            sx={{
+              "&:before": { width: 0 },
+              "& .MuiDivider-wrapper": { padding: "0 16px 0 0" },
+              marginTop: "16px",
+            }}
+          >
+            <PageTitle fontSize="1rem">Borrowed Items</PageTitle>
+          </Divider>
 
-          <Divider />
-          <PageTitle fontSize="1rem">Borrowed Items</PageTitle>
           {borrowedItems && (
-            <BorrowedItemsTable borrowedItems={borrowedItems} />
+            <BorrowedItemsTable borrowedItems={borrowedItems} transacStatus={transacData?.transac_status} />
           )}
 
           {activeStatuses.includes(transacData?.transac_status) && (
@@ -269,19 +295,20 @@ function SpecificRequestModal({
               }}
             >
               <Button
+                // Disable EDIT BUTTON IF
+                // 01. On going transaction
+                // 02. Approved Transaction
+                // 03. Pending Borrowing approval but has an endorser (meaning already approved by endorser)
+                disabled={isEditDisabled}
                 sx={{
                   "&:focus": {
                     outline: "none",
                   },
                 }}
                 onClick={() => {
-                  // console.log(specificRequestData)
                   setEditOpen(true);
                   setModalOpen(false);
-                  console.log(
-                    // TRANSAC_STATUSES[specificRequestData?.transac_status]
-                    transacStatus.transac_status
-                  );
+                  console.log(transacStatus.transac_status);
                 }}
               >
                 <p
@@ -310,6 +337,7 @@ function SpecificRequestModal({
                     padding: 0,
                     margin: 0,
                     fontSize: "0.875rem",
+                    color: "#D54442"
                   }}
                 >
                   Cancel Request
@@ -319,11 +347,11 @@ function SpecificRequestModal({
           )}
         </div>
       </CustomModal>
-      {transacData && (
+      {specificRequestData && (
         <EditRequestModal
           isEditOpen={isEditOpen}
           setEditOpen={setEditOpen}
-          specificRequestData={transacData}
+          specificRequestData={specificRequestData}
         />
       )}
     </>

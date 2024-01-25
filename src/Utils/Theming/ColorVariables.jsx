@@ -6,8 +6,9 @@ function ColorVariables() {
   const neutralMain = theme.palette.neutral.main;
   const neutralLight = theme.palette.neutral.light;
   const primaryMain = theme.palette.primary.main;
+  const secondaryMain = theme.palette.secondary.main;
 
-  return { neutralMain, neutralLight, primaryMain, neutralBackground };
+  return { neutralMain, neutralLight, primaryMain, neutralBackground, secondaryMain };
 }
 
 export default ColorVariables;

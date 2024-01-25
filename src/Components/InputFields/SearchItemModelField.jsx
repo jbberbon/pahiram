@@ -15,17 +15,21 @@ const SearchItemModelField = ({
   placeholder,
   // setSearchInput,
   disabled,
+  defaultValue,
 }) => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState(defaultValue || "");
+  const isOptionEqualToValue = (option, value) => option?.id === value?.id;
 
   return (
     <Autocomplete
       {...field}
       options={options && options.length > 0 ? options : []}
       getOptionLabel={(option) => (option && option.model_name) || ""}
+      disabled={disabled}
       renderInput={(params) => (
         <TextField
           {...params}
+          required
           label={label}
           variant="standard"
           error={Boolean(fieldState?.error?.message)}
@@ -47,7 +51,8 @@ const SearchItemModelField = ({
           {loading ? <CircularProgress size={20} /> : option.model_name}
         </li>
       )}
-      sx={{ flex: "1 1 15rem" }}
+      isOptionEqualToValue={isOptionEqualToValue}
+      // sx={{ flex: "1 1 15rem" }}
     />
   );
 };
@@ -61,6 +66,7 @@ SearchItemModelField.propTypes = {
   setValue: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
+  defaultValue: PropTypes.object,
 };
 
 export default SearchItemModelField;

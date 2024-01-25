@@ -6,7 +6,7 @@ import EmptyItems from "./EmptyItems";
 import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
 import useGetBorrowRequests from "../../../Hooks/BorrowRequestHooks/useGetBorrowRequests";
 import useGetSpecificBorrowRequest from "../../../Hooks/BorrowRequestHooks/useGetSpecificBorrowRequest";
-import PageTitle from "../../../Components/Text/BorrowRequestsTitle";
+import PageTitle from "../../../Components/Text/PageTitle";
 import SpecificRequestModal from "./SpecificRequest/SpecificRequestModal";
 import useCancelRequest from "../../../Hooks/BorrowRequestHooks/useCancelRequest";
 import SuccessSnackbar from "../../../Components/Snackbars/SuccessSnackbar";

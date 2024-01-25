@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 // import BreakpointVariables from "../../Utils/Theming/BreakpointVariables";
 
 function PageTitle({ children, fontSize }) {
-  // const { isSm } = BreakpointVariables();
   return (
     <div
       style={{
-        // textAlign: isSm ? "center" : "left",
         width: "100%",
+        display: "flex",
+        alignItems: "center",
       }}
     >
       <h2
@@ -18,6 +18,8 @@ function PageTitle({ children, fontSize }) {
           margin: 0,
           fontSize: fontSize ? fontSize : "1.5rem",
           fontWeight: "600",
+          whiteSpace: "nowrap",
+          width: "100%",
         }}
       >
         {children}

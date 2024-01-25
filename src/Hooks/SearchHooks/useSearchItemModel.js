@@ -9,7 +9,7 @@ const useSearchItemModel = (officeCode, isOfficeSelected) => {
 
   const searchItemModel = async (officeCode) => {
     try {
-      console.error("search executed")
+      // console.error("search executed")
       setLoading(true);
       const endpoint = getModelListByOfficeEndpoint(officeCode);
       const response = await getRequest(endpoint);
@@ -19,6 +19,7 @@ const useSearchItemModel = (officeCode, isOfficeSelected) => {
       }
       setResults(response.data);
       setLoading(false);
+      // console.error(response.data)
     } catch (error) {
       setError(error);
       console.error(error);

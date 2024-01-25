@@ -1,45 +1,96 @@
 import TextField from "@mui/material/TextField";
-import { Controller, useFieldArray } from "react-hook-form";
+
+import PageTitle from "../../../../Components/Text/PageTitle";
+import { Controller } from "react-hook-form";
+import SearchItemModelField from "../../../../Components/InputFields/SearchItemModelField";
+import ErrorSnackbar from "../../../../Components/Snackbars/ErrorSnackbar";
+import { useState } from "react";
+import useSearchItemModel from "../../../../Hooks/SearchHooks/useSearchItemModel";
+
 import PropTypes from "prop-types";
-import RemoveItemButton from "./RemoveItemButton";
-import Divider from "@mui/material/Divider";
-import SearchItemModelField from "../../../Components/InputFields/SearchItemModelField";
-import ErrorSnackbar from "../../../Components/Snackbars/ErrorSnackbar";
-import useSearchItemModel from "../../../Hooks/SearchHooks/useSearchItemModel";
-// import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
+import RemoveItemButton from "../../BorrowItems/RemoveItemButton";
 
-const ItemForm = ({
-  control,
-  fieldCount,
-  subtractFieldCount,
-  isOfficeSelected,
-  setValue,
-  selectedOffice,
-}) => {
-  const { remove } = useFieldArray({
-    control,
-    name: "items",
-  });
+const AddNewItems = ({ selectedOffice, control, setValue, getValues }) => {
+  const [fieldCount, setFieldCount] = useState(0);
 
-  const handleRemoveField = (index) => {
-    remove(index);
-    subtractFieldCount();
+  const addFieldCount = () => {
+    if (fieldCount < 10) {
+      setFieldCount(fieldCount + 1);
+      console.log(fieldCount);
+    } else {
+      console.log("Max 10 fields");
+    }
+  };
+  const subtractFieldCount = (indexToRemove) => {
+    setFieldCount(fieldCount - 1);
+    setValue(
+      "add_new_items",
+      getValues("add_new_items").filter(
+        (item, index) => index !== indexToRemove
+      )
+    );
   };
 
-  // Custom hook for searching items
+  const isOfficeSelected = true;
   const { results, loading, error, setError } = useSearchItemModel(
     selectedOffice,
     isOfficeSelected
   );
-
   return (
-    isOfficeSelected && (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "16px",
+        width: "100%",
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+        <div
+          style={{
+            maxWidth: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PageTitle fontSize="1rem">Add New Items</PageTitle>
+        </div>
+        <hr
+          style={{
+            height: "1px",
+            border: 0,
+            width: "100%",
+            background: "#333",
+            margin: "auto 16px auto 16px",
+          }}
+        />
+        <Button
+          onClick={addFieldCount}
+          variant="text"
+          disabled={!isOfficeSelected}
+          disableElevation
+          disableRipple
+          sx={{
+            padding: "8px 8px",
+            margin: 0,
+            "&:focus": {
+              outline: "none",
+            },
+          }}
+        >
+          <p style={{ margin: 0, fontWeight: "500", whiteSpace: "nowrap" }}>
+            Add fields
+          </p>
+        </Button>
+      </div>
       <div
         style={{
-          width: "100%",
           display: "flex",
           flexDirection: "column",
-          gap: "16px",
+          gap: "18px",
         }}
       >
         {[...Array(fieldCount).keys()].map((index) => (
@@ -48,12 +99,13 @@ const ItemForm = ({
             style={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "center",
               gap: "16px",
+              paddingBottom: "16px",
+              width: "100%",
             }}
           >
             <Controller
-              name={`items[${index}].item_group_id`}
+              name={`add_new_items[${index}].item_group_id`}
               control={control}
               defaultValue=""
               rules={{
@@ -64,9 +116,9 @@ const ItemForm = ({
                 },
               }}
               render={({ field, fieldState }) => (
-                <div style={{ flex: "1 1 15rem" }}>
+                <div style={{ flex: "1 1 8rem" }}>
                   <SearchItemModelField
-                    disabled={!isOfficeSelected}
+                    disabled={false}
                     field={field}
                     fieldState={fieldState}
                     label="Search Item"
@@ -79,9 +131,9 @@ const ItemForm = ({
               )}
             />
             <Controller
-              name={`items[${index}].quantity`}
+              name={`add_new_items[${index}].quantity`}
               control={control}
-              defaultValue={1}
+              defaultValue=""
               rules={{
                 required: "Quantity is required",
                 min: { value: 1, message: "Quantity must be at least 1" },
@@ -89,6 +141,7 @@ const ItemForm = ({
               }}
               render={({ field, fieldState }) => (
                 <TextField
+                  required
                   {...field}
                   label="Quantity"
                   type="number"
@@ -96,21 +149,22 @@ const ItemForm = ({
                   fullWidth
                   error={Boolean(fieldState?.error)}
                   helperText={fieldState?.error?.message}
-                  sx={{ flex: "1 1 3rem" }}
+                  sx={{ flex: "1 1 2rem" }}
                 />
               )}
             />
             <Controller
-              name={`items[${index}].start_date`}
+              name={`add_new_items[${index}].start_date`}
               control={control}
               defaultValue=""
               rules={{ required: "Start date is required" }}
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  label="Select Item Start Date"
+                  required
+                  label="Change Item Start Date"
                   InputLabelProps={{ shrink: true }}
-                  id="select-return-date"
+                  id="change-start-date"
                   type="datetime-local"
                   variant="standard"
                   error={Boolean(fieldState?.error)}
@@ -120,16 +174,17 @@ const ItemForm = ({
               )}
             />
             <Controller
-              name={`items[${index}].return_date`}
+              name={`add_new_items[${index}].return_date`}
               control={control}
               defaultValue=""
               rules={{ required: "Return date is required" }}
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  label="Select Item Return Date"
+                  required
+                  label="Change Item Return Date"
                   InputLabelProps={{ shrink: true }}
-                  id="select-return-date"
+                  id="change-return-date"
                   type="datetime-local"
                   variant="standard"
                   error={Boolean(fieldState?.error)}
@@ -139,28 +194,21 @@ const ItemForm = ({
               )}
             />
             <RemoveItemButton
-              handleRemoveField={() => handleRemoveField(index)}
+              handleRemoveField={() => subtractFieldCount(index)}
             />
-            <Divider sx={{ width: "100%", paddingTop: "16px" }} />
           </div>
         ))}
-        <ErrorSnackbar error={error} setError={setError} />
-        {/* <Button onClick={() => console.log(items)}>
-          Reveal Endorser RHF Value
-        </Button> */}
       </div>
-    )
+      <ErrorSnackbar error={error} setError={setError} />
+    </div>
   );
 };
 
-ItemForm.propTypes = {
+AddNewItems.propTypes = {
+  selectedOffice: PropTypes.string.isRequired,
   control: PropTypes.object.isRequired,
-  fieldCount: PropTypes.number.isRequired,
-  subtractFieldCount: PropTypes.func.isRequired,
-  isOfficeSelected: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
-  selectedOffice: PropTypes.string,
-  items: PropTypes.array,
+  getValues: PropTypes.func.isRequired,
 };
 
-export default ItemForm;
+export default AddNewItems;

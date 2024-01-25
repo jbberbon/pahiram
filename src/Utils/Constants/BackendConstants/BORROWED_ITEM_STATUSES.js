@@ -1,10 +1,6 @@
 export const BORROWED_ITEM_STATUSES = {
-  PENDING_ENDORSER_APPROVAL: {
-    status: "Pending Endorser Approval",
-    description: "Item is awaiting approval",
-  },
-  PENDING_BORROWING_APPROVAL: {
-    status: "Pending Borrowing Approval",
+  PENDING_APPROVAL: {
+    status: "Pending Approval",
     description: "Item is awaiting approval",
   },
   APPROVED: {

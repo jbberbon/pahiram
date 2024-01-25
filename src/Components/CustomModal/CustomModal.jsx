@@ -25,6 +25,8 @@ const CustomModal = ({ children, isModalOpen, setModalOpen }) => {
             style={{
               backgroundColor: neutralBackground,
               width: isMd ? "90%" : "50%",
+              maxHeight: "90%", 
+              overflowY: "auto", // Add this line
             }}
           >
             {children}

@@ -1,28 +1,23 @@
 import CustomModal from "../../../../Components/CustomModal/CustomModal";
 import PropTypes from "prop-types";
-import PageTitle from "../../../../Components/Text/BorrowRequestsTitle";
 
-import { useForm, Controller } from "react-hook-form";
-// import { TextField } from "@mui/material";
-import SearchUserField from "../../../../Components/InputFields/SearchUserField";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import ErrorSnackbar from "../../../../Components/Snackbars/ErrorSnackbar";
-import { MenuItem, TextField } from "@mui/material";
 import useEditRequest from "../../../../Hooks/BorrowRequestHooks/useEditRequest";
 import SuccessSnackbar from "../../../../Components/Snackbars/SuccessSnackbar";
-import useSearchEndorser from "../../../../Hooks/SearchHooks/useSearchEndorser";
-import { BORROW_PURPOSES } from "../../../../Utils/Constants/BackendConstants/BORROW_PURPOSES";
 import { getApcisToken } from "../../../../Utils/HelperFunctions/UserStore/GetToken";
+import ColorVariables from "../../../../Utils/Theming/ColorVariables";
+import EditTransactionDetails from "./EditTransactionDetails";
+import EditItemDetails from "./EditItemDetails";
+import convertDatesToApiFormat from "../../../../Utils/HelperFunctions/DateFunction/convertDatesToApiFormat";
+import AddNewItems from "./AddNewItems";
+import { getDirtyValues } from "../../../../Utils/HelperFunctions/FormRelatedFunctions/getDirtyValues";
 
 const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
-  const [userSearchInput, setUserSearchInput] = useState("");
-  const { handleSubmit, control, setValue, getValues } = useForm();
+  const transacData = specificRequestData?.transac_data;
+  const itemData = specificRequestData?.items;
 
-  const isOfficeSelected = true;
-  const { results, loading, error, setError } = useSearchEndorser(
-    userSearchInput,
-    isOfficeSelected
-  );
+  const { secondaryMain } = ColorVariables();
 
   const {
     isEditSuccess,
@@ -33,150 +28,128 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
     handleEditRequest,
   } = useEditRequest();
 
+  const { handleSubmit, control, setValue, getValues, formState } = useForm();
+  const { dirtyFields } = formState;
   const apcisToken = getApcisToken();
-  const onSubmitEdit = async () => {
-    try {
-      const formData = getValues();
 
-      // delete formData.endorsed_by;
+  const onSubmitEdit = () => {
+    const formData = getValues();
+    let requestBody = {};
 
-      const requestBody = {
-        request_data: { ...formData, apcis_token: apcisToken },
+    // 01. Check for Change in Transaction Data
+    const dirtyRequestData = getDirtyValues(
+      formData["request_data"],
+      dirtyFields["request_data"]
+    );
+    if (Object.keys(dirtyRequestData).length > 0) {
+      requestBody = {
+        ...requestBody,
+        request_data: { ...dirtyRequestData, apcis_token: apcisToken },
       };
-      console.log(requestBody);
-      handleEditRequest(specificRequestData.id, requestBody);
-      if (!isEditLoading) {
-        setEditOpen(false);
-      }
-    } catch {
-      console.log("edit error");
+    }
+    // 02. Check for Change in Existing Items Data
+    const dirtyEditItemData = getDirtyValues(
+      formData["edit_existing_items"],
+      dirtyFields["edit_existing_items"]
+    );
+    if (Object.keys(dirtyEditItemData).length > 0) {
+      // 02.01 Check for items with is_cancelled field
+      let editExistingItems = Object.values(dirtyEditItemData).map((item) => {
+        if (item["is_cancelled"] === true) {
+          // Remove all fields EXCEPT item_group_id and is_cancelled
+          return {
+            item_group_id: item["item_group_id"],
+            is_cancelled: true,
+          };
+        }
+        // Remove is_cancelled field (FALSE)
+        const { is_cancelled, ...rest } = item;
+        return rest;
+      });
+
+      // 02.02 Convert date from input to the expected format by API
+      editExistingItems = convertDatesToApiFormat(editExistingItems);
+
+      requestBody = {
+        ...requestBody,
+        edit_existing_items: { ...editExistingItems },
+      };
+    }
+
+    // 03. Check for New Items
+    let addNewItems = formData["add_new_items"];
+    if (addNewItems && Object.keys(addNewItems).length > 0) {
+      // 03.01 Convert date from input to the expected format by API
+      addNewItems = convertDatesToApiFormat(addNewItems);
+      requestBody = {
+        ...requestBody,
+        add_new_items: { ...addNewItems },
+      };
+    }
+
+    if (Object.keys(requestBody).length === 0) {
+      return setEditOpen(false);
+    }
+
+    handleEditRequest(transacData.id, requestBody);
+    console.log("Request Body", requestBody);
+    if (!isEditLoading && isEditError) {
+      setEditOpen(false);
     }
   };
 
   return (
     <>
       <CustomModal isModalOpen={isEditOpen} setModalOpen={setEditOpen}>
-        <div style={{ width: "100%", padding: "16px" }}>
-          <PageTitle fontSize="1rem">Edit Request Details</PageTitle>
+        <form
+          onSubmit={handleSubmit(onSubmitEdit)}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "24px",
+            width: "100%",
+            padding: "16px",
+            margin: "auto",
+          }}
+        >
+          {transacData && (
+            <EditTransactionDetails
+              control={control}
+              setValue={setValue}
+              transacData={transacData}
+            />
+          )}
+          {itemData && (
+            <EditItemDetails
+              itemData={itemData}
+              control={control}
+              departmentCode={transacData?.department_acronym}
+              setValue={setValue}
+            />
+          )}
 
-          <form
-            onSubmit={handleSubmit(onSubmitEdit)}
+          {itemData && (
+            <AddNewItems
+              itemData={itemData}
+              selectedOffice={transacData?.department_acronym}
+              control={control}
+              setValue={setValue}
+              getValues={getValues}
+            />
+          )}
+
+          <button
+            disabled={isEditLoading}
             style={{
-              display: "flex",
-              flexDirection: "column",
-              marginTop: "8px",
-              gap: "16px",
+              width: "100%",
+              backgroundColor: secondaryMain,
+              marginTop: "12px",
             }}
           >
-            <Controller
-              name="endorsed_by"
-              control={control}
-              defaultValue={specificRequestData?.endorsed_by?.apc_id || ""}
-              rules={{
-                maxLength: {
-                  value: 30,
-                  message: "Endorser Name should not exceed 30 characters",
-                },
-                pattern: {
-                  value: /^[a-zA-Z0-9\s-]+$/,
-                  message:
-                    "Invalid input. Only letters, numbers, and hyphens are allowed.",
-                },
-                required: specificRequestData?.endorsed_by?.apc_id
-                  ? "You cannot remove existing endorser"
-                  : false,
-              }}
-              render={({ field, fieldState }) => (
-                <SearchUserField
-                  field={field}
-                  fieldState={fieldState}
-                  disabled={false}
-                  setSearchInput={setUserSearchInput}
-                  label="Change Endorser"
-                  options={
-                    results.length > 0
-                      ? results
-                      : [specificRequestData?.endorsed_by]
-                  }
-                  loading={loading}
-                  setValue={setValue}
-                  placeholder="Enter endorser name"
-                  defaultValue={specificRequestData?.endorsed_by || ""}
-                />
-              )}
-            />
-            <div
-              style={{
-                display: "flex",
-                gap: "16px",
-                flexWrap: "wrap",
-              }}
-            >
-              <Controller
-                name="purpose"
-                control={control}
-                defaultValue={specificRequestData?.purpose}
-                rules={{ required: "Purpose is required" }}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    {...field}
-                    label="Change Purpose"
-                    variant="standard"
-                    select
-                    disabled={!isOfficeSelected}
-                    error={Boolean(fieldState?.error)}
-                    helperText={fieldState?.error?.message}
-                    sx={{ flex: "1 1 8rem" }}
-                  >
-                    {Object.entries(BORROW_PURPOSES).map(([key, purpose]) => (
-                      <MenuItem key={key} value={key}>
-                        {purpose.purpose}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-              <Controller
-                name="user_defined_purpose"
-                control={control}
-                defaultValue={specificRequestData?.user_defined_purpose}
-                rules={{
-                  required: "Purpose is required",
-                  minLength: {
-                    value: 5,
-                    message: "Purpose should be at least 5 characters",
-                  },
-                  maxLength: {
-                    value: 30,
-                    message: "Purpose should not exceed 30 characters",
-                  },
-                  pattern: {
-                    value: /^[a-zA-Z0-9\s-]+$/,
-                    message:
-                      "Invalid input. Only letters, numbers, and hyphens are allowed.",
-                  },
-                }}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    {...field}
-                    label="Specify Purpose"
-                    variant="standard"
-                    type="text"
-                    disabled={!isOfficeSelected}
-                    error={Boolean(fieldState?.error)}
-                    helperText={fieldState?.error?.message}
-                    sx={{ flex: "1 1 8rem" }}
-                  />
-                )}
-              />
-            </div>
-            <button disabled={isEditLoading}>
-              {isEditLoading ? "Loading..." : "Submit"}
-            </button>
-          </form>
-        </div>
+            {isEditLoading ? "Loading..." : "Submit"}
+          </button>
+        </form>
       </CustomModal>
-      <ErrorSnackbar error={error} setError={setError} />
       <ErrorSnackbar error={isEditError} setError={setEditError} />
       <SuccessSnackbar
         isSuccess={isEditSuccess}
