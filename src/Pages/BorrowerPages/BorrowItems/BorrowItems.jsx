@@ -5,7 +5,7 @@ import TransactionForm from "./TransactionForm";
 
 import BorrowFormTitle from "./BorrowFormTitle";
 import Button from "@mui/material/Button";
-import ChooseFormSubtitle from "./ChooseFormSubtitle";
+import ItemFormTitle from "./ItemFormTitle";
 import ItemForm from "./ItemForm";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,10 +19,11 @@ import { getApcisToken } from "../../../Utils/HelperFunctions/UserStore/GetToken
 // import PropTypes from "prop-types";
 
 const BorrowItems = () => {
-  const { neutralBackground } = ColorVariables();
+  const { neutralBackground, neutralMain } = ColorVariables();
   const { isSm } = BreakpointVariables();
 
-  const { handleSubmit, control, watch, setValue, reset } = useForm();
+  const { handleSubmit, control, watch, setValue, reset, getValues } =
+    useForm();
   const selectedOffice = watch("department");
   const endorser = watch("endorsed_by");
   const items = watch("items");
@@ -57,6 +58,7 @@ const BorrowItems = () => {
 
   const onSubmit = async (data) => {
     const inputPayload = convertDatesToApiFormat(data);
+    console.log(inputPayload);
 
     if (inputPayload.endorsed_by) {
       // Assuming that endorsed_by is a non-empty string or a truthy value
@@ -76,7 +78,7 @@ const BorrowItems = () => {
       timeoutId = setTimeout(() => {
         reset();
         setSubmitSuccess(null);
-        // Refresh the window HAHAHA 
+        // Refresh the window HAHAHA
         window.location.reload();
       }, 3000);
     }
@@ -119,7 +121,7 @@ const BorrowItems = () => {
           setValue={setValue}
         />
 
-        <ChooseFormSubtitle
+        <ItemFormTitle
           addFieldCount={addFieldCount}
           isOfficeSelected={!!selectedOffice}
         />
@@ -129,6 +131,8 @@ const BorrowItems = () => {
           subtractFieldCount={subtractFieldCount}
           isOfficeSelected={!!selectedOffice}
           setValue={setValue}
+          getValues={getValues}
+          watch={watch}
           selectedOffice={selectedOffice}
           items={items}
         />
@@ -148,10 +152,10 @@ const BorrowItems = () => {
         >
           <p
             style={{
-              fontWeight: "500",
+              fontWeight: "600",
               margin: 0,
               padding: "2px 0",
-              color: "black",
+              color: "white",
             }}
           >
             {isSubmitLoading || isFormResetting ? "Loading" : "Submit Request"}

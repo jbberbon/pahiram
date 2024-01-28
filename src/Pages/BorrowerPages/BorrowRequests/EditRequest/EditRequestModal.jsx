@@ -1,23 +1,23 @@
 import CustomModal from "../../../../Components/CustomModal/CustomModal";
-import PropTypes from "prop-types";
-
 import { useForm } from "react-hook-form";
 import ErrorSnackbar from "../../../../Components/Snackbars/ErrorSnackbar";
 import useEditRequest from "../../../../Hooks/BorrowRequestHooks/useEditRequest";
 import SuccessSnackbar from "../../../../Components/Snackbars/SuccessSnackbar";
 import { getApcisToken } from "../../../../Utils/HelperFunctions/UserStore/GetToken";
-import ColorVariables from "../../../../Utils/Theming/ColorVariables";
-import EditTransactionDetails from "./EditTransactionDetails";
-import EditItemDetails from "./EditItemDetails";
+import EditTransactionForm from "./EditTransactionForm";
+import EditItemForm from "./EditItemForm";
 import convertDatesToApiFormat from "../../../../Utils/HelperFunctions/DateFunction/convertDatesToApiFormat";
 import AddNewItems from "./AddNewItems";
 import { getDirtyValues } from "../../../../Utils/HelperFunctions/FormRelatedFunctions/getDirtyValues";
+import PropTypes from "prop-types";
+import { Button } from "@mui/material";
+import BreakpointVariables from "../../../../Utils/Theming/BreakpointVariables";
+import { useEffect } from "react";
 
 const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
+  const { isCustom420 } = BreakpointVariables();
   const transacData = specificRequestData?.transac_data;
   const itemData = specificRequestData?.items;
-
-  const { secondaryMain } = ColorVariables();
 
   const {
     isEditSuccess,
@@ -28,12 +28,15 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
     handleEditRequest,
   } = useEditRequest();
 
-  const { handleSubmit, control, setValue, getValues, formState } = useForm();
+  const { handleSubmit, control, setValue, getValues, formState, reset } =
+    useForm();
   const { dirtyFields } = formState;
   const apcisToken = getApcisToken();
 
   const onSubmitEdit = () => {
     const formData = getValues();
+    console.log("Edit Raw", formData);
+    console.log("DIRTY FIELDS", dirtyFields);
     let requestBody = {};
 
     // 01. Check for Change in Transaction Data
@@ -98,6 +101,17 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
     }
   };
 
+  // Clean up
+  useEffect(() => {
+    if (isEditSuccess) {
+      reset();
+      const timer = setTimeout(() => {
+        setEditOpen(false);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [reset, isEditSuccess, setEditOpen]);
+
   return (
     <>
       <CustomModal isModalOpen={isEditOpen} setModalOpen={setEditOpen}>
@@ -106,21 +120,21 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "24px",
+            gap: isCustom420 ? "16px" : "24px",
             width: "100%",
             padding: "16px",
             margin: "auto",
           }}
         >
           {transacData && (
-            <EditTransactionDetails
+            <EditTransactionForm
               control={control}
               setValue={setValue}
               transacData={transacData}
             />
           )}
           {itemData && (
-            <EditItemDetails
+            <EditItemForm
               itemData={itemData}
               control={control}
               departmentCode={transacData?.department_acronym}
@@ -138,16 +152,18 @@ const EditRequestModal = ({ isEditOpen, setEditOpen, specificRequestData }) => {
             />
           )}
 
-          <button
+          <Button
+            type="submit"
             disabled={isEditLoading}
-            style={{
+            color="secondary"
+            variant="contained"
+            sx={{
               width: "100%",
-              backgroundColor: secondaryMain,
               marginTop: "12px",
             }}
           >
             {isEditLoading ? "Loading..." : "Submit"}
-          </button>
+          </Button>
         </form>
       </CustomModal>
       <ErrorSnackbar error={isEditError} setError={setEditError} />

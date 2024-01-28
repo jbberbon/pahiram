@@ -12,6 +12,7 @@ import { useState } from "react";
 import EditRequestModal from "../EditRequest/EditRequestModal";
 import { findTransacStatus } from "../../../../Utils/HelperFunctions/ConstantFunctions/TransacStatusConstantHelper";
 import BorrowedItemsTable from "./BorrowedItemsTable";
+import ColorVariables from "../../../../Utils/Theming/ColorVariables";
 
 function SpecificRequestModal({
   isModalOpen,
@@ -20,6 +21,7 @@ function SpecificRequestModal({
   handleCancelRequest,
   // isSpecificRequestLoading,
 }) {
+  const { neutralMain } = ColorVariables();
   const [isEditOpen, setEditOpen] = useState(false);
   const { isSm } = BreakpointVariables();
   const transacData = specificRequestData?.transac_data;
@@ -69,7 +71,7 @@ function SpecificRequestModal({
             width: "100%",
             padding: isSm ? "20px" : "18px",
             gap: "12px",
-            margin: "auto"
+            margin: "auto",
           }}
         >
           <Divider
@@ -97,6 +99,7 @@ function SpecificRequestModal({
                 whiteSpace: "nowrap",
                 minWidth: "110px",
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               Request ID
@@ -106,6 +109,7 @@ function SpecificRequestModal({
                 padding: 0,
                 margin: 0,
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               {truncatedId}...
@@ -137,6 +141,7 @@ function SpecificRequestModal({
                 whiteSpace: "nowrap",
                 minWidth: "110px",
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               Office
@@ -146,6 +151,7 @@ function SpecificRequestModal({
                 padding: 0,
                 margin: 0,
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               {transacData?.department}
@@ -166,6 +172,7 @@ function SpecificRequestModal({
                 whiteSpace: "nowrap",
                 minWidth: "110px",
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               Submitted on
@@ -175,6 +182,7 @@ function SpecificRequestModal({
                 padding: 0,
                 margin: 0,
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               {parsedSubmittedDate}
@@ -196,6 +204,7 @@ function SpecificRequestModal({
                 whiteSpace: "nowrap",
                 minWidth: "110px",
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               Purpose
@@ -205,6 +214,7 @@ function SpecificRequestModal({
                 padding: 0,
                 margin: 0,
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               {transacData?.user_defined_purpose}
@@ -225,6 +235,7 @@ function SpecificRequestModal({
                 whiteSpace: "nowrap",
                 minWidth: "110px",
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               Endorser
@@ -234,6 +245,7 @@ function SpecificRequestModal({
                 padding: 0,
                 margin: 0,
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               {transacData?.endorsed_by?.full_name
@@ -256,6 +268,7 @@ function SpecificRequestModal({
                 whiteSpace: "nowrap",
                 minWidth: "110px",
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               Status
@@ -265,6 +278,7 @@ function SpecificRequestModal({
                 padding: 0,
                 margin: 0,
                 fontSize: "0.875rem",
+                color: neutralMain,
               }}
             >
               {transacStatus?.transac_status}
@@ -283,7 +297,10 @@ function SpecificRequestModal({
           </Divider>
 
           {borrowedItems && (
-            <BorrowedItemsTable borrowedItems={borrowedItems} transacStatus={transacData?.transac_status} />
+            <BorrowedItemsTable
+              borrowedItems={borrowedItems}
+              transacStatus={transacData?.transac_status}
+            />
           )}
 
           {activeStatuses.includes(transacData?.transac_status) && (
@@ -337,7 +354,7 @@ function SpecificRequestModal({
                     padding: 0,
                     margin: 0,
                     fontSize: "0.875rem",
-                    color: "#D54442"
+                    color: "#D54442",
                   }}
                 >
                   Cancel Request

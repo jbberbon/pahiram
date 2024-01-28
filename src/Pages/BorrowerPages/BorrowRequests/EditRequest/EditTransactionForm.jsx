@@ -10,7 +10,7 @@ import { BORROW_PURPOSES } from "../../../../Utils/Constants/BackendConstants/BO
 import PropTypes from "prop-types";
 import Divider from "@mui/material/Divider";
 
-function EditTransactionDetails({ control, setValue, transacData }) {
+function EditTransactionForm({ control, setValue, transacData }) {
   const [userSearchInput, setUserSearchInput] = useState("");
   const isOfficeSelected = true; // Bandaid
   const { results, loading, error, setError } = useSearchEndorser(
@@ -147,10 +147,10 @@ function EditTransactionDetails({ control, setValue, transacData }) {
   );
 }
 
-EditTransactionDetails.propTypes = {
+EditTransactionForm.propTypes = {
   control: PropTypes.object.isRequired,
   setValue: PropTypes.func.isRequired,
   transacData: PropTypes.object.isRequired,
 };
 
-export default EditTransactionDetails;
+export default EditTransactionForm;

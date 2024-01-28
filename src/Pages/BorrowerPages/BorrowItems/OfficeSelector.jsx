@@ -3,8 +3,10 @@ import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
 import { OFFICES } from "../../../Utils/Constants/BackendConstants/OFFICES";
+import ColorVariables from "../../../Utils/Theming/ColorVariables";
 
 const OfficeSelector = ({ control, items, reset }) => {
+  const { neutralMain } = ColorVariables();
   const includedOfficeKeys = ["BMO", "ESLO", "ITRO"];
 
   return (
@@ -37,7 +39,7 @@ const OfficeSelector = ({ control, items, reset }) => {
             }}
             onChange={(e) => {
               field.onChange(e);
-              console.log(items)
+              console.log(items);
               if (items || items !== undefined) {
                 reset();
                 console.log(items);
@@ -52,6 +54,7 @@ const OfficeSelector = ({ control, items, reset }) => {
                   fontWeight: "500",
                   padding: "4px 0",
                   margin: 0,
+                  color: neutralMain,
                 }}
               >
                 Select Office
@@ -68,6 +71,7 @@ const OfficeSelector = ({ control, items, reset }) => {
                     fontWeight: "500",
                     padding: "4px 0",
                     margin: 0,
+                    color: neutralMain,
                   }}
                 >
                   {OFFICES[officeKey].acronym}

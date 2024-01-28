@@ -10,10 +10,12 @@ import {
   getCancelledlStatus,
 } from "../../../../Utils/HelperFunctions/ConstantFunctions/BorrowedItemStatusConstantHelper";
 import PropTypes from "prop-types";
+import ColorVariables from "../../../../Utils/Theming/ColorVariables";
 
 function BorrowedItemsTable({ borrowedItems, transacStatus }) {
   const headers = ["Item", "Quantity", "Start Date", "End Date", "Status"];
   const cancelledStatus = getCancelledlStatus();
+  const { neutralMain } = ColorVariables();
   return (
     <div style={{ overflowX: "auto" }}>
       <Table sx={{ minWidth: "400px" }} aria-label="borrowed items table">
@@ -30,6 +32,7 @@ function BorrowedItemsTable({ borrowedItems, transacStatus }) {
                   fontSize: "0.875rem",
                   whiteSpace: "nowrap",
                   fontWeight: "700",
+                  color: neutralMain,
                 }}
               >
                 {header}
@@ -62,6 +65,7 @@ function BorrowedItemsTable({ borrowedItems, transacStatus }) {
                     margin: 0,
                     fontSize: "0.875rem",
                     whiteSpace: "nowrap",
+                    color: neutralMain,
                   }}
                 >
                   {item?.item.model_name}
@@ -74,6 +78,7 @@ function BorrowedItemsTable({ borrowedItems, transacStatus }) {
                     margin: 0,
                     fontSize: "0.875rem",
                     whiteSpace: "nowrap",
+                    color: neutralMain,
                   }}
                 >
                   {item?.quantity}
@@ -86,6 +91,7 @@ function BorrowedItemsTable({ borrowedItems, transacStatus }) {
                     margin: 0,
                     fontSize: "0.875rem",
                     whiteSpace: "nowrap",
+                    color: neutralMain,
                   }}
                 >
                   {convertDateForHumanConsumption(item?.start_date)}
@@ -98,6 +104,7 @@ function BorrowedItemsTable({ borrowedItems, transacStatus }) {
                     margin: 0,
                     fontSize: "0.875rem",
                     whiteSpace: "nowrap",
+                    color: neutralMain,
                   }}
                 >
                   {convertDateForHumanConsumption(item?.due_date)}
@@ -111,6 +118,7 @@ function BorrowedItemsTable({ borrowedItems, transacStatus }) {
                     margin: 0,
                     fontSize: "0.875rem",
                     whiteSpace: "nowrap",
+                    color: neutralMain,
                   }}
                 >
                   {

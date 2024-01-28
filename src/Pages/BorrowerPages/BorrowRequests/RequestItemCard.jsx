@@ -25,6 +25,7 @@ function RequestItemCard({
             whiteSpace: "nowrap", // Keep the text on a single line
             margin: 0,
             padding: "4px 4px 4px 0",
+            color: "#f3f4f6",
           }}
         >
           Request - {slicedTransacId}
@@ -35,6 +36,7 @@ function RequestItemCard({
             margin: 0,
             fontWeight: "500",
             overflow: "hidden",
+            color: "#f3f4f6",
           }}
         >
           {department}
@@ -44,6 +46,7 @@ function RequestItemCard({
             padding: "4px 4px 4px 0",
             margin: 0,
             fontWeight: "500",
+            color: "#f3f4f6",
           }}
         >
           Sumitted on {parsedDate}
@@ -53,11 +56,12 @@ function RequestItemCard({
             padding: "4px 4px 4px 0",
             margin: 0,
             fontWeight: "600",
+            color: "#f3f4f6",
           }}
         >
           <em>
             Endorsed by{" "}
-            {endorser?.full_name ? `Mr/Ms ${endorser.full_name}` : "None"}
+            {endorser?.full_name ? `Mr/Ms ${endorser.full_name}` : "N/A"}
           </em>
         </p>
       </div>

@@ -60,10 +60,10 @@ const AddNewItems = ({ selectedOffice, control, setValue, getValues }) => {
         </div>
         <hr
           style={{
-            height: "1px",
+            height: "1.5px",
             border: 0,
             width: "100%",
-            background: "#333",
+            background: "#2222",
             margin: "auto 16px auto 16px",
           }}
         />

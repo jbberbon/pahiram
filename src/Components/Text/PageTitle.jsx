@@ -1,9 +1,11 @@
 // import IconButton from "@mui/material/IconButton";
 // import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import PropTypes from "prop-types";
+import ColorVariables from "../../Utils/Theming/ColorVariables";
 // import BreakpointVariables from "../../Utils/Theming/BreakpointVariables";
 
 function PageTitle({ children, fontSize }) {
+  const { neutralMain } = ColorVariables();
   return (
     <div
       style={{
@@ -20,6 +22,7 @@ function PageTitle({ children, fontSize }) {
           fontWeight: "600",
           whiteSpace: "nowrap",
           width: "100%",
+          color: neutralMain,
         }}
       >
         {children}

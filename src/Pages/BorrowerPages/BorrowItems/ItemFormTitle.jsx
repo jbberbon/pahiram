@@ -1,7 +1,9 @@
 import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
+import ColorVariables from "../../../Utils/Theming/ColorVariables";
 
-const ChooseFormSubtitle = ({ addFieldCount, isOfficeSelected }) => {
+const ItemFormTitle = ({ addFieldCount, isOfficeSelected }) => {
+  const { neutralMain } = ColorVariables();
   return (
     <div
       style={{
@@ -16,6 +18,7 @@ const ChooseFormSubtitle = ({ addFieldCount, isOfficeSelected }) => {
           fontWeight: "500",
           padding: "4px 0",
           margin: 0,
+          color: neutralMain,
         }}
       >
         Choose Items
@@ -40,9 +43,9 @@ const ChooseFormSubtitle = ({ addFieldCount, isOfficeSelected }) => {
   );
 };
 
-ChooseFormSubtitle.propTypes = {
+ItemFormTitle.propTypes = {
   addFieldCount: PropTypes.func.isRequired,
   isOfficeSelected: PropTypes.bool.isRequired,
 };
 
-export default ChooseFormSubtitle;
+export default ItemFormTitle;

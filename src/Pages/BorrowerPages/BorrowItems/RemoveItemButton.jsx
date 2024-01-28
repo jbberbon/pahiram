@@ -21,7 +21,7 @@ const RemoveItemButton = ({ handleRemoveField }) => {
       }}
     >
       <DeleteOutlineRoundedIcon
-        style={{ color: "#D54442", marginTop: "auto" }}
+        style={{ color: "#D54442", marginTop: "auto", fontSize: "1.5rem" }}
       />
     </Button>
   );
