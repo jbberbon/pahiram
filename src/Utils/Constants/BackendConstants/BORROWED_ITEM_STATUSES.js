@@ -28,7 +28,7 @@ export const BORROWED_ITEM_STATUSES = {
     description: "Item has been returned after a borrowing transaction",
   },
   DAMAGED_BUT_REPAIRABLE: {
-    status: "Damaged but Repairable",
+    status: "Damaged",
     description: "Returned item requires repair/maintenance",
   },
   UNREPAIRABLE: {
@@ -38,5 +38,9 @@ export const BORROWED_ITEM_STATUSES = {
   LOST: {
     status: "Lost",
     description: "Item is lost by the borrower",
+  },
+  UNRETURNED: {
+    status: "Unreturned",
+    description: "Item is unreturned by the borrower",
   },
 };

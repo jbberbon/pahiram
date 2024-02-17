@@ -3,8 +3,7 @@ const OFFICES = {
   BMO: 2020,
   ESLO: 3030,
   ITRO: 4040,
-  Finance: 5050,
-  HR: 6060,
+  FAO: 5050,
   PLO: 7070
 };
 

@@ -9,6 +9,7 @@ const useUserStore = create(
         avatarName: "",
         firstName: "",
         lastName: "",
+        fullName: "",
         email: "",
         office: "",
         role: "",
@@ -28,6 +29,9 @@ const useUserStore = create(
             ),
             firstName: response?.user?.first_name,
             lastName: response?.user?.last_name,
+            fullName: [response?.user?.first_name, response?.user?.last_name]
+              .filter(Boolean)
+              .join(" "),
             email: response?.user?.email,
             office: response?.user?.department_code,
             role: response?.user?.role,

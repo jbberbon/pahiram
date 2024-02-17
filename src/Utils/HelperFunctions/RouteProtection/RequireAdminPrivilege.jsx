@@ -7,8 +7,8 @@ import { getBorrowerKey } from "../ConstantFunctions/UserRoleConstantHelper";
 function RequireAdminPrivilege({ allowedRoles }) {
   const location = useLocation();
   const { userData } = useUserStore();
-  const userRole = userData.role;
-  const isAdmin = userData.isAdmin;
+  const userRole = userData?.role;
+  const isAdmin = userData?.isAdmin;
 
   const borrower = getBorrowerKey();
 

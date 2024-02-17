@@ -151,7 +151,7 @@ function DateSelectorModal({
               };
             }}
             select={handleDateSelect}
-            events={[...bookedDates, { title: "Chosen Date", ...newEvent }]}
+            events={[...bookedDates, { title: "Chosen Date", ...newEvent, color: '#e7b426' }]}
             slotMinTime={"07:30:00"}
             slotMaxTime={"17:30:00"}
             nextDayThreshold={"09:00:00"}

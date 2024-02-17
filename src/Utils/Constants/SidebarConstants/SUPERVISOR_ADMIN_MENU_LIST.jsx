@@ -20,9 +20,9 @@ const SUPERVISOR_ADMIN_MENU_LIST = [
     aria: "Navigate to manage transactions page",
   },
   {
-    title: "Lending History",
+    title: "Borrowing History",
     icon: <HistoryEduRoundedIcon fontSize="large" />,
-    link: "lending-history",
+    link: "borrowing-history",
     aria: "Navigate to lending history page",
   },
   {

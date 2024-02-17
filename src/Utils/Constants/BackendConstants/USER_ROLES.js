@@ -3,10 +3,10 @@ export const USER_ROLES = {
     role: "Borrower",
     description: "System borrower",
   },
-  ENDORSER: {
-    role: "Endorser",
-    description: "Borrowing Endorser",
-  },
+  // ENDORSER: {
+  //   role: "Endorser",
+  //   description: "Borrowing Endorser",
+  // },
   BORROWING_MANAGER: {
     role: "Borrowing Manager",
     description: "Manages borrowing transactions",

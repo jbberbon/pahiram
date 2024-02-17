@@ -6,9 +6,9 @@ import Layout from "../../../Components/Layout/Layout";
 function RequireAuth({ allowedRoles }) {
   const location = useLocation();
   const { userData, authData } = useUserStore();
-  const isAuthenticated = authData.isAuthenticated;
+  const isAuthenticated = authData?.isAuthenticated;
 
-  if (isAuthenticated && allowedRoles.includes(userData.role)) {
+  if (isAuthenticated && allowedRoles.includes(userData?.role)) {
     return <Layout />;
   }
   if (isAuthenticated) {

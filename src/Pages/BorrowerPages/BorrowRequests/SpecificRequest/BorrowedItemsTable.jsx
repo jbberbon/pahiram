@@ -7,15 +7,24 @@ import Chip from "@mui/material/Chip";
 import convertDateForHumanConsumption from "../../../../Utils/HelperFunctions/DateFunction/convertDateForHumanConsumption";
 import {
   findBorrowedItemStatus,
-  getCancelledlStatus,
+  getCancelledStatus,
 } from "../../../../Utils/HelperFunctions/ConstantFunctions/BorrowedItemStatusConstantHelper";
 import PropTypes from "prop-types";
 import ColorVariables from "../../../../Utils/Theming/ColorVariables";
 
-function BorrowedItemsTable({ borrowedItems, transacStatus }) {
-  const headers = ["Item", "Quantity", "Start Date", "End Date", "Status"];
-  const cancelledStatus = getCancelledlStatus();
+const BorrowedItemsTable = ({ borrowedItems, transacStatus }) => {
+  const headers = ["Item", "Qty", "Start Date", "End Date", "Status"];
+  const cancelledStatus = getCancelledStatus();
   const { neutralMain } = ColorVariables();
+
+  const tableCellStyle = {
+    padding: "12px 12px 12px 0",
+    margin: 0,
+    fontSize: "0.875rem",
+    whiteSpace: "nowrap",
+    color: neutralMain,
+  };
+
   return (
     <div style={{ overflowX: "auto" }}>
       <Table sx={{ minWidth: "400px" }} aria-label="borrowed items table">
@@ -57,75 +66,29 @@ function BorrowedItemsTable({ borrowedItems, transacStatus }) {
                   },
                 }}
               >
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{
-                    padding: "12px 12px 12px 0",
-                    margin: 0,
-                    fontSize: "0.875rem",
-                    whiteSpace: "nowrap",
-                    color: neutralMain,
-                  }}
-                >
-                  {item?.item.model_name}
+                <TableCell component="th" scope="row" style={tableCellStyle}>
+                  {/* {item?.item?.model_name} */}
+                  {item?.model_name}
                 </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{
-                    padding: "12px 12px 12px 0",
-                    margin: 0,
-                    fontSize: "0.875rem",
-                    whiteSpace: "nowrap",
-                    color: neutralMain,
-                  }}
-                >
+
+                <TableCell component="th" scope="row" style={tableCellStyle}>
                   {item?.quantity}
                 </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{
-                    padding: "12px 12px 12px 0",
-                    margin: 0,
-                    fontSize: "0.875rem",
-                    whiteSpace: "nowrap",
-                    color: neutralMain,
-                  }}
-                >
+
+                <TableCell component="th" scope="row" style={tableCellStyle}>
                   {convertDateForHumanConsumption(item?.start_date)}
                 </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{
-                    padding: "12px 12px 12px 0",
-                    margin: 0,
-                    fontSize: "0.875rem",
-                    whiteSpace: "nowrap",
-                    color: neutralMain,
-                  }}
-                >
+
+                <TableCell component="th" scope="row" style={tableCellStyle}>
                   {convertDateForHumanConsumption(item?.due_date)}
                 </TableCell>
 
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{
-                    padding: "12px 0 12px 0",
-                    margin: 0,
-                    fontSize: "0.875rem",
-                    whiteSpace: "nowrap",
-                    color: neutralMain,
-                  }}
-                >
+                <TableCell component="th" scope="row" style={tableCellStyle}>
                   {
                     <Chip
                       label={
                         findBorrowedItemStatus(item?.borrowed_item_status)
-                          .status
+                          ?.status
                       }
                       size="small"
                       variant="outlined"
@@ -139,9 +102,9 @@ function BorrowedItemsTable({ borrowedItems, transacStatus }) {
       </Table>
     </div>
   );
-}
+};
 BorrowedItemsTable.propTypes = {
   borrowedItems: PropTypes.array.isRequired,
-  transacStatus: PropTypes.string.isRequired,
+  transacStatus: PropTypes.string,
 };
 export default BorrowedItemsTable;

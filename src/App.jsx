@@ -32,7 +32,7 @@ const LazyDashboard = React.lazy(() =>
   import("./Pages/ManagementPages/Dashboard")
 );
 const LazyManageTransactions = React.lazy(() =>
-  import("./Pages/ManagementPages/ManageTransactions")
+  import("./Pages/ManagementPages/ManageTransactions/ManageTransactions")
 );
 const LazyLendingHistory = React.lazy(() =>
   import("./Pages/ManagementPages/LendingHistory")
@@ -46,6 +46,10 @@ const LazyManagePenalties = React.lazy(() =>
 const LazyManageAccounts = React.lazy(() =>
   import("./Pages/ManagementPages/ManageAccounts")
 );
+const LazyManageEndorsements = React.lazy(() =>
+  import("./Pages/ManagementPages/ManageEndorsements/ManageEndorsements")
+);
+
 // Loading Animations
 const LazyLoadingLinear = lazy(() =>
   import("./Components/LoadingAnimation/LoadingLinear")
@@ -58,15 +62,14 @@ import useUserStore from "./Store/UserStore";
 import RequireAuth from "./Utils/HelperFunctions/RouteProtection/RequireAuth";
 import RequireAdminPrivilege from "./Utils/HelperFunctions/RouteProtection/RequireAdminPrivilege";
 
-// import getRoleConstants from "./Utils/Constants/USER_ROLES";
 import { USER_ROLES } from "./Utils/Constants/BackendConstants/USER_ROLES";
 
 function App() {
   const [theme] = useMode();
   const { userData, authData } = useUserStore();
-  const userRole = userData.role;
-  const isAdmin = userData.isAdmin;
-  const isAuthenticated = authData.isAuthenticated;
+  const userRole = userData?.role;
+  const isAdmin = userData?.isAdmin;
+  const isAuthenticated = authData?.isAuthenticated;
 
   const allUserRoles = Object.keys(USER_ROLES);
   const redirect =
@@ -76,7 +79,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
-        {/* Unprotected Paths */}
+        {/* Unprotected Paths ------------------------------------------------ */}
         <Route
           path="/login"
           element={
@@ -147,6 +150,14 @@ function App() {
             element={
               <Suspense fallback={<LazyLoadingLinear />}>
                 <LazyPenaltyRecords />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/manage-endorsements"
+            element={
+              <Suspense fallback={<LazyLoadingLinear />}>
+                <LazyManageEndorsements />
               </Suspense>
             }
           />

@@ -5,8 +5,4 @@ function ManageAccounts() {
   return <MainDisplayLayout>Manage Accounts</MainDisplayLayout>;
 }
 
-// Dashboard.propTypes = {
-//   isOpen: PropTypes.bool.isRequired,
-// };
-
 export default ManageAccounts;

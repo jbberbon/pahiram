@@ -33,7 +33,7 @@ function convertDateForHumanConsumption(inputDate) {
   const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
   // Construct the formatted string
-  const formattedString = ` ${day} ${month} ${year} at ${formattedHours}:${formattedMinutes}${ampm}`;
+  const formattedString = ` ${day} ${month} ${year} at ${formattedHours}:${formattedMinutes} ${ampm}`;
 
     return formattedString;
 }

@@ -2,8 +2,6 @@ import { useState } from "react";
 import { patchRequest } from "../../API/HttpRequests/borrowRequestAxiosCalls";
 import { patchBorrowRequestEndpoint } from "../../API/Endpoints/borrowRequestEndpoints";
 
-
-
 const useEditRequest = () => {
   const [isEditSuccess, setEditSuccess] = useState(null);
   const [isEditError, setEditError] = useState(null);

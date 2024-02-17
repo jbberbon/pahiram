@@ -14,6 +14,11 @@ const useSidebarStore = create(
         set((state) => ({ isOpenBorrowerMenu: !state.isOpenBorrowerMenu }));
       },
 
+      isOpenEndorserMenu: false,
+      toggleEndorserMenu: () => {
+        set((state) => ({ isOpenEndorserMenu: !state.isOpenEndorserMenu }));
+      },
+
       isOpenManagementMenu: true,
       toggleManagementMenu: () => {
         set((state) => ({ isOpenManagementMenu: !state.isOpenManagementMenu }));

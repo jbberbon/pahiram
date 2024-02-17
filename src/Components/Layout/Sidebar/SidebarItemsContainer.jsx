@@ -9,13 +9,17 @@ import ALL_MENU_LIST from "../../../Utils/Constants/SidebarConstants/ALL_MENU_LI
 import CollapseSidebarMenu from "./CollapseSidebarMenu";
 import useSidebarStore from "../../../Store/SidebarStore";
 import { getBorrowerKey } from "../../../Utils/HelperFunctions/ConstantFunctions/UserRoleConstantHelper";
+import ENDORSER_MENU_LIST from "../../../Utils/Constants/SidebarConstants/ENDORSER_MENU_LIST";
 
 function SidebarItemsContainer() {
   const currentPathname = useCurrentPathname();
   const { userData } = useUserStore();
-  const isAdmin = userData.isAdmin;
-  const userRole = userData.role;
+  const userEmail = userData?.email;
+  const isAdmin = userData?.isAdmin;
+  const userRole = userData?.role;
   const borrower = getBorrowerKey();
+
+  const employeeEmail = "@apc.edu.ph";
 
   //-------------------------------------------------------------------------
 
@@ -23,7 +27,7 @@ function SidebarItemsContainer() {
     isAdmin || userRole != borrower ? "/dashboard" : "/borrow-items";
 
   const [selectedLink, setSelectedLink] = useState(initialActiveLink);
-  
+
   const handleListItemClick = (index) => {
     setSelectedLink(index);
   };
@@ -35,7 +39,7 @@ function SidebarItemsContainer() {
 
     // Find the link in all_menu_list that matches the current path
     const activeLink = ALL_MENU_LIST.reduce((foundLink, item) => {
-      return foundLink || (item.link === currentPath ? item.link : null);
+      return foundLink || (item?.link === currentPath ? item?.link : null);
     }, null);
     setSelectedLink(activeLink);
   }, [currentPathname]);
@@ -44,19 +48,43 @@ function SidebarItemsContainer() {
 
   const {
     isOpenBorrowerMenu,
+    isOpenEndorserMenu,
     isOpenManagementMenu,
     toggleBorrowerMenu,
+    toggleEndorserMenu,
     toggleManagementMenu,
   } = useSidebarStore();
 
   // Non-admin borrowers
   if (userRole === borrower && !isAdmin) {
     return (
-      <SidebarList
-        sidebarItems={BORROWER_MENU_LIST}
-        selectedLink={selectedLink}
-        handleListItemClick={handleListItemClick}
-      />
+      <>
+        <CollapseSidebarMenu
+          menuTitle="Borrower Menu"
+          isOpen={isOpenBorrowerMenu}
+          setIsOpen={toggleBorrowerMenu}
+        >
+          <SidebarList
+            sidebarItems={BORROWER_MENU_LIST}
+            selectedLink={selectedLink}
+            handleListItemClick={handleListItemClick}
+          />
+        </CollapseSidebarMenu>
+        
+        {userEmail.includes(employeeEmail) && (
+          <CollapseSidebarMenu
+            menuTitle="Endorser Menu"
+            isOpen={isOpenEndorserMenu}
+            setIsOpen={toggleEndorserMenu}
+          >
+            <SidebarList
+              sidebarItems={ENDORSER_MENU_LIST}
+              selectedLink={selectedLink}
+              handleListItemClick={handleListItemClick}
+            />
+          </CollapseSidebarMenu>
+        )}
+      </>
     );
   }
   // Non-admin employees
@@ -76,9 +104,24 @@ function SidebarItemsContainer() {
             initialIsOpen={false}
           />
         </CollapseSidebarMenu>
+
+        {userEmail.includes(employeeEmail) && (
+          <CollapseSidebarMenu
+            menuTitle="Endorser Menu"
+            isOpen={isOpenEndorserMenu}
+            setIsOpen={toggleEndorserMenu}
+          >
+            <SidebarList
+              sidebarItems={ENDORSER_MENU_LIST}
+              selectedLink={selectedLink}
+              handleListItemClick={handleListItemClick}
+            />
+          </CollapseSidebarMenu>
+        )}
+
         {/*  Pahiram Management */}
         <CollapseSidebarMenu
-          menuTitle="Management"
+          menuTitle="Lending Management"
           isOpen={isOpenManagementMenu}
           setIsOpen={toggleManagementMenu}
         >
@@ -110,9 +153,24 @@ function SidebarItemsContainer() {
           initialIsOpen={false}
         />
       </CollapseSidebarMenu>
+
+      {userEmail.includes(employeeEmail) && (
+        <CollapseSidebarMenu
+          menuTitle="Endorser Menu"
+          isOpen={isOpenEndorserMenu}
+          setIsOpen={toggleEndorserMenu}
+        >
+          <SidebarList
+            sidebarItems={ENDORSER_MENU_LIST}
+            selectedLink={selectedLink}
+            handleListItemClick={handleListItemClick}
+          />
+        </CollapseSidebarMenu>
+      )}
+
       {/*  Pahiram Management */}
       <CollapseSidebarMenu
-        menuTitle="Management"
+        menuTitle="Lending Management"
         isOpen={isOpenManagementMenu}
         setIsOpen={toggleManagementMenu}
       >

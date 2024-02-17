@@ -13,6 +13,7 @@ import EditRequestModal from "../EditRequest/EditRequestModal";
 import { findTransacStatus } from "../../../../Utils/HelperFunctions/ConstantFunctions/TransacStatusConstantHelper";
 import BorrowedItemsTable from "./BorrowedItemsTable";
 import ColorVariables from "../../../../Utils/Theming/ColorVariables";
+import { copyToClipboard } from "../../../../Utils/HelperFunctions/copyToClipboard";
 
 function SpecificRequestModal({
   isModalOpen,
@@ -26,12 +27,31 @@ function SpecificRequestModal({
   const { isSm } = BreakpointVariables();
   const transacData = specificRequestData?.transac_data;
   const borrowedItems = specificRequestData?.items;
-  const truncatedId = transacData?.id ? transacData?.id.slice(0, 20) : "";
 
-  const handleCopyClick = () => {
-    navigator.clipboard.writeText(transacData?.id);
-    console.log(borrowedItems);
+  const flexRowCenter = {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   };
+  const pStyleBold = {
+    fontWeight: "700",
+    padding: 0,
+    margin: 0,
+    whiteSpace: "nowrap",
+    minWidth: "110px",
+    fontSize: "0.875rem",
+    color: neutralMain,
+  };
+  const pStyleRegular = {
+    padding: 0,
+    margin: 0,
+    fontSize: "0.875rem",
+    color: neutralMain,
+  };
+
+  const truncatedId = transacData?.id
+    ? transacData?.id.slice(0, 20) + "..."
+    : "";
 
   const parsedSubmittedDate = transacData?.created_at
     ? convertDateForHumanConsumption(transacData?.created_at)
@@ -57,10 +77,6 @@ function SpecificRequestModal({
     transacData?.endorsed_by?.full_name !== undefined;
   const isEditDisabled = isOngoing || isApproved || isPendingApproval;
 
-  // console.log("transacData?.transac_status:", transacData?.transac_status);
-  // console.log("isOngoing:", isOngoing);
-  // console.log("isApproved:", isApproved);
-  // console.log("isPendingApproval:", isPendingApproval);
   return (
     <>
       <CustomModal isModalOpen={isModalOpen} setModalOpen={setModalOpen}>
@@ -84,38 +100,11 @@ function SpecificRequestModal({
           >
             <PageTitle fontSize="1rem">Borrow Request Details</PageTitle>
           </Divider>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontWeight: "700",
-                padding: 0,
-                margin: 0,
-                whiteSpace: "nowrap",
-                minWidth: "110px",
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              Request ID
-            </p>
-            <p
-              style={{
-                padding: 0,
-                margin: 0,
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              {truncatedId}...
-            </p>
+          <div style={flexRowCenter}>
+            <p style={pStyleBold}>Request ID</p>
+            <p style={pStyleRegular}>{isSm ? truncatedId : transacData?.id}</p>
             <IconButton
-              onClick={handleCopyClick}
+              onClick={() => copyToClipboard(transacData?.id)}
               sx={{
                 marginLeft: "auto",
                 "&:focus": {
@@ -126,163 +115,34 @@ function SpecificRequestModal({
               <ContentCopyIcon sx={{ fontSize: "14px" }} />
             </IconButton>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontWeight: "700",
-                padding: 0,
-                margin: 0,
-                whiteSpace: "nowrap",
-                minWidth: "110px",
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              Office
-            </p>
-            <p
-              style={{
-                padding: 0,
-                margin: 0,
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              {transacData?.department}
-            </p>
+
+          <div style={flexRowCenter}>
+            <p style={pStyleBold}>Office</p>
+            <p style={pStyleRegular}>{transacData?.department}</p>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontWeight: "700",
-                padding: 0,
-                margin: 0,
-                whiteSpace: "nowrap",
-                minWidth: "110px",
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              Submitted on
-            </p>
-            <p
-              style={{
-                padding: 0,
-                margin: 0,
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              {parsedSubmittedDate}
-            </p>
+
+          <div style={flexRowCenter}>
+            <p style={pStyleBold}>Submitted on</p>
+            <p style={pStyleRegular}>{parsedSubmittedDate}</p>
           </div>
-          {/* <Divider component="p" /> */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontWeight: "700",
-                padding: 0,
-                margin: 0,
-                whiteSpace: "nowrap",
-                minWidth: "110px",
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              Purpose
-            </p>
-            <p
-              style={{
-                padding: 0,
-                margin: 0,
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              {transacData?.user_defined_purpose}
-            </p>
+
+          <div style={flexRowCenter}>
+            <p style={pStyleBold}>Purpose</p>
+            <p style={pStyleRegular}>{transacData?.user_defined_purpose}</p>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontWeight: "700",
-                padding: 0,
-                margin: 0,
-                whiteSpace: "nowrap",
-                minWidth: "110px",
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              Endorser
-            </p>
-            <p
-              style={{
-                padding: 0,
-                margin: 0,
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
+
+          <div style={flexRowCenter}>
+            <p style={pStyleBold}>Endorser</p>
+            <p style={pStyleRegular}>
               {transacData?.endorsed_by?.full_name
                 ? transacData?.endorsed_by?.full_name
                 : "None"}
             </p>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontWeight: "700",
-                padding: 0,
-                margin: 0,
-                whiteSpace: "nowrap",
-                minWidth: "110px",
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              Status
-            </p>
-            <p
-              style={{
-                padding: 0,
-                margin: 0,
-                fontSize: "0.875rem",
-                color: neutralMain,
-              }}
-            >
-              {transacStatus?.transac_status}
-            </p>
+
+          <div style={flexRowCenter}>
+            <p style={pStyleBold}>Status</p>
+            <p style={pStyleRegular}>{transacStatus?.transac_status}</p>
           </div>
 
           <Divider
@@ -317,16 +177,12 @@ function SpecificRequestModal({
                 // 02. Approved Transaction
                 // 03. Pending Borrowing approval but has an endorser (meaning already approved by endorser)
                 disabled={isEditDisabled}
-                sx={{
-                  "&:focus": {
-                    outline: "none",
-                  },
-                }}
                 onClick={() => {
                   setEditOpen(true);
                   setModalOpen(false);
                   console.log(transacStatus.transac_status);
                 }}
+                color="success"
               >
                 <p
                   style={{
@@ -339,11 +195,7 @@ function SpecificRequestModal({
                 </p>
               </Button>
               <Button
-                sx={{
-                  "&:focus": {
-                    outline: "none",
-                  },
-                }}
+                color="error"
                 onClick={() => {
                   handleCancelRequest(transacData.id);
                   setModalOpen(false);
@@ -354,7 +206,6 @@ function SpecificRequestModal({
                     padding: 0,
                     margin: 0,
                     fontSize: "0.875rem",
-                    color: "#D54442",
                   }}
                 >
                   Cancel Request

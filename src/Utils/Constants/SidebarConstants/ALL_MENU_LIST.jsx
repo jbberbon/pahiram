@@ -41,9 +41,9 @@ const ALL_MENU_LIST = [
     aria: "Navigate to manage transactions page",
   },
   {
-    title: "Lending History",
+    title: "Borrowing History",
     icon: <HistoryEduRoundedIcon fontSize="large" />,
-    link: "lending-history",
+    link: "borrowing-history",
     aria: "Navigate to lending history page",
   },
   {
@@ -63,6 +63,12 @@ const ALL_MENU_LIST = [
     icon: <ManageAccountsOutlinedIcon fontSize="large" />,
     link: "manage-accounts",
     aria: "Navigate to lending history page",
+  },
+  {
+    title: "Manage Endorsements",
+    icon: <></>,
+    link: "manage-endorsements",
+    aria: "navigate to manage endorsement page",
   },
 ];
 

@@ -39,7 +39,8 @@ const EditItemForm = ({ setValue, control, itemData, departmentCode }) => {
         {filteredItems &&
           filteredItems.map(
             (itemModel, index) =>
-              itemModel?.item?.id && (
+              // itemModel?.item?.id && (
+              itemModel?.id && (
                 <EditItemFormField
                   key={index}
                   index={index}
