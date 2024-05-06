@@ -1,0 +1,1 @@
+const n="/user/borrow-request",r=e=>`/user/borrow-request/${e}`,s=e=>`/item-model/${e}/booked-dates`,i="/user/borrow-request/submit",c=e=>`/user/borrow-request/${e}/edit`,d=e=>`/user/borrow-request/${e}/cancel`,t="/user/penalized-transaction",a=e=>`${t}/${e}`;export{a,n as b,r as c,c as d,d as e,s as f,t as g,i as p};
