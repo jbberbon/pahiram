@@ -21,8 +21,6 @@ const CustomModal = ({
     setModalOpen(false);
   };
 
-  console.log(customStyles);
-
   return (
     <div>
       {isModalOpen && (

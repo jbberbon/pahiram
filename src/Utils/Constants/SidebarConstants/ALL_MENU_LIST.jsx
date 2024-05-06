@@ -70,6 +70,9 @@ const ALL_MENU_LIST = [
     link: "manage-endorsements",
     aria: "navigate to manage endorsement page",
   },
+  {
+    link: "penalty-clearance",
+  },
 ];
 
 export default ALL_MENU_LIST;

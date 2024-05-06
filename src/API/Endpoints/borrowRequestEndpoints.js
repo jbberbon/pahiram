@@ -20,3 +20,8 @@ export const cancelBorrowRequestEndpoint = (resourceId) => {
   const endpoint = `/user/borrow-request/${resourceId}/cancel`;
   return endpoint;
 };
+
+export const getPenalizedTransacListEndpoint = "/user/penalized-transaction";
+
+export const getSpecificPenalizedTransacEndpoint = (resourceId) =>
+  `${getPenalizedTransacListEndpoint}/${resourceId}`;

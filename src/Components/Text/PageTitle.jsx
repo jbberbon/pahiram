@@ -1,17 +1,31 @@
-// import IconButton from "@mui/material/IconButton";
-// import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import PropTypes from "prop-types";
 import ColorVariables from "../../Utils/Theming/ColorVariables";
-// import BreakpointVariables from "../../Utils/Theming/BreakpointVariables";
+import { IconButton, Popover, Typography } from "@mui/material";
+import TipsAndUpdatesOutlinedIcon from "@mui/icons-material/TipsAndUpdatesOutlined";
+import { useState } from "react";
 
-function PageTitle({ children, fontSize }) {
+function PageTitle({ children, fontSize, popoverMessage }) {
   const { neutralMain } = ColorVariables();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
   return (
     <div
       style={{
         width: "100%",
         display: "flex",
         alignItems: "center",
+        gap: "8px",
       }}
     >
       <h2
@@ -21,12 +35,31 @@ function PageTitle({ children, fontSize }) {
           fontSize: fontSize ? fontSize : "1.5rem",
           fontWeight: "600",
           whiteSpace: "nowrap",
-          width: "100%",
+          // width: "100%",
           color: neutralMain,
         }}
       >
         {children}
       </h2>
+      {popoverMessage && (
+        <>
+          <IconButton id="" onClick={handleClick}>
+            <TipsAndUpdatesOutlinedIcon fontSize="small" />
+          </IconButton>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <Typography sx={{ p: 2 }}>{popoverMessage}.</Typography>
+          </Popover>
+        </>
+      )}
     </div>
   );
 }
@@ -34,6 +67,7 @@ function PageTitle({ children, fontSize }) {
 PageTitle.propTypes = {
   children: PropTypes.node.isRequired,
   fontSize: PropTypes.string,
+  popoverMessage: PropTypes.string,
   // isSm: PropTypes.any.isRequired,
 };
 

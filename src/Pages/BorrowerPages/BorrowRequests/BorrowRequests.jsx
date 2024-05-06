@@ -11,9 +11,7 @@ import SpecificRequestModal from "./SpecificRequest/SpecificRequestModal";
 import useCancelRequest from "../../../Hooks/BorrowRequestHooks/useCancelRequest";
 import SuccessSnackbar from "../../../Components/Snackbars/SuccessSnackbar";
 
-function BorrowRequests() {
-  // const { isSm } = BreakpointVariables();
-
+const BorrowRequests = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const {
@@ -63,105 +61,104 @@ function BorrowRequests() {
   );
 
   return (
-    <MainDisplayLayout>
-      <InnerMainDisplayLayout>
-        <PageTitle>Borrow Requests</PageTitle>
-        <PageTitle fontSize={"1.2rem"}>On-going Requests</PageTitle>
-        <div
-          style={{
-            display: "flex",
-            gap: "16px",
-            flexWrap: "wrap",
-            width: "100%",
-          }}
-        >
-          {borrowRequestList?.length > 0 &&
-          filteredActiveRequests?.length > 0 ? (
-            filteredActiveRequests.map((request) => (
-              <RequestItemCard
-                key={request?.id}
-                transacId={request?.id}
-                submitDate={request?.created_at}
-                department={request?.department}
-                endorser={request?.endorsed_by}
-                onClick={() => {
-                  fetchSpecificRequest(request?.id);
-                  if (!isLoading) {
-                    setModalOpen(true);
-                  }
-                }}
-              />
-            ))
-          ) : isLoadingRequestList ? (
-            <EmptyItems message="Fetching data. Please wait" />
-          ) : (
-            <EmptyItems message="You have no active request" />
-          )}
-        </div>
+    <>
+      <MainDisplayLayout>
+        <InnerMainDisplayLayout>
+          <PageTitle>Borrow Requests</PageTitle>
+          <PageTitle fontSize={"1.2rem"}>On-going Requests</PageTitle>
+          <div
+            style={{
+              display: "flex",
+              gap: "16px",
+              flexWrap: "wrap",
+              width: "100%",
+            }}
+          >
+            {borrowRequestList?.length > 0 &&
+            filteredActiveRequests?.length > 0 ? (
+              filteredActiveRequests.map((request) => (
+                <RequestItemCard
+                  key={request?.id}
+                  transacId={request?.id}
+                  submitDate={request?.created_at}
+                  department={request?.department}
+                  endorser={request?.endorsed_by}
+                  onClick={() => {
+                    fetchSpecificRequest(request?.id);
+                    if (!isLoading) {
+                      setModalOpen(true);
+                    }
+                  }}
+                />
+              ))
+            ) : isLoadingRequestList ? (
+              <EmptyItems message="Fetching data. Please wait" />
+            ) : (
+              <EmptyItems message="You have no active request" />
+            )}
+          </div>
 
-        <span></span>
-        <PageTitle fontSize={"1.2rem"}>Previous Requests</PageTitle>
-        <div
-          style={{
-            display: "flex",
-            gap: "16px",
-            flexWrap: "wrap",
-            width: "100%",
-          }}
-        >
-          {borrowRequestList?.length > 0 &&
-          filteredPreviousRequests?.length > 0 ? (
-            filteredPreviousRequests.map((request) => (
-              <RequestItemCard
-                key={request?.id}
-                transacId={request?.id}
-                submitDate={request?.created_at}
-                department={request?.department}
-                endorser={request?.endorsed_by}
-                onClick={() => {
-                  fetchSpecificRequest(request?.id);
-                  if (!isLoading) {
-                    setModalOpen(true);
-                  }
-                }}
-              />
-            ))
-          ) : isLoadingRequestList ? (
-            <EmptyItems message="Fetching data. Please wait" />
-          ) : (
-            <EmptyItems message="You have no previous request" />
-          )}
-        </div>
+          <span></span>
+          <PageTitle fontSize={"1.2rem"}>Previous Requests</PageTitle>
+          <div
+            style={{
+              display: "flex",
+              gap: "16px",
+              flexWrap: "wrap",
+              width: "100%",
+            }}
+          >
+            {borrowRequestList?.length > 0 &&
+            filteredPreviousRequests?.length > 0 ? (
+              filteredPreviousRequests.map((request) => (
+                <RequestItemCard
+                  key={request?.id}
+                  transacId={request?.id}
+                  submitDate={request?.created_at}
+                  department={request?.department}
+                  endorser={request?.endorsed_by}
+                  onClick={() => {
+                    fetchSpecificRequest(request?.id);
+                    if (!isLoading) {
+                      setModalOpen(true);
+                    }
+                  }}
+                />
+              ))
+            ) : isLoadingRequestList ? (
+              <EmptyItems message="Fetching data. Please wait" />
+            ) : (
+              <EmptyItems message="You have no previous request" />
+            )}
+          </div>
+        </InnerMainDisplayLayout>
+      </MainDisplayLayout>
 
-        <SpecificRequestModal
-          // isSpecificRequestLoading={isSpecificRequestLoading}
-          isModalOpen={isModalOpen}
-          setModalOpen={setModalOpen}
-          specificRequestData={specificRequest}
-          handleCancelRequest={handleCancelRequest}
-          // getRequestList={() => getRequestList}
-        />
+      <SpecificRequestModal
+        // isSpecificRequestLoading={isSpecificRequestLoading}
+        isModalOpen={isModalOpen}
+        setModalOpen={setModalOpen}
+        specificRequestData={specificRequest}
+        handleCancelRequest={handleCancelRequest}
+        // getRequestList={() => getRequestList}
+      />
 
-        {/*
-         * Snackbars
-         */}
-        <SuccessSnackbar
-          isSuccess={isCancelSuccess}
-          setIsSuccess={setCancelSuccess}
-          successMessage={isCancelSuccess}
-        />
-        <ErrorSnackbar
-          error={isErrorRequestList}
-          setError={setErrorRequestList}
-        />
-        <ErrorSnackbar
-          error={isErrorSpecificRequest}
-          setError={setErrorSpecificRequest}
-        />
-        <ErrorSnackbar error={isCancelError} setError={setCancelError} />
-      </InnerMainDisplayLayout>
-    </MainDisplayLayout>
+      <SuccessSnackbar
+        isSuccess={isCancelSuccess}
+        setIsSuccess={setCancelSuccess}
+        successMessage={isCancelSuccess}
+      />
+      <ErrorSnackbar
+        error={isErrorRequestList}
+        setError={setErrorRequestList}
+      />
+      <ErrorSnackbar
+        error={isErrorSpecificRequest}
+        setError={setErrorSpecificRequest}
+      />
+      <ErrorSnackbar error={isCancelError} setError={setCancelError} />
+    </>
   );
-}
+};
 
 export default BorrowRequests;

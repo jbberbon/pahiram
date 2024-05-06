@@ -14,6 +14,11 @@ const useSidebarStore = create(
         set((state) => ({ isOpenBorrowerMenu: !state.isOpenBorrowerMenu }));
       },
 
+      isOpenAdminMenu: false,
+      toggleAdminMenu: () => {
+        set((state) => ({ isOpenAdminMenu: !state.isOpenAdminMenu }));
+      },
+
       isOpenEndorserMenu: false,
       toggleEndorserMenu: () => {
         set((state) => ({ isOpenEndorserMenu: !state.isOpenEndorserMenu }));
@@ -22,6 +27,10 @@ const useSidebarStore = create(
       isOpenManagementMenu: true,
       toggleManagementMenu: () => {
         set((state) => ({ isOpenManagementMenu: !state.isOpenManagementMenu }));
+      },
+      isOpenFinanceMenu: true,
+      toggleFinanceMenu: () => {
+        set((state) => ({ isOpenFinanceMenu: !state.isOpenFinanceMenu }));
       },
     }),
     {

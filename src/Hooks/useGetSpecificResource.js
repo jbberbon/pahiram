@@ -17,15 +17,15 @@ const useGetSpecificResource = () => {
       const response = await getRequest(specificResourceEndpoint);
 
       if (response?.status === false) {
-        isErrorSpecificResource(response?.message);
+        setIsErrorSpecificResource(response?.message);
       } else {
-        setSpecificResource(response.data);
+        setSpecificResource(response?.data);
+        console.log(response);
       }
       setIsLoadingSpecificResource(false);
     } catch (error) {
       setIsLoadingSpecificResource(false);
       setIsErrorSpecificResource(error);
-      console.error("Error fetching details:", error);
     }
   };
 

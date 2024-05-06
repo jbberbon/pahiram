@@ -19,8 +19,8 @@ const EndorsementItemCard = ({ transacData, onClick }) => {
 
   const purpose = findPurpose(transacData?.purpose);
   const userDefinedPurpose = `${
-    transacData?.user_defined_purpose.length > 30
-      ? transacData?.user_defined_purpose.slice(0, 30) + "..."
+    transacData?.user_defined_purpose?.length > 30
+      ? transacData?.user_defined_purpose?.slice(0, 30) + "..."
       : transacData?.user_defined_purpose
   }`;
   return (
@@ -43,7 +43,7 @@ const EndorsementItemCard = ({ transacData, onClick }) => {
         </h4>
         <p style={pTagStyles}>{transacData?.borrower}</p>
         <p style={pTagStyles}>
-          For {purpose.purpose}, {userDefinedPurpose}
+          For {purpose?.purpose}, {userDefinedPurpose}
         </p>
 
         <p style={pTagStyles}>Sumitted on {parsedDate}</p>

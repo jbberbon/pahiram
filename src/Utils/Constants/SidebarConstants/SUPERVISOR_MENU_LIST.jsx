@@ -6,7 +6,7 @@ import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlin
 import GppMaybeOutlinedIcon from '@mui/icons-material/GppMaybeOutlined';
 
 
-const SUPERVISOR_ADMIN_MENU_LIST = [
+const SUPERVISOR_MENU_LIST = [
   {
     title: "Dashboard",
     icon: <DashboardCustomizeRoundedIcon fontSize="large" />,
@@ -38,11 +38,11 @@ const SUPERVISOR_ADMIN_MENU_LIST = [
     aria: "Navigate to manage penalty page",
   },
   {
-    title: "Manage Accounts",
+    title: "Manage Office Accounts",
     icon: <ManageAccountsOutlinedIcon fontSize="large" />,
-    link: "manage-accounts",
-    aria: "Navigate to lending history page",
+    link: "manage-office-account",
+    aria: "Navigate to office account management page",
   },
 ];
 
-export default SUPERVISOR_ADMIN_MENU_LIST;
+export default SUPERVISOR_MENU_LIST;

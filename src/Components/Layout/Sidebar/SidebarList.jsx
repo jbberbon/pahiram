@@ -28,7 +28,7 @@ function SidebarList({ sidebarItems, selectedLink, handleListItemClick }) {
           {/* 
             * Use the Link component for navigation 
             */}
-          <Link to={val.link}>
+          <Link to={val?.link}>
             <ListItemButton
               disableGutters={false}
               className="list-item-button"
@@ -44,10 +44,10 @@ function SidebarList({ sidebarItems, selectedLink, handleListItemClick }) {
                   backgroundColor: "neutral.light !important",
                 },
               }}
-              aria-label={val.aria}
+              aria-label={val?.aria}
               role="button"
-              selected={selectedLink === val.link}
-              onClick={() => handleListItemClick(val.link)}
+              selected={selectedLink === val?.link}
+              onClick={() => handleListItemClick(val?.link)}
             >
               <ListItemIcon
                 sx={{
@@ -55,13 +55,13 @@ function SidebarList({ sidebarItems, selectedLink, handleListItemClick }) {
                   color: neutralMain,
                 }}
               >
-                {val.icon}
+                {val?.icon}
               </ListItemIcon>
               <h2
                 className={styles.menuOptionsTitle}
                 style={{ color: neutralMain }}
               >
-                {val.title}
+                {val?.title}
               </h2>
             </ListItemButton>
           </Link>

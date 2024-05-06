@@ -1,25 +1,27 @@
-import { getOfficeTransactionListEndpoint } from "../../../API/Endpoints/manageBorrowTransaction";
+// import PropTypes from "prop-types";
+
 import InnerMainDisplayLayout from "../../../Components/Layout/MainDisplay/InnerMainDisplayLayout";
 import MainDisplayLayout from "../../../Components/Layout/MainDisplay/MainDisplayLayout";
 import PageTitle from "../../../Components/Text/PageTitle";
-import ForReturnList from "./FacilitateReturn/ForReturnList";
-import FilteredTransactionList from "./FilteredTransactionList";
-import ForReleaseList from "./ReleaseItems/ForReleaseList";
+import PenalizedTransactionCardList from "./PenalizedTransactionCardList";
 
-const PENDING_BORROWING_APPROVAL = "PENDING_BORROWING_APPROVAL";
-const APPROVED = "APPROVED";
-const ON_GOING = "ON_GOING";
-const TRANSACTION_COMPLETE = "TRANSACTION_COMPLETE";
-// const OVERDUE_TRANSACTION_COMPLETION = "OVERDUE_TRANSACTION_COMPLETION";
-
-const ManageTransactions = () => {
+const PenaltyRecords = () => {
   return (
     <>
       <MainDisplayLayout>
         <InnerMainDisplayLayout>
-          <PageTitle>Manage Transactions</PageTitle>
+          <PageTitle>Penalized Transactions</PageTitle>
 
-          <FilteredTransactionList
+          <PenalizedTransactionCardList
+            sectionTitle="Pending Payment"
+            filter={"status=PENDING_PAYMENT"}
+          />
+
+          <PenalizedTransactionCardList
+            sectionTitle="Settled Penalties"
+            filter={"status=PAID"}
+          />
+          {/* <FilteredTransactionList
             sectionTitle="Pending Approval"
             filter={"status=" + PENDING_BORROWING_APPROVAL}
           />
@@ -37,18 +39,12 @@ const ManageTransactions = () => {
               getOfficeTransactionListEndpoint + "?status=" + ON_GOING
             }
           />
-          {/* <FilteredTransactionList
-            sectionTitle="On Going Transactions"
-            filter={"status=" + ON_GOING}
-          /> */}
-
-          {/* Change Filter later */}
+          
           <FilteredTransactionList
             sectionTitle="Delayed Returns"
             filter={"status=" + ON_GOING}
           />
 
-          {/* Change filter later */}
           <FilteredTransactionList
             sectionTitle="Unreturned"
             filter={"status=" + ON_GOING}
@@ -59,15 +55,18 @@ const ManageTransactions = () => {
             filter={"is_lapsed=true"}
           />
 
-          {/* Change filter later */}
           <FilteredTransactionList
             sectionTitle="Complete"
             filter={"status=" + TRANSACTION_COMPLETE}
-          />
+          /> */}
         </InnerMainDisplayLayout>
       </MainDisplayLayout>
     </>
   );
 };
 
-export default ManageTransactions;
+// Dashboard.propTypes = {
+//   isOpen: PropTypes.bool.isRequired,
+// };
+
+export default PenaltyRecords;

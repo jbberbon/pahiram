@@ -60,17 +60,17 @@ function LoginForm() {
           className={styles.form}
           noValidate
         >
-          {loginFormObject.map((formField, key) => (
-            <div key={key} style={{ width: "100%" }}>
+          {loginFormObject?.map((formField, key) => (
+            <div key={key} style={{ width: "100%", display: "flex", flexDirection: "column", gap: "8px" }}>
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  // display: "flex",
+                  // alignItems: "center",
+                  // justifyContent: "space-between",
                   width: "100%",
                 }}
               >
-                <label htmlFor={formField.name}>
+                <label htmlFor={formField?.name}>
                   <Typography
                     fontWeight={"600"}
                     component={"span"}
@@ -79,7 +79,7 @@ function LoginForm() {
                     {formField.title}
                   </Typography>
                 </label>
-                <IconButton
+                {/* <IconButton
                   className={styles.helpButton}
                   disableRipple
                   onClick={formField.dialog.onClick}
@@ -92,21 +92,21 @@ function LoginForm() {
                   onClick={formField.dialog.onClick}
                   title={formField.dialog.title}
                   content={formField.dialog.content}
-                />
+                /> */}
               </div>
               <TextField
-                id={formField.id}
-                name={formField.name}
-                {...formField.hookForm}
-                type={formField.type}
+                id={formField?.id}
+                name={formField?.name}
+                {...formField?.hookForm}
+                type={formField?.type}
                 variant="outlined"
                 fullWidth={true}
                 width="100%"
                 color="secondary"
-                aria-label={formField.ariaLabel}
+                aria-label={formField?.ariaLabel}
               />
               <Typography color="error" paddingTop="4px">
-                {formField.errors}
+                {formField?.errors}
               </Typography>
             </div>
           ))}

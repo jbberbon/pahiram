@@ -2,11 +2,11 @@ import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import InventoryRoundedIcon from "@mui/icons-material/InventoryRounded";
 import HistoryEduRoundedIcon from "@mui/icons-material/HistoryEduRounded";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
-import GppMaybeOutlinedIcon from '@mui/icons-material/GppMaybeOutlined';
+import GppMaybeOutlinedIcon from "@mui/icons-material/GppMaybeOutlined";
 
 const EMPLOYEE_MENU_LIST = [
   {
-    title: "Dashboard",
+    title: "Lending Dashboard",
     icon: <DashboardCustomizeRoundedIcon fontSize="large" />,
     link: "dashboard",
     aria: "Navigate to dashboard page",
@@ -26,7 +26,7 @@ const EMPLOYEE_MENU_LIST = [
   {
     title: "Manage Inventory",
     icon: <InventoryRoundedIcon fontSize="large" />,
-    link: "manage-inventory",
+    link: "manage-office-inventory",
     aria: "Navigate to manage inventory page",
   },
   {

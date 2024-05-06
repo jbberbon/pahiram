@@ -20,7 +20,7 @@ function Unauthorized() {
     <Box flexGrow={1} pl={2}>
       Permission Denied
       <br />
-      <Link to={userData.role === borrower ? "/borrow-items" : "/dashboard"}>Go back</Link>
+      <Link to={userData?.role === borrower ? "/borrow-items" : "/dashboard"}>Go back</Link>
 
       <br />
       <button onClick={handleNavigateToLogin}>Go back to login page</button>
