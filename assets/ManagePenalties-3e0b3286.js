@@ -1,1 +1,0 @@
-import{j as a}from"./index-a5100791.js";import{M as t}from"./MainDisplayLayout-ed673920.js";import"./SidebarStore-355b0e01.js";function r(){return a.jsx(t,{children:"Manage Penalties"})}export{r as default};

@@ -1,0 +1,1 @@
+import{u as t,j as r,L as e}from"./index-36060215.js";import{g as a}from"./USER_ROLES-80c7b21f.js";import{B as n}from"./Box-c89578f5.js";import"./extendSxProp-5febf8e6.js";function p(){const{userData:o}=t(),s=a.borrower;return r.jsxs(n,{flexGrow:1,pl:2,children:["FAQS",r.jsx("br",{}),r.jsx(e,{to:o.role===s?"/borrow-items":"/dashboard",children:"Go back"})]})}export{p as default};
