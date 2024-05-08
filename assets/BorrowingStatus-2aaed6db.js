@@ -1,1 +1,0 @@
-import{j as r}from"./index-f41e202c.js";import{M as t}from"./MainDisplayLayout-d09b03e3.js";import"./SidebarStore-74a9779a.js";function s(){return r.jsx(t,{children:"Borrowing Status"})}export{s as default};

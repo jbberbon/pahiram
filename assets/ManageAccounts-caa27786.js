@@ -1,1 +1,0 @@
-import{j as t}from"./index-f41e202c.js";import{M as a}from"./MainDisplayLayout-d09b03e3.js";import"./SidebarStore-74a9779a.js";function s(){return t.jsx(a,{children:"Manage Accounts"})}export{s as default};
