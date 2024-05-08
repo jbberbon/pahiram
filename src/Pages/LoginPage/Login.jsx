@@ -131,7 +131,7 @@ function Login() {
         {/* LEFT -------------------------- */}
         <Box sx={imgDiv}>
           <img
-            src="./public/assets/login2.jpg"
+            src="http://jbberbon.github.io/pahiram/assets/login2.jpg"
             className={styles.loginImg}
             alt="Cat taking a selfie"
           />
