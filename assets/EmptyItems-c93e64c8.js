@@ -1,1 +1,0 @@
-import{P as s,j as e}from"./index-d2fd7b75.js";function n({message:t}){return e.jsx("div",{style:{width:"100%",display:"flex",justifyContent:"center",alignItems:"center"},children:e.jsx("h3",{style:{fontWeight:"400",fontSize:"1rem"},children:t||"Wow such empty in here..."})})}n.propTypes={message:s.string};export{n as E};

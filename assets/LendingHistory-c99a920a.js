@@ -1,0 +1,1 @@
+import{j as i}from"./index-a5100791.js";import{M as r}from"./MainDisplayLayout-ed673920.js";import"./SidebarStore-355b0e01.js";function s(){return i.jsx(r,{children:"Lending History"})}export{s as default};

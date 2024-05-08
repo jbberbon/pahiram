@@ -1,0 +1,1 @@
+import{j as r}from"./index-a5100791.js";import{M as a}from"./MainDisplayLayout-ed673920.js";import"./SidebarStore-355b0e01.js";function i(){return r.jsx(a,{children:"Dashboard"})}export{i as default};
