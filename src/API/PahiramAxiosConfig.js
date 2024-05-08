@@ -3,7 +3,7 @@ import { getPahiramToken } from "../Utils/HelperFunctions/UserStore/GetToken";
 // import useUserStore from "../Store/UserStore";
 
 const PahiramAxiosConfig = axios.create({
-  baseURL: "http://3.26.231.193/api",
+  baseURL: "https://pahiram-backend.site/api",
   timeout: 5000,
   headers: {
     Accept: "application/json",
@@ -26,7 +26,7 @@ PahiramAxiosConfig.interceptors.request.use(
 
 
 const PahiramAxiosConfigLogin = axios.create({
-  baseURL: "http://3.26.231.193/api",
+  baseURL: "https://pahiram-backend.site/api",
   timeout: 5000,
   headers: {
     Accept: "application/json",
